@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Categories - Eldelshell Blog</title>
+    <title>A jQuery Mobile Progress Bar - Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,11 +12,11 @@
         <link href="./static/images/favicon.ico" rel="icon">
     
                             <!-- Open Graph tags -->
-                            <meta property="og:type" content="website"/>
-            <meta property="og:title" content="Eldelshell Blog"/>
-            <meta property="og:url" content="."/>
-            <meta property="og:description" content="Eldelshell Blog"/>
-                        
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="A jQuery Mobile Progress Bar"/>
+            <meta property="og:url" content="./a-jquery-mobile-progress-bar.html"/>
+            <meta property="og:description" content="Been working on different apps for FirefoxOS, which I'm loving by the way. For my latest app I've been using jQuery Mobile which, to my surprise, doesn't come with a progress bar control. Luckily for you, here's the code to generate yours with as few lines ..."/>
+            
     <!-- Bootstrap -->
             <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
         <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@
                                                                              <li><a href="./pages/about-me.html">
                              About Me
                           </a></li>
-                                                                                                  <li >
+                                                                                                  <li class="active">
                             <a href="./category/blog.html">Blog</a>
                         </li>
                                                 </ul>
@@ -65,34 +65,80 @@
     <div class="row">
                 <div class="col-sm-9">
                     
-            <section id="categories">
-        <h1>All Categories for Eldelshell Blog</h1>
-        <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-blog">Blog <span class="badge pull-right">11</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-blog" class="panel-collapse collapse">
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./a-jquery-mobile-progress-bar.html"
+                       rel="bookmark"
+                       title="Permalink to A jQuery Mobile Progress Bar">
+                        A jQuery Mobile Progress Bar
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
                     <div class="panel-body">
-                                                <p><span class="categories-timestamp"><time datetime="2014-04-19T00:00:00">sáb 19 abril 2014</time></span> <a href="./hello-world.html">Hello Pelican</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2014-04-01T00:00:00">mar 01 abril 2014</time></span> <a href="./little-jooq-trick-to-get-list-of-pojos.html">Little jOOQ trick to get a List of POJOs</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2014-03-25T00:00:00">mar 25 marzo 2014</time></span> <a href="./active-page-in-apache-wicket.html">Active Page in Apache Wicket</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-07-29T00:00:00">lun 29 julio 2013</time></span> <a href="./font-awesome-icons-in-android.html">Font Awesome Icons in Android</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-05-31T00:00:00">vie 31 mayo 2013</time></span> <a href="./updating-geeksphone-keon-to-nightly.html">Updating Geeksphone Keon to Nightly Build</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-05-28T00:00:00">mar 28 mayo 2013</time></span> <a href="./a-jquery-mobile-progress-bar.html">A jQuery Mobile Progress Bar</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-04-23T00:00:00">mar 23 abril 2013</time></span> <a href="./a-simple-big-data-architecture.html">A (Simple) Big Data Architecture</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-04-16T00:00:00">mar 16 abril 2013</time></span> <a href="./python-virtualenv-for-google-app-engine.html">Python virtualenv for Google App Engine and Flask</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-04-01T00:00:00">lun 01 abril 2013</time></span> <a href="./build-your-less-files-from-cli-with.html">Build your LESS files from the CLI with Java & Rhino</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-04-01T00:00:00">lun 01 abril 2013</time></span> <a href="./stars-filter-for-jinja2-bootstrap.html">Stars filter for Jinja2 + Bootstrap</a></p>
-                                                <p><span class="categories-timestamp"><time datetime="2013-03-14T00:00:00">jue 14 marzo 2013</time></span> <a href="./jinja2-template-datetime-filters-in.html">Jinja2 template datetime filters in Flask</a></p>
-                                            </div>
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2013-05-28T00:00:00"> mar 28 mayo 2013</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/jquery-mobile.html">jquery-mobile</a>
+            
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </div>
-                    </div>
+                <p>Been working on different apps for FirefoxOS, which I'm loving by the way.</p>
+<p>For my latest app I've been using jQuery Mobile which, to my surprise, doesn't come with a progress bar control.</p>
+<p>Luckily for you, here's the code to generate yours with as few lines of code as possible.</p>
+<div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+        <span class="nc">.progress-bar</span> <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">number</span><span class="o">],</span> <span class="nc">.ui-slider-handle</span> <span class="p">{</span>
+            <span class="k">display</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+        <span class="p">}</span>  
+        <span class="nc">.progress-bar</span> <span class="nc">.ui-slider-track</span> <span class="p">{</span>
+            <span class="k">margin</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-role=</span><span class="s">&quot;page&quot;</span> <span class="na">data-theme=</span><span class="s">&quot;a&quot;</span> <span class="na">id=</span><span class="s">&quot;landing&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;progress-bar&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;range&quot;</span> <span class="na">id=</span><span class="s">&quot;progress-bar&quot;</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span> <span class="na">min=</span><span class="s">&quot;0&quot;</span> <span class="na">max=</span><span class="s">&quot;100&quot;</span> <span class="na">data-highlight=</span><span class="s">&quot;true&quot;</span> <span class="na">data-mini=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
 
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+        <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">tries</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">intervalId</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">tries</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">){</span>
+                    <span class="nx">tries</span><span class="o">++</span><span class="p">;</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#progress-bar&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">tries</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#progress-bar&#39;</span><span class="p">).</span><span class="nx">slider</span><span class="p">(</span><span class="s1">&#39;refresh&#39;</span><span class="p">);</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="nb">window</span><span class="p">.</span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalId</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+        <span class="p">})();</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+
+<p>This code is being used for the landing page of this app while it loads some stuff on the background.</p>
+<p><img alt="FirefoxOS Simulator" src="./static/images/Simulator_075.png" title="FirefoxOS Simulator" /></p>
+<p>You can put the slider's button back by removing the .ui-slider-handle from the CSS.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
     </section>
+
         </div>
 	        <div class="col-sm-3 well well-sm" id="sidebar">
                 
@@ -229,13 +275,17 @@
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Homepage</Attribute>
+    <Attribute name="title">A jQuery Mobile Progress Bar</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description"></Attribute>
+    <Attribute name="description">Been working on different apps for FirefoxOS, which I'm loving by the way. For my latest app I've been using jQuery Mobile which, to my surprise, doesn't come with a progress bar control. Luckily for you, here's the code to generate yours with as few lines ...</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update"></Attribute>
+    <Attribute name="last_update">2013-05-28T00:00:00</Attribute>
 </DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="jquery-mobile"/>
+    </DataObject>
 
 
 --></body>
