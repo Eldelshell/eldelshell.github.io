@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>A Play Framework server setup - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="A Play Framework server setup"/>
+            <meta property="og:url" content="./a-play-framework-server-setup.html"/>
+            <meta property="og:description" content="What a wonderful surprise was that Play 2.0.x can't be deployed to application servers. Yes, there's a plugin, but I'm not really fond on depending in some guy's project for my business critical applications and the generated WAR wasn't really helpful since you ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./a-play-framework-server-setup.html"
+                       rel="bookmark"
+                       title="Permalink to A Play Framework server setup">
+                        A Play Framework server setup
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-09-08T00:00:00"> Sat 08 September 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/java.html">Java</a>
+            /
+    	<a href="./tag/play.html">Play!</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>What a wonderful surprise was that Play 2.0.x can't be deployed to 
+application servers. Yes, there's a <a href="https://github.com/dlecan/play2-war-plugin">plugin</a>, but I'm not really fond 
+on depending in some guy's project for my business critical applications 
+and the generated WAR wasn't really helpful since you still need to 
+run a different instance of your application server for each Play 
+application because you can only deploy to root ("/") and not as a specific path ("/myapp/").</p>
+<p>Netty, although I don't get the whole .io domains thing, is what the 
+guys at Play decided to use, so, for those of you who use Apache HTTP 
+you can drop the AJP plugin and install the proxy_mod and proxy_http_mod.</p>
+<p>When setting up a server, be it Tomcat, JBoss or Glassfish, my main 
+target is flexibility and ease of configuration. I hate having to 
+modify 30 different logger.xml files because some guy doesn't know 
+about symlinks, or having to perform 30 manual operations to 
+perform a release. Also, the start/stop process has to be as easy 
+and centralized as possible since you never know who is the guy 
+restarting your cluster at 4:00am is. Finally, deployments 
+have to be as light and fast as possible.</p>
+<p>With those objectives in mind, this is what I came up with:</p>
+<div class="highlight"><pre><span class="nv">$tree</span> /home/play
+|-- bin
+| |-- all        <span class="c">#(script to start/stop all applications)</span>
+| |-- play       <span class="c">#(script to start/stop the foo applications)</span>
+| |-- deploy     <span class="c">#(script to deploy the applicationa)</span>
+|-- etc
+| |-- application.conf <span class="c">#(common Play configuration file used by all applications)</span>
+| <span class="sb">`</span>-- logger.xml       <span class="c">#(common Logger configuration file used by all apps)</span>
+|-- lib
+|   |-- 2.0.2 
+|   |    |-- akka-actor.jar
+|   |    |-- akka-slf4j.jar
+|   |    |-- ...
+|   |    <span class="sb">`</span>-- xml-apis.jar
+|   |-- 2.0.3
+|   |    |-- akka-actor.jar
+|   |    |-- akka-slf4j.jar
+|   |    |-- ...
+|   |    <span class="sb">`</span>-- xml-apis.jar|   
+    <span class="sb">`</span>-- play -&gt; lib
+|-- logs <span class="c">#(Folder for log files from the different applications)</span>
+|   |-- foo.log
+|   |-- bar.log
+|   <span class="sb">`</span>-- api.log
+<span class="sb">`</span>-- webapps <span class="c">#(Folder which contains our applications)</span>
+    |-- bar    
+    | |-- 0.1-SNAPSHOT    
+    | | |-- joda-time-2.1.jar    
+    | | |-- foo_2.9.1-1.0-SNAPSHOT.jar    
+    | | |-- foo-common-0.1-SNAPSHOT.jar
+    | <span class="sb">`</span>-- current -&gt; 0.1-SNAPSHOT
+    |-- api    
+    | |-- 0.1-SNAPSHOT
+    | | |-- joda-time-2.1.jar    
+    | | |-- foo-api_2.9.1-1.0-SNAPSHOT.jar    
+    | | |-- foo-common-0.1-SNAPSHOT.jar
+    | <span class="sb">`</span>-- current -&gt; 0.1-SNAPSHOT    
+    <span class="sb">`</span>-- foo      
+      |-- 0.1-SNAPSHOT
+      | |-- joda-time-2.1.jar      
+      | |-- foo-common-0.1-SNAPSHOT.jar      
+      | |-- foo-bar_2.9.1-1.0-SNAPSHOT.jar
+      <span class="sb">`</span>-- current -&gt; 0.1-SNAPSHOT
+</pre></div>
+
+
+<p>There are two tricky parts here: creating the startup scripts with the correct classpath 
+and separating Play's jar files from yours. Since my projects dependencies were few 
+it was easy to simply copy them over from the target/stage folder. Another solution 
+is to generate an empty Play application, run the stage option and copy the files generated there.</p>
+<p>The startup scripts, however you do them, you have to provide the correct options to Java:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+<span class="c"># Play Admin Script</span>
+<span class="c"># This script is to be used to handle operations with our Play</span>
+<span class="c"># servers. This script is able to start, stop, and report on the</span>
+<span class="c"># status of our servers</span>
+<span class="c">#</span>
+
+<span class="nv">play_home</span><span class="o">=</span><span class="s2">&quot;/home/play&quot;</span>
+<span class="nv">app_id</span><span class="o">=</span><span class="s2">&quot;my-play-app&quot;</span>
+<span class="nv">app_port</span><span class="o">=</span><span class="s2">&quot;9000&quot;</span>
+<span class="nv">out_file</span><span class="o">=</span><span class="s2">&quot;${play_home}/logs/${app_id}/${app_id}.out&quot;</span>
+
+do_start <span class="o">()</span> <span class="o">{</span>
+    <span class="nb">local </span><span class="nv">app_path</span><span class="o">=</span><span class="s2">&quot;${play_home}/webapps/${app_id}&quot;</span>
+    <span class="nb">local </span><span class="nv">config_file</span><span class="o">=</span><span class="s2">&quot;${play_home}/etc/application.conf&quot;</span>
+    <span class="nb">local </span><span class="nv">logger_file</span><span class="o">=</span><span class="s2">&quot;${play_home}/etc/logger.xml&quot;</span>
+    <span class="nb">local </span><span class="nv">path</span><span class="o">=</span><span class="s2">&quot;${play_home}/lib/play/*:${app_path}/current/*&quot;</span>
+    <span class="nb">local </span><span class="nv">opts</span><span class="o">=</span><span class="s2">&quot;-Dapp.id=${app_id} -Dhttp.port=${app_port} -Xms128m -Xmx512m -server -XX:MaxPermSize=128m -Dconfig.file=${config_file} -Dlogger.file=${logger_file}&quot;</span>
+
+    <span class="nb">local </span><span class="nv">exit_code</span><span class="o">=</span>10
+    <span class="k">while</span> <span class="o">[</span> <span class="nv">$exit_code</span> -eq 10 <span class="o">]</span>; <span class="k">do</span>
+        <span class="s2">&quot;${JAVA_HOME}/bin/java&quot;</span> <span class="k">${</span><span class="nv">opts</span><span class="k">}</span> -cp <span class="s2">&quot;${path}&quot;</span> play.core.server.NettyServer <span class="s2">&quot;${app_path}&quot;</span>
+        <span class="nv">exit_code</span><span class="o">=</span><span class="nv">$?</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+
+do_stop <span class="o">()</span> <span class="o">{</span>
+    pkill -f <span class="s2">&quot;app.id=${app_id}&quot;</span>
+    <span class="nb">exit</span> <span class="nv">$?</span>
+<span class="o">}</span>
+
+do_status <span class="o">()</span> <span class="o">{</span>
+    pkill -0 -f <span class="s2">&quot;app.id=${app_id}&quot;</span> &gt; /dev/null 2&gt;&amp;1 <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Process is running&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>0
+    <span class="nb">echo</span> <span class="s2">&quot;Process is not running&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>0
+<span class="o">}</span>
+
+<span class="c">### main ###</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$(whoami)&quot;</span> !<span class="o">=</span> <span class="s2">&quot;play&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">   </span><span class="nb">echo</span> <span class="s2">&quot;This script must be run as ubuntu user&quot;</span> 1&gt;&amp;2
+   <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;${JAVA_HOME}&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;JAVA_HOME Not set. Install the JRE and set the JAVA_HOME in your initialization file&quot;</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&quot;${JAVA_HOME}&quot;</span> <span class="o">]</span> ; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;Java ${JAVA_HOME} Directory doesn&#39;t exist.&quot;</span>
+    <span class="nb">exit </span>1
+<span class="k">else</span>
+<span class="k">    if</span> <span class="o">[</span> ! -x <span class="s2">&quot;${JAVA_HOME}/bin/java&quot;</span> <span class="o">]</span> ; <span class="k">then</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Java binary error: not found or not executable&quot;</span>
+        <span class="nb">exit </span>1
+    <span class="k">fi</span>
+<span class="k">fi</span>
+
+<span class="k">case</span> <span class="k">${</span><span class="nv">1</span><span class="k">}</span> in
+    start<span class="o">)</span>
+        do_start
+    ;;
+
+    stop<span class="o">)</span>
+        do_stop
+    ;;
+
+    status<span class="o">)</span>
+        do_status
+    ;;
+
+    nohup<span class="o">)</span>
+        nohup <span class="nv">$0</span> <span class="nv">$1</span> start &gt; <span class="s2">&quot;${out_file}&quot;</span> 2&gt;&amp;1 &amp;
+    ;;
+
+    *<span class="o">)</span>
+        <span class="nb">echo</span> <span class="s2">&quot;Usage: $0 start|nohup|stop|status&quot;</span>
+        <span class="nb">exit </span>1
+    ;;
+<span class="k">esac</span>
+
+<span class="nb">exit </span>0
+</pre></div>
+
+
+<p>This will work with JDK 6 and JDK 7 which are the only ones which support this 
+classpath definitions. Since we're running many Play instances, we need to 
+provide different ports with the http.port options. To configure Play to 
+use our common application.conf (which holds the configuration for the 
+database connection) we use the <em>config.file</em> options. Finally, to provide different 
+logger configurations to Logback we use the logger.file option.</p>
+<p>What is accomplished by this setup:</p>
+<ul>
+<li>Very Unix like structure (bin, logs, etc)</li>
+<li>Easy deploy (simply replace the current symlink)</li>
+<li>Easy patching (replace one of your jars and restart)</li>
+<li>Easy servers control (bash scripts)</li>
+</ul>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">A Play Framework server setup</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">What a wonderful surprise was that Play 2.0.x can't be deployed to application servers. Yes, there's a plugin, but I'm not really fond on depending in some guy's project for my business critical applications and the generated WAR wasn't really helpful since you ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-09-08T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Java"/>
+            <Attribute name="category" value="Play!"/>
+    </DataObject>
+
+
+--></body>
+</html>

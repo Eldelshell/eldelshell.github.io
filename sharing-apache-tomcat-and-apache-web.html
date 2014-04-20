@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Sharing Apache Tomcat and Apache Web Server - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Sharing Apache Tomcat and Apache Web Server"/>
+            <meta property="og:url" content="./sharing-apache-tomcat-and-apache-web.html"/>
+            <meta property="og:description" content="Today's problem is sharing one single virtual host with different Tomcat instances. For example, say you have your Apache (the web server) with a virtual host for an intranet and you have in different Tomcat instances different applications like: monitoring, dashboard and hradmin. You want your users to be ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./sharing-apache-tomcat-and-apache-web.html"
+                       rel="bookmark"
+                       title="Permalink to Sharing Apache Tomcat and Apache Web Server">
+                        Sharing Apache Tomcat and Apache Web Server
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-04-20T00:00:00"> Sun 20 April 2014</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/tomcat.html">Tomcat</a>
+            /
+    	<a href="./tag/http.html">HTTP</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Today's problem is sharing one single virtual host with different Tomcat instances. For example, say you have your Apache (the web server) with a virtual host for an intranet and you have in different Tomcat instances different applications like: monitoring, dashboard and hradmin. You want your users to be directed to the correct application if they access the URL <em>http://intranet/dashboard</em> or <em>http://intranet/hradmin</em>.</p>
+<p>In this example I'm using three Tomcat servers and this applications:</p>
+<ul>
+<li>server1:8080/monitoring/</li>
+<li>server1:8080/dashboard/</li>
+<li>hr1:8080/hradmin/</li>
+<li>hr2:8080/hradmin/</li>
+</ul>
+<p>The <strong>server1</strong> Tomcat is running two different applications and the <em>hr1</em> and <em>hr2</em> are running the <em>hradmin</em> application which we want to be load balanced and since it's critical, to be always available.</p>
+<p>The first thing to do is create the <strong>jkworkers.properties</strong> file:</p>
+<div class="highlight"><pre><span class="cp"># This names are the ones defined bellow</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">list</span><span class="o">=</span><span class="n">server1</span><span class="p">,</span><span class="n">hrlb</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">lock</span><span class="o">=</span><span class="n">P</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">status</span><span class="p">.</span><span class="n">type</span><span class="o">=</span><span class="n">status</span>
+
+<span class="cp"># Single server running monitoring and dashboard</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">type</span><span class="o">=</span><span class="n">ajp13</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168.1.2</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">disabled</span><span class="o">=</span><span class="nb">false</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">socket_timeout</span><span class="o">=</span><span class="mi">60000</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">server1</span><span class="p">.</span><span class="n">connect_timeout</span><span class="o">=</span><span class="mi">60000</span>
+
+<span class="cp"># Two workers for two servers running a critical application</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">type</span><span class="o">=</span><span class="n">ajp13</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168.1.3</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">disabled</span><span class="o">=</span><span class="nb">false</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">socket_timeout</span><span class="o">=</span><span class="mi">60000</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr1</span><span class="p">.</span><span class="n">connect_timeout</span><span class="o">=</span><span class="mi">60000</span>
+
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">type</span><span class="o">=</span><span class="n">ajp13</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168.1.4</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">disabled</span><span class="o">=</span><span class="nb">false</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">socket_timeout</span><span class="o">=</span><span class="mi">60000</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hr2</span><span class="p">.</span><span class="n">connect_timeout</span><span class="o">=</span><span class="mi">60000</span>
+
+<span class="cp"># Loadbalancer configuration for the critical application</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hrlb</span><span class="p">.</span><span class="n">type</span><span class="o">=</span><span class="n">lb</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hrlb</span><span class="p">.</span><span class="n">balance_workers</span><span class="o">=</span><span class="n">hr1</span><span class="p">,</span><span class="n">hr2</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hrlb</span><span class="p">.</span><span class="n">sticky_session</span><span class="o">=</span><span class="nb">true</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hrlb</span><span class="p">.</span><span class="n">sticky_session_force</span><span class="o">=</span><span class="nb">false</span>
+<span class="n">worker</span><span class="p">.</span><span class="n">hrlb</span><span class="p">.</span><span class="n">method</span><span class="o">=</span><span class="n">R</span>
+</pre></div>
+
+
+<p>Of course, you should use the DNS names instead of the IP addresses. Also, there are many more options to be set here, but this should give you a good start.</p>
+<p>Second, you need your <strong>jk.conf</strong> file:</p>
+<div class="highlight"><pre><span class="nb">JkWorkersFile</span> <span class="sx">/etc/apache2/conf.d/jkworkers.properties</span>
+<span class="nb">JkLogFile</span> <span class="sx">/var/log/apache2/mod_jk.log</span>
+<span class="nb">JkLogLevel</span> <span class="k">info</span>
+<span class="nb">JkLogStampFormat</span> <span class="s2">&quot;[%a %b %d %H:%M:%S %Y]&quot;</span>
+<span class="nb">JkOptions</span> +ForwardKeySize +ForwardURICompatUnparsed -ForwardDirectories
+<span class="nb">JkRequestLogFormat</span> <span class="s2">&quot;%w %V %T&quot;</span>
+<span class="nb">JkShmFile</span> <span class="sx">/var/log/httpd/jk.shm</span>
+<span class="nt">&lt;Location</span> <span class="s">/jkstatus</span><span class="nt">&gt;</span>
+    <span class="nb">JkMount</span> status
+    <span class="nb">Order</span> deny,allow
+    <span class="nb">Deny</span> from <span class="k">all</span>
+    <span class="nb">Allow</span> from <span class="m">127.0.0.1</span>
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+
+
+<p>And finally, you can set up your virtual host in the, for example, <strong>intranet.conf</strong> file:</p>
+<div class="highlight"><pre><span class="nt">&lt;VirtualHost</span> <span class="s">*:80</span><span class="nt">&gt;</span>
+  <span class="nb">ServerName</span> intranet
+  <span class="nb">RewriteEngine</span> <span class="k">on</span>
+
+  <span class="c"># Here we set where we want the url http://intranet/ to go</span>
+  <span class="nb">RedirectMatch</span> ^/$ <span class="sx">/dashboard/</span>
+
+  <span class="nb">DocumentRoot</span> <span class="sx">/srv/www/htdocs/docroot</span>
+  <span class="nb">CustomLog</span>  <span class="sx">/var/log/apache2/access_reports</span> combined
+  <span class="nb">ErrorLog</span>  <span class="sx">/var/log/apache2/error_reports</span>
+
+  <span class="c"># You can even setup a jongo proxy</span>
+  <span class="nb">ProxyPass</span> <span class="sx">/jongo/</span> http://192.168.1.5:8080/jongo/
+  <span class="nb">ProxyPassReverse</span> <span class="sx">/jongo/</span> http://192.168.1.5:8080/jongo/
+
+  <span class="c"># It&#39;s important that this names are the same used in your Tomcat</span>
+  <span class="nb">JkMount</span> <span class="sx">/dashboard/</span>* server1
+  <span class="nb">JkMount</span> <span class="sx">/monitoring/</span>* server1
+  <span class="nb">JkMount</span> <span class="sx">/hradmin/</span>* hrlb
+<span class="nt">&lt;/VirtualHost&gt;</span>
+</pre></div>
+
+
+<p>What we're doing here is telling the Apache server to listen on port 80 for all requests to the intranet host and to forward this requests to their corresponding applications:</p>
+<ul>
+<li>http://intranet/ goes to http://server1/dashboard/</li>
+<li>http://intranet/dashboard/ goes to http://server1/dashboard/</li>
+<li>http://intranet/monitoring/ goes to http://server1/monitoring/</li>
+<li>http://intranet/hradmin/ goes to http://hr1/hradmin/ or to http://hr2/hradmin/</li>
+</ul>
+<p>Where you put this files depends on your httpd.conf configuration.</p>
+<p>This example will allow a vanilla Apache HTTP server to serve three different applications (one load balanced) from three Tomcat servers (server1, hr1 and hr2)</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Sharing Apache Tomcat and Apache Web Server</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">Today's problem is sharing one single virtual host with different Tomcat instances. For example, say you have your Apache (the web server) with a virtual host for an intranet and you have in different Tomcat instances different applications like: monitoring, dashboard and hradmin. You want your users to be ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2014-04-20T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Tomcat"/>
+            <Attribute name="category" value="HTTP"/>
+    </DataObject>
+
+
+--></body>
+</html>

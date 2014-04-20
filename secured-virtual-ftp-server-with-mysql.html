@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Secured virtual FTP with MySQL - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Secured virtual FTP with MySQL"/>
+            <meta property="og:url" content="./secured-virtual-ftp-server-with-mysql.html"/>
+            <meta property="og:description" content="In this tutorial I'll show how to setup a FTP virtual serveri (VSFTP) backed by a MySQL database to handle authentication. This example should work with PostgreSQL or any other RDBMS with PAM support. We're going to need: vsftpd: Virtual FTP server pam: Authentication modules MySQL: database $sudo ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./secured-virtual-ftp-server-with-mysql.html"
+                       rel="bookmark"
+                       title="Permalink to Secured virtual FTP with MySQL">
+                        Secured virtual FTP with MySQL
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2011-09-10T00:00:00"> Sat 10 September 2011</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/ftp.html">FTP</a>
+            /
+    	<a href="./tag/mysql.html">MySQL</a>
+            /
+    	<a href="./tag/linux.html">Linux</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In this tutorial I'll show how to setup a FTP virtual serveri (VSFTP) backed by a MySQL database to handle authentication. This example should work with PostgreSQL or any other RDBMS with PAM support. We're going to need:</p>
+<ul>
+<li>vsftpd: Virtual FTP server</li>
+<li>pam: Authentication modules</li>
+<li>MySQL: database</li>
+</ul>
+<div class="highlight"><pre><span class="nv">$sudo</span> apt-get install libpam-mysql vsftpd mysql-server
+</pre></div>
+
+
+<p>This will install everything we need in a Ubuntu server. Now let's configure it all so they work together.</p>
+<h2>MySQL Configuration</h2>
+<p>Nos vamos a centrar en la configuración que nos interesa en este momentos, por lo tanto, esto no es lo único que se debe hacer despues de instalar MySQL.</p>
+<p>We're going to center in the specific configuration for this tutorial, this is not a recommended setup for MySQL.</p>
+<div class="highlight"><pre><span class="c1">-- Create the users database</span>
+<span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">vsftpd</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">vsftpd</span><span class="p">;</span>
+
+<span class="c1">-- Create a table for our users</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">accounts</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">int</span> <span class="n">AUTO_INCREMENT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">username</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="nb">binary</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">pass</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="nb">binary</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">primary</span> <span class="k">key</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- We can create a table to hold some logs</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">logs</span> <span class="p">(</span><span class="n">msg</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+    <span class="k">user</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">pid</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="k">host</span> <span class="nb">char</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+    <span class="n">rhost</span> <span class="nb">char</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+    <span class="n">logtime</span> <span class="k">timestamp</span>
+<span class="p">);</span>
+
+<span class="c1">-- Create a user for vsftpd (we don&#39;t want root)</span>
+<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">UPDATE</span> <span class="k">ON</span> <span class="n">vsftpd</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;vsftpd&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;vsftpd_pwd&#39;</span><span class="p">);</span>
+<span class="n">FLUSH</span> <span class="n">PRIVELEGES</span><span class="p">;</span>
+
+<span class="k">GRANT</span> <span class="k">SELECT</span> <span class="k">ON</span> <span class="n">vsftpd</span><span class="p">.</span><span class="n">accounts</span> <span class="k">TO</span> <span class="s1">&#39;vsftpd&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;vsftpd_pwd&#39;</span><span class="p">);</span>
+<span class="k">GRANT</span> <span class="k">INSERT</span> <span class="k">ON</span> <span class="n">vsftpd</span><span class="p">.</span><span class="n">logs</span> <span class="k">TO</span> <span class="s1">&#39;vsftpd&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;vsftpd_pwd&#39;</span><span class="p">);</span>
+<span class="n">FLUSH</span> <span class="n">PRIVELEGES</span><span class="p">;</span>
+</pre></div>
+
+
+<h2>Linux configuration</h2>
+<div class="highlight"><pre><span class="nv">$sudo</span> adduser --ingroup nogroup -d /home/vsftpd -s /bin/false vsftpd
+<span class="nv">$sudo</span> chown vsftpd.nogroup /home/vsftpd
+<span class="nv">$sudo</span> vi /etc/pam.d/vsftpd
+</pre></div>
+
+
+<p>Add the following:</p>
+<div class="highlight"><pre><span class="n">auth</span> <span class="n">required</span> <span class="n">pam_mysql</span><span class="p">.</span><span class="n">so</span> <span class="n">config_file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">pam_mysql</span> <span class="n">try_first_pass</span><span class="o">=</span><span class="nb">false</span>
+<span class="n">account</span> <span class="n">required</span> <span class="n">pam_mysql</span><span class="p">.</span><span class="n">so</span> <span class="n">config_file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">pam_mysql</span> <span class="n">try_first_pass</span><span class="o">=</span><span class="nb">false</span>
+</pre></div>
+
+
+<p>Now create the <strong>/etc/security/pam_mysql</strong> file</p>
+<div class="highlight"><pre><span class="n">users</span><span class="p">.</span><span class="n">host</span><span class="o">=</span><span class="n">localhost</span>
+<span class="n">users</span><span class="p">.</span><span class="n">database</span><span class="o">=</span><span class="n">vsftpd</span>
+<span class="n">users</span><span class="p">.</span><span class="n">db_user</span><span class="o">=</span><span class="n">vsftpd</span>
+<span class="n">users</span><span class="p">.</span><span class="n">db_passwd</span><span class="o">=</span><span class="n">vsftpd_pwd</span>
+<span class="n">users</span><span class="p">.</span><span class="n">table</span><span class="o">=</span><span class="n">accounts</span>
+<span class="n">users</span><span class="p">.</span><span class="n">user_column</span><span class="o">=</span><span class="n">username</span>
+<span class="n">users</span><span class="p">.</span><span class="n">password_column</span><span class="o">=</span><span class="n">pass</span>
+<span class="n">users</span><span class="p">.</span><span class="n">password_crypt</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">verbose</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">log</span><span class="p">.</span><span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">log</span><span class="p">.</span><span class="n">table</span><span class="o">=</span><span class="n">logs</span>
+<span class="n">log</span><span class="p">.</span><span class="n">message_column</span><span class="o">=</span><span class="n">msg</span>
+<span class="n">log</span><span class="p">.</span><span class="n">pid_column</span><span class="o">=</span><span class="n">pid</span>
+<span class="n">log</span><span class="p">.</span><span class="n">user_column</span><span class="o">=</span><span class="n">user</span>
+<span class="n">log</span><span class="p">.</span><span class="n">host_column</span><span class="o">=</span><span class="n">host</span>
+<span class="n">log</span><span class="p">.</span><span class="n">rhost_column</span><span class="o">=</span><span class="n">rhost</span>
+<span class="n">log</span><span class="p">.</span><span class="n">time_column</span><span class="o">=</span><span class="n">logtime</span>
+</pre></div>
+
+
+<p>Finally, we configure <strong>/etc/vsftpd.conf</strong></p>
+<div class="highlight"><pre><span class="n">listen</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">anonymous_enable</span><span class="o">=</span><span class="n">NO</span>
+<span class="n">local_enable</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">write_enable</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">local_umask</span><span class="o">=</span><span class="mo">022</span>
+<span class="n">xferlog_enable</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">xferlog_file</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">vsftpd</span><span class="p">.</span><span class="n">log</span>
+<span class="n">xferlog_std_format</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">nopriv_user</span><span class="o">=</span><span class="n">vsftpd</span>
+<span class="n">chroot_local_user</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">secure_chroot_dir</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">vsftpd</span>
+<span class="n">pam_service_name</span><span class="o">=</span><span class="n">vsftpd</span>
+<span class="n">rsa_cert_file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">vsftpd</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">guest_enable</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">guest_username</span><span class="o">=</span><span class="n">vsftpd</span>
+<span class="n">local_root</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">vsftpd</span><span class="o">/</span><span class="err">$</span><span class="n">USER</span>
+<span class="n">user_sub_token</span><span class="o">=</span><span class="err">$</span><span class="n">USER</span>
+<span class="n">virtual_use_local_privs</span><span class="o">=</span><span class="n">YES</span>
+<span class="n">user_config_dir</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">vsftpd_user_conf</span>
+</pre></div>
+
+
+<p>We can now start our FTP server</p>
+<div class="highlight"><pre><span class="nv">$sudo</span> /etc/init.d/vsftpd start
+</pre></div>
+
+
+<p><em>Note: we can configure vsftpd from inetd or xinetd</em></p>
+<h2>Add users</h2>
+<p>Create the new user in the MySQL database:</p>
+<div class="highlight"><pre><span class="n">USE</span> <span class="n">vsftpd</span><span class="p">;</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">accounts</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">pass</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">(</span><span class="s1">&#39;foo_pwd&#39;</span><span class="p">));</span>
+</pre></div>
+
+
+<p>And create the user's home folder</p>
+<div class="highlight"><pre><span class="nv">$sudo</span> mkdir /home/vsftpd/nombre
+<span class="nv">$sudo</span> chmod vsftpd.ngroup /home/vsftpd/nombre
+</pre></div>
+
+
+<p>That's it, we can use any FTP client to connect to the server. For more information:</p>
+<ul>
+<li>man vsftpd.conf</li>
+<li>man pam</li>
+</ul>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Secured virtual FTP with MySQL</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">In this tutorial I'll show how to setup a FTP virtual serveri (VSFTP) backed by a MySQL database to handle authentication. This example should work with PostgreSQL or any other RDBMS with PAM support. We're going to need: vsftpd: Virtual FTP server pam: Authentication modules MySQL: database $sudo ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2011-09-10T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="FTP"/>
+            <Attribute name="category" value="MySQL"/>
+            <Attribute name="category" value="Linux"/>
+    </DataObject>
+
+
+--></body>
+</html>

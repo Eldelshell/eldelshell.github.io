@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Play Framework 2.0.x JavaScript Internationalization - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Play Framework 2.0.x JavaScript Internationalization"/>
+            <meta property="og:url" content="./play-framework-20x-javascript.html"/>
+            <meta property="og:description" content="Play framework provides a very neat way of producing internationalized sites using the Messages plugin, but, it only supports native (Scala/Java) code or HTML templates, this means that JavaScript code can't be made i18n compliant. Since this was getting on my nerves I started looking into alternatives for ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./play-framework-20x-javascript.html"
+                       rel="bookmark"
+                       title="Permalink to Play Framework 2.0.x JavaScript Internationalization">
+                        Play Framework 2.0.x JavaScript Internationalization
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-10-17T00:00:00"> Wed 17 October 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/java.html">Java</a>
+            /
+    	<a href="./tag/play.html">Play!</a>
+            /
+    	<a href="./tag/javascript.html">JavaScript</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Play framework provides a very neat way of producing internationalized sites 
+using the Messages plugin, but, it only supports native (Scala/Java) code 
+or HTML templates, this means that JavaScript code can't be made i18n compliant.</p>
+<p>Since this was getting on my nerves I started looking into alternatives for 
+JavaScript i18n support. My first try was with <a href="http://i18next.com/">i18next</a> but the JSON file 
+format used wasn't something that fit with us since we already have 
+all our i18n text in standard Play form in <em>conf/messages.xx</em></p>
+<p>Luckily, the <a href="http://code.google.com/p/jquery-i18n-properties/">jquery-i18n-properties</a> jQuery 
+plugin uses standard Java properties file format and that's what we're going to use here.</p>
+<p>So, first of all, download the plugin and add it to your HTML template (right below jquery) and use the following code:</p>
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">properties</span><span class="p">({</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;messages&#39;</span><span class="p">,</span>
+        <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/i18n?&#39;</span><span class="p">,</span>
+        <span class="nx">mode</span><span class="o">:</span> <span class="s1">&#39;map&#39;</span><span class="p">,</span>
+        <span class="nx">cache</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">language</span><span class="o">:</span> <span class="s1">&#39;kk&#39;</span>
+    <span class="p">});</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;label.hello.world&#39;</span><span class="p">));</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>With this the plugin get's loaded and an alert is loaded to test everything works ok. Next, create a controller like:</p>
+<div class="highlight"><pre><span class="c1">// the routes file</span>
+<span class="n">GET</span> <span class="o">/</span><span class="n">i18n</span> <span class="n">controllers</span><span class="o">.</span><span class="na">JavaScriptController</span><span class="o">.</span><span class="na">i18n</span><span class="o">()</span>
+
+<span class="c1">// the controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JavaScriptController</span> <span class="kd">extends</span> <span class="n">Controller</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Result</span> <span class="nf">i18n</span><span class="o">(){</span>
+        <span class="n">Lang</span> <span class="n">l</span> <span class="o">=</span> <span class="n">request</span><span class="o">().</span><span class="na">acceptLanguages</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">properties</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+        <span class="c1">// you can also use commons-io</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getContextClassLoader</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;messages.&quot;</span> <span class="o">+</span> <span class="n">l</span><span class="o">.</span><span class="na">code</span><span class="o">())){</span>
+            <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Scanner</span><span class="o">(</span><span class="n">in</span><span class="o">).</span><span class="na">useDelimiter</span><span class="o">(</span><span class="s">&quot;\\A&quot;</span><span class="o">).</span><span class="na">next</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchElementException</span> <span class="o">|</span> <span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">&quot;Failed to read messages file&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">ok</span><span class="o">(</span><span class="n">properties</span><span class="o">).</span><span class="na">as</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>Basically what we're doing here is providing a path to the plugin and using 
+the standard Play language implementation, load the messages file and return it as plain text.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Play Framework 2.0.x JavaScript Internationalization</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">Play framework provides a very neat way of producing internationalized sites using the Messages plugin, but, it only supports native (Scala/Java) code or HTML templates, this means that JavaScript code can't be made i18n compliant. Since this was getting on my nerves I started looking into alternatives for ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-10-17T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Java"/>
+            <Attribute name="category" value="Play!"/>
+            <Attribute name="category" value="JavaScript"/>
+    </DataObject>
+
+
+--></body>
+</html>

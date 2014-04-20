@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Why everyone bitches about Java? - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Why everyone bitches about Java?"/>
+            <meta property="og:url" content="./why-everyone-bitches-about-java.html"/>
+            <meta property="og:description" content="Daily I read Slashdot, HackerNews, TheDailyWTF and other sites, where it seems from many comments and stories that Java is one of the most hated languages/environments from them all and I don't understand why. I've been programming since the age of eight or so on a Macintosh ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./why-everyone-bitches-about-java.html"
+                       rel="bookmark"
+                       title="Permalink to Why everyone bitches about Java?">
+                        Why everyone bitches about Java?
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-07-14T00:00:00"> Sat 14 July 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/java.html">Java</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Daily I read Slashdot, HackerNews, TheDailyWTF and other sites, where it seems 
+from many comments and stories that Java is one of the most hated 
+languages/environments from them all and I don't understand why.</p>
+<p>I've been programming since the age of eight or so on a Macintosh with 
+TurboPascal and from there I've done things in BASIC, Visual Basic 
+(you make mistakes while being young), PHP, C++, Python, Perl, Ruby, Groovy 
+and lately Scala. For the most part of my career, I've been a Java professional, 
+developing anything I was thrown into (web, desktop, backend, frontend), but 
+still, I can't see why all the hate to the first/second most 
+used programming language according to the TIOBE index <sup title="I know I know">note</sup>.</p>
+<p>For the most part, criticisms are:</p>
+<ul>
+<li>Java is slow</li>
+<li>Java is enterprisy</li>
+<li>Java is static</li>
+<li>Java is old</li>
+<li>Java is OO</li>
+<li>Garbage collection sucks<sup title="I don't know why something that does a better job than most programmers is considered bad.">note</sup></li>
+<li>Autoboxing is lame</li>
+<li>Java code is ugly</li>
+<li>LOC in Java are too many</li>
+</ul>
+<p>I've read and hear this thousands of times and yes, I could start to debunk 
+all (expect autoboxing) of those assertions with facts that can be found 
+all over the web and with my own experience, but that's not the point 
+of this post, the real problem is, even if all of those are true, what are the alternatives?</p>
+<p>To all the people who bitch about Java every time they get the chance, respond to this question: which is the alternative to Java?</p>
+<p>For Java the language, there are plenty. For Java as a whole, there are none.</p>
+<p>You see, Java is not just the language, it's way more:</p>
+<ul>
+<li>The JVM</li>
+<li>The best open source IDE's <sup title="Funny that the best IDE's for languages like PHP, Python, Ruby and others are Java IDE's like NetBeans or Eclipse.">note</sup></li>
+<li>Database drivers for every database <sup title="I've got to see the first major database provider that doesn't offer a JDBC driver.">note</sup></li>
+<li>Plenty of frameworks</li>
+<li>Plenty of ORMs</li>
+<li>Consolidated GUI Toolkit<sup title="Swing might be ugly, but try any other multi platform GUI toolkit and you'll love Swing.">note</sup></li>
+<li>Application servers</li>
+<li>Messaging</li>
+</ul>
+<p>And a long etcetera. Add to that all the open source projects and libraries that you get like JUnit, Spring, JRebel or Maven.</p>
+<p>Big supporters like Oracle, IBM, Google, RedHat and specially ASF. We're not talking here about some guy's personal project (NodeJS anyone?), this are big players which have invested enormous amounts of resources and are building their business on or around Java.</p>
+<p>Why didn't Google build Android around something else like Python or something new like Go? Why would Oracle acquire BEA and SUN? Here's a short list of some open source communities that work around Java:</p>
+<ul>
+<li>Apache Software Foundation (ASF)</li>
+<li>Eclipse Foundation</li>
+<li>JBoss Community</li>
+<li>Codehaus</li>
+<li>Java.net</li>
+</ul>
+<p>Java and almost every piece of software around it is open source. You can architect your whole business with only open source software (and you'll love it) if you choose Java. Basically install a plain Linux box only with the JDK and you are ready to make millions without paying a single unit of credit in licenses.</p>
+<p>And finally, Java is a language that's almost everywhere: web, desktop, mobile. So if you learn Java, you are likely to find a job in pretty much any industry you choose. That's not bad, right? Also, the language is very consistent, statically typed (yes, this is very good), keeps on evolving and can be self documenting and readable if you know what you're doing.</p>
+<p>So, are there better programming languages? Sure, and I actually enjoy way more Python and Groovy than Java.</p>
+<p>Is there a better environment than Java? Definitively no.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Why everyone bitches about Java?</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">Daily I read Slashdot, HackerNews, TheDailyWTF and other sites, where it seems from many comments and stories that Java is one of the most hated languages/environments from them all and I don't understand why. I've been programming since the age of eight or so on a Macintosh ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-07-14T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Java"/>
+    </DataObject>
+
+
+--></body>
+</html>

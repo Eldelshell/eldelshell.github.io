@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Central GNU Screen/SSH Server - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Central GNU Screen/SSH Server"/>
+            <meta property="og:url" content="./central-screen-ssh-server.html"/>
+            <meta property="og:description" content="I'm not going to explain why screen is such a great tool because it's and there are many blogs who will tell you so. What I'm going to explain is how you can use screen to setup a central server to manage and monitor who connects to ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./central-screen-ssh-server.html"
+                       rel="bookmark"
+                       title="Permalink to Central GNU Screen/SSH Server">
+                        Central GNU Screen/SSH Server
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2011-01-20T00:00:00"> Thu 20 January 2011</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/linux.html">Linux</a>
+            /
+    	<a href="./tag/ssh.html">SSH</a>
+            /
+    	<a href="./tag/screen.html">screen</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>I'm not going to explain why screen is such a great tool because it's and there are many blogs who will tell you so. What I'm going to explain is how you can use screen to setup a central server to manage and monitor who connects to your servers and what do they do.</p>
+<p>Screen has the special ability that allows us to log and connect to running sessions. This becomes handy in our current objective: setting up a central server where all users must connect so they can connect to other servers.</p>
+<p>The idea is pretty basic:</p>
+<ol>
+<li>Fred connects to screen server (fred@screenserver)</li>
+<li>Using the provided script, Fred connects to another server (ssh@anotherserver)</li>
+</ol>
+<p>This has lots of advantages:</p>
+<ul>
+<li>No user management for each server</li>
+<li>Users know only one, easily changed password for all servers</li>
+<li>Greater control of user actions</li>
+<li>Monitor unscheduled access</li>
+<li>Log user activity</li>
+</ul>
+<p>Of course, there are some disadvantages:</p>
+<ul>
+<li>Single point of failure</li>
+<li>Single point of entrance</li>
+<li>Can become a pain when transfering files</li>
+</ul>
+<p>First, we need to setup a single server with the following:</p>
+<ol>
+<li>SSH Client</li>
+<li>GNU Screen</li>
+<li>User account for each user (limit the user's group using quotas)</li>
+<li>Common user account on each server you wish to connect to (i.e. foo)</li>
+</ol>
+<p>You have your screen server, and on each server you have a user (i.e. ssh) with the same password (i.e. bar123) or using a certificate. Now secure you SSH configuration by allowing access only from the screen server to the <em>ssh</em> user (and admin just in case):</p>
+<div class="highlight"><pre><span class="cp"># /etc/hosts.allow</span>
+<span class="nl">sshd:</span> <span class="mf">192.168.0.2</span><span class="o">/</span><span class="mf">255.255.255.0</span>
+<span class="nl">sshd:</span> <span class="mf">192.168.0.3</span><span class="o">/</span><span class="mf">255.255.255.0</span>
+<span class="cp"># /etc/hosts.deny</span>
+<span class="nl">sshd:</span> <span class="n">ALL</span>
+<span class="cp"># /etc/ssh/sshd_config</span>
+<span class="n">AllowUsers</span> <span class="n">ssh</span> <span class="n">admin</span>
+<span class="n">PermitRootLogin</span> <span class="n">no</span>
+</pre></div>
+
+
+<p>Your users should be able now to:</p>
+<ul>
+<li>Connect to the screen server using someuser@screenserver</li>
+<li>Connect to your servers only from the new screen server using foo@webserver</li>
+</ul>
+<h2>Use some screen magic</h2>
+<p>If you include screen in this whole setup, you'll be able to log user activity in the servers by correctly configuring screen. First, add the following configuration to <em>/etc/screenrc</em>:</p>
+<div class="highlight"><pre><span class="cp"># Scrolling</span>
+<span class="n">defscrollback</span> <span class="mi">1500</span>
+<span class="n">termcapinfo</span> <span class="n">xterm</span><span class="o">*</span> <span class="n">ti</span><span class="err">@</span><span class="o">:</span><span class="n">te</span><span class="err">@</span>
+
+<span class="cp"># Detach on close</span>
+<span class="n">autodetach</span> <span class="n">on</span>
+
+<span class="cp"># Disable key binds</span>
+<span class="n">bind</span> <span class="n">H</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">the</span> <span class="n">user</span> <span class="n">to</span> <span class="n">disable</span> <span class="n">logging</span>
+<span class="n">bind</span> <span class="n">d</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">detach</span>
+<span class="n">bind</span> <span class="o">^</span><span class="n">d</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">detach</span>
+<span class="n">bind</span> <span class="n">c</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">create</span>
+<span class="n">bind</span> <span class="o">^</span><span class="n">c</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">create</span>
+<span class="n">bind</span> <span class="n">S</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">split</span>
+<span class="n">bind</span> <span class="o">:</span> <span class="n">echo</span> <span class="s">&quot;Disabled&quot;</span> <span class="err">#</span> <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">allow</span> <span class="n">to</span> <span class="n">issue</span> <span class="n">commands</span>
+
+<span class="cp"># no startup msg</span>
+<span class="n">startup_message</span> <span class="n">off</span>
+
+<span class="cp"># Logging</span>
+<span class="n">deflog</span> <span class="n">on</span>
+<span class="n">logtstamp</span> <span class="n">on</span>
+<span class="n">logfile</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">screen</span><span class="o">-</span><span class="n">logs</span><span class="o">/%</span><span class="n">t</span><span class="o">-%</span><span class="n">Y</span><span class="o">%</span><span class="n">m</span><span class="o">%</span><span class="n">d</span><span class="o">-%</span><span class="n">n</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<p>On each user's home folder, create an empty <em>.screenrc</em> file. This file should be owned by root with read only permits (since you don't want the users to modify it). This way, no user will be able to override the general configuration.</p>
+<p>Next, and add your servers to this script:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+<span class="c"># Screener script</span>
+<span class="c"># version: 0.1</span>
+<span class="c">#</span>
+
+<span class="c"># Add your servers here</span>
+<span class="nv">servers</span><span class="o">=(</span>
+    <span class="s2">&quot;foo@bar1&quot;</span>
+    <span class="s2">&quot;foo@bar2&quot;</span>
+    <span class="s2">&quot;foo@bar3&quot;</span>
+<span class="o">)</span>
+
+<span class="nv">server</span><span class="o">=</span><span class="s2">&quot;${1}&quot;</span>
+
+check_args <span class="o">(){</span>
+    <span class="nb">local </span><span class="nv">expected</span><span class="o">=</span>1
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-ne <span class="k">${</span><span class="nv">expected</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Usage ${0} server&quot;</span>
+        <span class="nb">exit </span>1
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+list_servers <span class="o">(){</span>
+    <span class="k">for </span>i in <span class="k">${</span><span class="nv">servers</span><span class="p">[@]</span><span class="k">}</span>; <span class="k">do</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;${i}&quot;</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+
+connect <span class="o">()</span> <span class="o">{</span>
+    <span class="nb">local </span><span class="nv">username</span><span class="o">=</span><span class="k">$(</span>whoami<span class="k">)</span>
+    <span class="nb">local </span><span class="nv">screen</span><span class="o">=</span><span class="s2">&quot;/usr/bin/screen&quot;</span>
+    <span class="nb">local </span><span class="nv">ssh</span><span class="o">=</span><span class="s2">&quot;/usr/bin/ssh&quot;</span>
+    <span class="nb">local </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;${username}.${server#*@}&quot;</span>
+    <span class="nb">local </span><span class="nv">screen_opts</span><span class="o">=</span><span class="s2">&quot;-S ${title} -t ${title}&quot;</span>
+    <span class="nb">local </span><span class="nv">ssh_opts</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="nb">local </span><span class="nv">connection</span><span class="o">=</span><span class="s2">&quot;${ssh} ${ssh_opts} ${server}&quot;</span>
+    <span class="k">${</span><span class="nv">screen</span><span class="k">}</span> <span class="k">${</span><span class="nv">screen_opts</span><span class="k">}</span> <span class="k">${</span><span class="nv">connection</span><span class="k">}</span>
+<span class="o">}</span>
+
+select_server <span class="o">(){</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Select a server from the list. q to quit&quot;</span>
+    list_servers
+    <span class="nb">read </span>server
+    <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;${server}&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">        </span>select_server
+    <span class="k">elif</span> <span class="o">[</span> <span class="s2">&quot;${server}&quot;</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Quitting ${0}&quot;</span>
+        <span class="nb">exit </span>0
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+validate_server <span class="o">(){</span>
+    <span class="nb">local </span><span class="nv">exists</span><span class="o">=</span>0
+    <span class="k">for </span>i in <span class="k">${</span><span class="nv">servers</span><span class="p">[@]</span><span class="k">}</span>; <span class="k">do</span>
+<span class="k">        if</span> <span class="o">[</span> <span class="s2">&quot;${server}&quot;</span> <span class="o">==</span> <span class="s2">&quot;${i}&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">            </span><span class="nv">exists</span><span class="o">=</span>1
+        <span class="k">fi</span>
+<span class="k">    done</span>
+<span class="k">    if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">exists</span><span class="k">}</span> -eq 0 <span class="o">]</span>; <span class="k">then</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Unkown server ${server}&quot;</span>
+        <span class="nb">exit </span>1
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;${server}&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span>select_server
+<span class="k">fi</span>
+
+validate_server
+
+<span class="nb">echo</span> <span class="s2">&quot;Connecting to ${server} $(whoami)&quot;</span>
+
+connect 
+</pre></div>
+
+
+<p>This script allows a user to select a server from the given list and launchs a ssh session inside a screen session:</p>
+<div class="highlight"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">screen</span> <span class="o">-</span><span class="n">S</span> <span class="n">user</span><span class="p">.</span><span class="n">bar1</span> <span class="o">-</span><span class="n">t</span> <span class="n">user</span><span class="p">.</span><span class="n">bar1</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ssh</span> <span class="n">foo</span><span class="err">@</span><span class="n">bar1</span>
+</pre></div>
+
+
+<p>Since you're controlling and monitoring all the screen sessions, you can easily know what the users are doing on each server by watching the log files: user-20110116-0.log</p>
+<p>Well, I hope this is useful for someone else. Leave a comment for any suggestions.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Central GNU Screen/SSH Server</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">I'm not going to explain why screen is such a great tool because it's and there are many blogs who will tell you so. What I'm going to explain is how you can use screen to setup a central server to manage and monitor who connects to ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2011-01-20T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Linux"/>
+            <Attribute name="category" value="SSH"/>
+            <Attribute name="category" value="screen"/>
+    </DataObject>
+
+
+--></body>
+</html>

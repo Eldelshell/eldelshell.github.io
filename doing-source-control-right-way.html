@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Doing source control... the right way - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Doing source control... the right way"/>
+            <meta property="og:url" content="./doing-source-control-right-way.html"/>
+            <meta property="og:description" content="Source control, so simple yet so many fail at it. Let's get some "guidelines" to help you out enhance your work with source control and identify problems which may give you trouble on the long run. Kill CVCS CVS and Subversion are the MSIE6 of source control. It was ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./doing-source-control-right-way.html"
+                       rel="bookmark"
+                       title="Permalink to Doing source control... the right way">
+                        Doing source control... the right way
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-03-11T00:00:00"> Sun 11 March 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/cvs.html">cvs</a>
+            /
+    	<a href="./tag/svn.html">svn</a>
+            /
+    	<a href="./tag/git.html">git</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Source control, so simple yet so many fail at it. Let's get some "guidelines" to 
+help you out enhance your work with source control and identify problems 
+which may give you trouble on the long run.</p>
+<h2>Kill CVCS</h2>
+<p><strong>CVS</strong> and <strong>Subversion</strong> are the MSIE6 of source control. It was fine in the 20<sup>th</sup> century, 
+but really, you deserve better. There are several articles online about why you should kill 
+your CVCS (Central Version Control System) repository and move on. Try a DVCS (Distributed Version Control System), 
+you'll know what I'm talking about.</p>
+<h2>Go nuclear... I mean, atomic.</h2>
+<p>Atomic basically means small. In the source control world this 
+means: do not commit 300 changes at once. If you find in this 
+situation you're not using source control, you're using a very 
+stupid backup strategy. You're not committing often, you're not 
+writing correct commit messages and you're certainly giving 
+the next guy doing a merge a headache.</p>
+<h3>The good thing about atomic commits are:</h3>
+<ul>
+<li>It makes you think about branching, tagging, merging and commenting.</li>
+<li>Every committed revision gives you a rollback position. So you decide, one hour of lost work or a whole week.</li>
+<li>The risk of a merge nightmare increases dramatically with time.</li>
+</ul>
+<p><strong>Commit your code... NOW!</strong></p>
+<p>If it's not in source control, it doesn't exist. So commit often.</p>
+<p>There are two reason I see for not committing changes: embarrassing yourself and 
+fill with crap the source control tree. The first one, I've been there, but 
+really, if your code is that stupid, better to learn now. On the second one, repeat 
+after me: "if it's not in source control, it doesn't exist". Your manager won't see 
+that nifty refactoring you have there in your hard drive waiting for the Big 
+Day... the day your hard drive breaks and all your work goes down the drain.</p>
+<h2>Tags &amp; Branches</h2>
+<p><strong>Use them damn it!</strong></p>
+<p>One of the reasons some people don't commit often is because the're afraid of 
+breaking the build, integration, etc. And they are right. For example, one recurring 
+issue is if you have to work a week or more on certain functionality, and 
+most of the source files you're working on will be "broken" until you're 
+done. Branch it! I have to see the first place where integration is 
+running against active development branches.</p>
+<h2>Review your changes before committing</h2>
+<p>I know, I just told you to commit as often as possible, and you should. But only commit 
+stuff which has its place in the DVCS: code. Stuff that shouldn't be in source control:</p>
+<ul>
+<li>Binary files</li>
+<li>Third party libraries </li>
+<li>Compressed files</li>
+<li>IDE files</li>
+<li>Log files</li>
+<li>Cache files</li>
+<li>Media files</li>
+<li>Documentation</li>
+</ul>
+<p>Let's review a little. Binary, compressed, cache, and media files don't get 
+along with source control because they're not text. It’s just wasteful. It’s 
+wasted on the source control machine disk, it’s wasted in bandwidth and 
+additional latency every time you need to send it across the network and 
+it’s sure as hell a waste of your time every time you’ve got to deal with 
+the inevitable conflicts that this practice produces. </p>
+<p>Log files are text, but it's stupid unless you want to keep track of some specific trace message. </p>
+<p>IDE files are those files which are generated by your IDE for you, only, not for the whole team. </p>
+<p>For documentation use a wiki which already provides source control. </p>
+<p>I usually get some rage when I remove some JAR or DLL from our source control. There are so many
+build tools which handle dependencies without having to mix your code with them, that it's insulting
+to consider having a <code>/lib</code> folder under source control. This means that your project setup is broken. Go fix it.</p>
+<p>Stuff that should:</p>
+<ul>
+<li>Code files</li>
+<li>XML files</li>
+<li>CSS files</li>
+<li>SQL files</li>
+<li>Plain text files</li>
+</ul>
+<h2>Commit messages</h2>
+<p>This is easy, right? Here are some examples that you're doing it wrong:</p>
+<ul>
+<li>Some changes</li>
+<li>Fixed</li>
+<li>Fixed [BUG-1302]</li>
+<li>Rev. 1923</li>
+<li>Merge</li>
+</ul>
+<p>Here, read some more in <a href="http://stackoverflow.com/questions/909338/what-is-the-worst-commit-message-you-have-ever-authored">What is the WORST commit message you have ever authored</a> you'll have fun. Now, adding a message to your commit is like commenting code: think the next guy to read it has an AK-47 and is on the verge of a nervous break down. Actually, know what is really embarrassing? Have your team debugging some issue which is making your company lose money and when they open the source history you don't remember what changeset 896 does because your message is "some shit fixed".</p>
+<h2>Don't be afraid</h2>
+<p>If you're not feeling comfortable with using the full feature set of your source control tool, simply make a copy of the repository folder and beat the crap out of it. Branch it, tag it, merge it, branch it again and repeat until you're comfortable. Just remember not to PUSH!</p>
+<p>I think this gives us a pretty good start point for a list (I love lists):</p>
+<ul>
+<li>Kill cvs, svn, etc.</li>
+<li>If it’s not in source control, it doesn’t exist.</li>
+<li>Commit early, commit often.</li>
+<li>Review your changes.</li>
+<li>Explain why you committed the code.</li>
+<li>No one cares about your personal settings.</li>
+<li>It's source control, not a backup tool.</li>
+<li>Branch your code.</li>
+<li>
+<p>Tag your code.</p>
+<p><em>Depending on the platform you are using (and the package managers it supports), I think 
+having 3rd party libs in source control is critical to ensure everyone in the 
+team is using the same version of the libs.</em></p>
+</li>
+</ul>
+<p>No it's not. This is the job of build tools (make, ant, maven) </p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Doing source control... the right way</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">Source control, so simple yet so many fail at it. Let's get some "guidelines" to help you out enhance your work with source control and identify problems which may give you trouble on the long run. Kill CVCS CVS and Subversion are the MSIE6 of source control. It was ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-03-11T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="cvs"/>
+            <Attribute name="category" value="svn"/>
+            <Attribute name="category" value="git"/>
+    </DataObject>
+
+
+--></body>
+</html>

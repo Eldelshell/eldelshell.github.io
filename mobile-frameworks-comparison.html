@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Mobile Frameworks Comparison - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Mobile Frameworks Comparison"/>
+            <meta property="og:url" content="./mobile-frameworks-comparison.html"/>
+            <meta property="og:description" content="I've been studying different mobile frameworks for different projects I'm currently engaged in and this is the result. How did I confront this quest of long hours of surfing the web, coding and ripping my hair? Well, first thing was to download all the JS files, code a ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./mobile-frameworks-comparison.html"
+                       rel="bookmark"
+                       title="Permalink to Mobile Frameworks Comparison">
+                        Mobile Frameworks Comparison
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-06-04T00:00:00"> Mon 04 June 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/mobile.html">Mobile</a>
+            /
+    	<a href="./tag/frameworks.html">Frameworks</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>I've been studying different mobile frameworks for different projects I'm currently engaged in and this is the <a href="https://docs.google.com/spreadsheet/ccc?key=0Ap3IHeZltVF-dEM3VW9CMml0VURnSXhwMU5hZW9CQ1E">result</a>.</p>
+<p>How did I confront this quest of long hours of surfing the web, coding and ripping my hair? Well, 
+first thing was to download all the JS files, code a simple REST backend with the <a href="http://www.playframework.org/">Play</a> framework 
+(a post about it is in my todo list) and setup the project while I figure out what were the criteria to follow.</p>
+<p>If you're on your own quest for touch nirvana, the best place to start is at <a href="http://www.markus-falk.com/mobile-frameworks-comparison-chart/">Markus Falk's website</a>. It's simply great and will give you a starting point and get a list of contenders. In our case, the contenders list is the following:</p>
+<ul>
+<li>JQuery Mobile</li>
+<li>Sencha Touch 2</li>
+<li>The M Project</li>
+<li>JO</li>
+<li>iUI</li>
+<li>DHTMLX Touch</li>
+<li>Wink</li>
+<li>Bootstrap + jQuery + AngularJS</li>
+</ul>
+<p>The last option I call it the "light" one. Bootstrap is great on doing what it does, showing content which adjust it self to the screen size and it offers a lot of controls which can be easily modifiable and work flawlessly in tablets and smartphones. The thing I like the most of this approach is that I feel we won't be too tied to a framework, which allows us to support more platforms. Let's see how it goes.</p>
+<h2>The criteria</h2>
+<ul>
+<li>Latest Published Version</li>
+<li>Supported Platforms</li>
+<li>Supporter</li>
+<li>License</li>
+<li>Paid Support</li>
+<li>Documentation (API, Examples, Tutorials)</li>
+<li>Published Books</li>
+<li>Community</li>
+<li>Stack Overflow Questions</li>
+<li>Google Trends Popularity</li>
+<li>GUI Designer</li>
+<li>Theme Designer</li>
+<li>HTML5 Input support</li>
+<li>Hides browser navigation bar</li>
+<li>Geolocalization Support</li>
+<li>Custom controls</li>
+<li>International support (i18n)</li>
+</ul>
+<p>I had most of the information I needed, so now and start the tests. Our prototype application won't be too complicated, but I wanted to see how the different frameworks handled long lists of grouped items. </p>
+<h2>The web-app</h2>
+<p>I can't show all screenshots of the prototypes I'm developing because it's a work in progress, but basically the each one will have three "views": </p>
+<ul>
+<li>Landing (with some nice effect if possible)</li>
+<li>Form with the following widgets</li>
+<li>Autocomplete</li>
+<li>Spinner</li>
+<li>Datepicker</li>
+<li>Collapsible blocks</li>
+<li>Results view which is a very long (1000) list of grouped items</li>
+</ul>
+<p>To check the performance I did the tests with:</p>
+<ul>
+<li>Safari - iPhone 4S - IOS 5</li>
+<li>Safari - iPhone 3GS - IOS 5</li>
+<li>Google Chrome - Samsung Galaxy S - Android ICS</li>
+<li>Stock Browser - Samsung Galaxy SII - Android Gingerbread</li>
+</ul>
+<h2>jQuery Mobile</h2>
+<p>jQuery Mobile seems to be the most popular around and the only inconvenience I found when using the "kitchensink" was performance on the SMGS. Using the excellent tools, I got the app up and running, even with the theme colors for the target brand in no more than two hours, with some nice effects and all.</p>
+<p>Performance was really good even when not using the minified version and the only caveat was with the "slide" effect which brought the SMGS to its knees. Not a problem with the other phones even with all effects. The nested list handled fine all the amount of items we needed. The general experience was excellent and I really liked JQM. The other frameworks are going to have a hard time beating it.</p>
+<p><img alt="" src="./static/images/Selection_003.png" /></p>
+<h3>Pros</h3>
+<ul>
+<li>Great tools like Theme Roller and Codiqa UI builder.</li>
+<li>View only framework (you can use whatever to handle the MC parts)</li>
+<li>Based on jQuery</li>
+<li>Lots of plugins (I specially liked the Swipe menu)</li>
+<li>Most popular</li>
+</ul>
+<h3>Cons</h3>
+<ul>
+<li>Could be too heavy for some smartphones.</li>
+<li>No official paid support.</li>
+</ul>
+<h2>Sencha Touch 2</h2>
+<p>I stumbled with Sencha Touch some time ago while reviewing ExtJS for another kind of project. And ExtJS is great, Sencha Touch not so much. Luckily I had the experience of working with the framework and its MVC architecture but if it's your first time around with ExtJS you'll have to do some learning.</p>
+<p>Setting up the application took more work than with jQuery Mobile because I had to download, install and setup "Sencha Architect" but after this it was pretty straight forward. Note that you don't need this tool to develop with this framework, but I didn't want to waste my time moving "divs" around.</p>
+<p>Sencha Architect was really helpful, but I couldn't make the webapp look as I wanted it and some things really started to frustrate me, like placing the button icons on the right side. Here's a screenshot of pretty much what I started with.</p>
+<p>Finally I gave up on the UI and started to code to see if I could get the same functionality than with jQuery Mobile. And here I stumbled into my first serious problem. All the components are defined with JavaScript code. This works well for RIA, but for mobile I don't think it's the best to have the mobile browser do all the heavy lifting.</p>
+<p>Finally and after more hours than it deserved I got the prototype "working". At first sight the application performed very well in iOS, but when I threw the list of items, not even the iPhone 4S was able to handle it. I believe the binding of all this data in the Stores and the view was killing it. With Android it was a whole different story because the performance was really poor and clicking on an item of the list selected the whole screen instead of launching a click event. This might have been a bug in Sencha Architect, but I'm not sure.</p>
+<p>Another issues I had with Sencha Touch 2 were:</p>
+<ul>
+<li>Some buttons looked very low quality</li>
+<li>The controls (i.e. the input type 'date') weren't the native ones</li>
+<li>No easy way to change the default theme</li>
+<li>Impossible to customize controls like button icons.</li>
+<li>Architect doesn't allow to add the "data" field to Stores making it hard to preview lists</li>
+</ul>
+<p>In general, I didn't like the experience at all compared with jQuery Mobile which took me a few hours to almost have a completely functional webapp.</p>
+<p><img alt="" src="./static/images/Selection_002.png" /></p>
+<h3>Pros</h3>
+<ul>
+<li>Based on ExtJS</li>
+<li>Complete MVC framework</li>
+<li>Official paid support</li>
+<li>Sencha Architect is great</li>
+</ul>
+<h3>Cons</h3>
+<ul>
+<li>Some controls look off</li>
+<li>No native controls</li>
+<li>Performance</li>
+<li>Few customization options</li>
+<li>Client side DOM generation</li>
+</ul>
+<h2>DHTMLX Touch</h2>
+<p>I've never used DHTMLX before, but the premise seems to be the same than with ExtJS: a MVC framework for RIA. And again I don't think this will work well for us on the mobile front. First, the Online Visual Designer wasn't helping me at all. For some reason it kept doing weird things. For example, try to add a "richlist" or "combobox" after you've added a datepicker. Everything is gone!</p>
+<p>This got me frustrated really fast, so I tried to work out the prototype cowboy style, with code. At least one thing which I thought was a good idea apart from Sencha was that the controls are defined separately with the ui function. This was the result:</p>
+<p>Not great. But one thing got my attention and it was the performance. It was really fast loading and handling animations on the SMGS and iPhone 3GS.</p>
+<p>As with Sencha Touch, I didn't like the experience very much. The general feeling is of a beta product, beginning with the UI designer. Getting started was easier than with Sencha but then things went downhill as my lack of knowledge of how things work with DHTMLX started to show.</p>
+<p><img alt="" src="./static/images/Selection_005.png" /></p>
+<h3>Pros</h3>
+<ul>
+<li>Based on DHTMLX</li>
+<li>Complete MVC framework</li>
+<li>Official paid support</li>
+<li>Very good performance and resource usage.</li>
+</ul>
+<h3>Cons</h3>
+<ul>
+<li>Some controls look off, like the counters are too big.</li>
+<li>No native controls</li>
+<li>No icons in the buttons</li>
+<li>Client side DOM generation</li>
+<li>The UI designer</li>
+<li>Very few customization options</li>
+</ul>
+<p>To be continued!</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Mobile Frameworks Comparison</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">I've been studying different mobile frameworks for different projects I'm currently engaged in and this is the result. How did I confront this quest of long hours of surfing the web, coding and ripping my hair? Well, first thing was to download all the JS files, code a ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-06-04T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Mobile"/>
+            <Attribute name="category" value="Frameworks"/>
+    </DataObject>
+
+
+--></body>
+</html>

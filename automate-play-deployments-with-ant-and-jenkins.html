@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Automate Play deployments with ANT and Jenkins - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="./static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Automate Play deployments with ANT and Jenkins"/>
+            <meta property="og:url" content="./automate-play-deployments-with-ant-and-jenkins.html"/>
+            <meta property="og:description" content="Following my previous post A Play Framework server setup I'm going to write on how to automate the whole Play build-deploy cycle. In a nutcase, we have two servers (ci and play hosts), jenkins, an ANT script and a Bash script which will handle the servers restart in the ..."/>
+            
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="./theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+    
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    		
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+                                Eldelshell Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="./pages/about-me.html">
+                             About Me
+                          </a></li>
+                                                                                                  <li class="active">
+                            <a href="./category/blog.html">Blog</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="./archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./automate-play-deployments-with-ant-and-jenkins.html"
+                       rel="bookmark"
+                       title="Permalink to Automate Play deployments with ANT and Jenkins">
+                        Automate Play deployments with ANT and Jenkins
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2012-10-20T00:00:00"> Sat 20 October 2012</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="./tag/java.html">Java</a>
+            /
+    	<a href="./tag/play.html">Play!</a>
+            /
+    	<a href="./tag/ant.html">Ant</a>
+            /
+    	<a href="./tag/jenkins.html">Jenkins</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Following my previous post A Play Framework server setup 
+I'm going to write on how to automate the whole Play build-deploy cycle. </p>
+<p>In a nutcase, we have two servers (ci and play hosts), jenkins, an 
+ANT script and a Bash script which will handle the servers restart in the host machines</p>
+<p>Here's much of the ANT script in all its glory:</p>
+<div class="highlight"><pre><span class="nt">&lt;property</span> <span class="na">file=</span><span class="s">&quot;${user.home}/build.properties&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;play.path&quot;</span> <span class="na">message=</span><span class="s">&quot;Property play.path not set in build.properties file&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;project.version&quot;</span> <span class="na">message=</span><span class="s">&quot;Property project.version not set&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;project.path&quot;</span> <span class="na">message=</span><span class="s">&quot;Property project.path not set in build.properties file&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;play.cache.repository&quot;</span> <span class="na">value=</span><span class="s">&quot;${play.path}/repository/cache/my.group.com&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;play.stage.dir&quot;</span> <span class="na">value=</span><span class="s">&quot;/target/staged&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;tstamp/&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;project.version.timestamp&quot;</span> <span class="na">value=</span><span class="s">&quot;${project.version}-${DSTAMP}${TSTAMP}&quot;</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- On deploy we don&#39;t need to send all the files in the stage folder, but only the ones specific to our project --&gt;</span>
+<span class="nt">&lt;patternset</span> <span class="na">id=</span><span class="s">&quot;project.files.pattern&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;**/foo-*.jar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;**/bar-*.jar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;**/api-*.jar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">name=</span><span class="s">&quot;**/joda-time*.jar&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/patternset&gt;</span>
+
+<span class="c">&lt;!-- This is what we&#39;ll call from Jenkins --&gt;</span>
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;jenkins-play-build&quot;</span> <span class="na">description=</span><span class="s">&quot;Specific target for jenkins&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;play-stage&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;deploy&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;play-stage&quot;</span> <span class="na">description=</span><span class="s">&quot;Does a full build and stage of our Play apps&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- We have some maven projects which we want to update by deleting this folder--&gt;</span>
+    <span class="nt">&lt;delete</span> <span class="na">dir=</span><span class="s">&quot;${play.cache.repository}&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;exec</span> <span class="na">executable=</span><span class="s">&quot;${play.path}/play&quot;</span> <span class="na">dir=</span><span class="s">&quot;${my.repository.path}/foo&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;clean&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;compile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;stage&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/exec&gt;</span>
+    <span class="nt">&lt;exec</span> <span class="na">executable=</span><span class="s">&quot;${play.path}/play&quot;</span> <span class="na">dir=</span><span class="s">&quot;${my.repository.path}/bar&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;clean&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;compile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;stage&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/exec&gt;</span>
+    <span class="nt">&lt;exec</span> <span class="na">executable=</span><span class="s">&quot;${play.path}/play&quot;</span> <span class="na">dir=</span><span class="s">&quot;${my.repository.path}/api&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;clean&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;compile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;arg</span> <span class="na">value=</span><span class="s">&quot;stage&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/exec&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;play-deploy&quot;</span> <span class="na">description=</span><span class="s">&quot;Deploys the given project&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;project.version.timestamp&quot;</span> <span class="na">message=</span><span class="s">&quot;Property version.timestamp needed to continue&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;deploy.server&quot;</span> <span class="na">message=</span><span class="s">&quot;Property needed to continue&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;fail</span> <span class="na">unless=</span><span class="s">&quot;webapp&quot;</span> <span class="na">message=</span><span class="s">&quot;Property webapp needed to continue&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;scp.path&quot;</span> <span class="na">value=</span><span class="s">&quot;${remote.user}@${remote.server}:${remote.dir}/webapps/${webapp}&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;sshexec</span>
+     <span class="na">host=</span><span class="s">&quot;${remote.server}&quot;</span>
+     <span class="na">username=</span><span class="s">&quot;${remote.user}&quot;</span>
+     <span class="na">keyfile=</span><span class="s">&quot;${user.home}/.ssh/id_rsa&quot;</span> <span class="na">trust=</span><span class="s">&quot;true&quot;</span>
+     <span class="na">command=</span><span class="s">&quot;mkdir ${remote.dir}/webapps/${webapp}/${project.version.timestamp}&quot;</span> <span class="na">failonerror=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;scp</span> <span class="na">toDir=</span><span class="s">&quot;${scp.path}/${project.version.timestamp}&quot;</span> <span class="na">keyfile=</span><span class="s">&quot;${user.home}/.ssh/id_rsa&quot;</span> <span class="na">trust=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;fileset</span> <span class="na">dir=</span><span class="s">&quot;${project.path}/${webapp}/${play.stage.dir}&quot;</span> <span class="na">casesensitive=</span><span class="s">&quot;yes&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;patternset</span> <span class="na">refid=</span><span class="s">&quot;project.files.pattern&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/fileset&gt;</span>
+    <span class="nt">&lt;/scp&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+
+<span class="c">&lt;!-- Deploy each of the projects separately. Repeat for each project. --&gt;</span>
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;play-deploy-foo&quot;</span> <span class="na">depends=</span><span class="s">&quot;check-play-foo-staged&quot;</span> <span class="na">if=</span><span class="s">&quot;project.foo.staged&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;play-deploy&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;webapp&quot;</span> <span class="na">value=</span><span class="s">&quot;foo&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;/antcall&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;check-play-foo-staged&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;echo</span> <span class="na">message=</span><span class="s">&quot;Check path ${project.path}/foo$/{play.stage.dir} exists&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;available</span> <span class="na">file=</span><span class="s">&quot;${project.path}/foo/${play.stage.dir}&quot;</span> <span class="na">type=</span><span class="s">&quot;dir&quot;</span> <span class="na">property=</span><span class="s">&quot;project.foo.staged&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+
+<span class="c">&lt;!-- This is the target which binds everything together for the deploy --&gt;</span>
+<span class="nt">&lt;target</span> <span class="na">name=</span><span class="s">&quot;deploy&quot;</span> <span class="na">description=</span><span class="s">&quot;Deploy all applications&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;play-deploy-foo&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;play-deploy-api&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;antcall</span> <span class="na">target=</span><span class="s">&quot;play-deploy-bar&quot;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;sshexec</span>
+   <span class="na">host=</span><span class="s">&quot;${remote.server}&quot;</span>
+   <span class="na">username=</span><span class="s">&quot;${remote.user}&quot;</span>
+   <span class="na">keyfile=</span><span class="s">&quot;${user.home}/.ssh/id_rsa&quot;</span> <span class="na">trust=</span><span class="s">&quot;true&quot;</span>
+   <span class="na">command=</span><span class="s">&quot;/home/play/bin/deploy ${project.version.timestamp}&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/target&gt;</span>
+</pre></div>
+
+
+<p>So, what we basically want here is to setup Jenkins to call a single ANT tasks, 
+in this case <em>jenkins-play-build</em> and set some properties as shown here:</p>
+<p><img alt="Jenkins" src="./static/images/Selection_006.png" title="Jenkins" /></p>
+<p>The script used to finish the deploy process will restart the Play apps 
+and update the symlink pointing to the latest version we deployed</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+<span class="c"># Script to automate CI deployments. Simply stop all</span>
+<span class="c"># servers, change the &quot;current&quot; symlinks to the given</span>
+<span class="c"># target folder and finally, start all servers</span>
+<span class="c">#</span>
+
+<span class="nv">play_home</span><span class="o">=</span><span class="s2">&quot;/home/play&quot;</span>
+<span class="nv">webapps_folder</span><span class="o">=</span><span class="s2">&quot;${play_home}/webapps&quot;</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;/usr/lib/jvm/default-java&quot;</span>
+
+<span class="nv">apps</span><span class="o">=(</span> <span class="s2">&quot;bar&quot;</span> <span class="s2">&quot;api&quot;</span> <span class="s2">&quot;foo&quot;</span> <span class="o">)</span>
+
+<span class="k">for </span>app in <span class="k">${</span><span class="nv">apps</span><span class="p">[@]</span><span class="k">}</span>; <span class="k">do</span>
+
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;Stopping server ${app}&quot;</span>
+    <span class="k">${</span><span class="nv">play_home</span><span class="k">}</span>/bin/<span class="k">${</span><span class="nv">app</span><span class="k">}</span> stop
+
+    <span class="nb">echo</span> <span class="s2">&quot;Regenerate current symlink of ${app}&quot;</span>
+    rm <span class="k">${</span><span class="nv">webapps_folder</span><span class="k">}</span>/<span class="k">${</span><span class="nv">app</span><span class="k">}</span>/current
+    ln -s <span class="k">${</span><span class="nv">webapps_folder</span><span class="k">}</span>/<span class="k">${</span><span class="nv">app</span><span class="k">}</span>/<span class="k">${</span><span class="nv">1</span><span class="k">}</span> <span class="k">${</span><span class="nv">webapps_folder</span><span class="k">}</span>/<span class="k">${</span><span class="nv">app</span><span class="k">}</span>/current
+
+    <span class="nb">echo</span> <span class="s2">&quot;Starting server ${app}&quot;</span>
+    <span class="k">${</span><span class="nv">play_home</span><span class="k">}</span>/bin/<span class="k">${</span><span class="nv">app</span><span class="k">}</span> nohup
+
+<span class="k">done</span>
+
+<span class="nb">exit </span>0
+</pre></div>
+
+
+<p>For this to work, you'll need to configure SSH password-less authentication between you CI server and the target servers.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="./"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="./tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="./tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="./tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/screen.html">
+                                screen
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/javascript.html">
+                                JavaScript
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jquery-mobile.html">
+                                jquery-mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/cvs.html">
+                                cvs
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/android.html">
+                                android
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/slf4j.html">
+                                slf4j
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/frameworks.html">
+                                Frameworks
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/grails.html">
+                                Grails
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/gae.html">
+                                gae
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/architecture.html">
+                                architecture
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/git.html">
+                                git
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bash.html">
+                                Bash
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jooq.html">
+                                jooq
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/maven.html">
+                                Maven
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/xfce.html">
+                                XFCE
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/mobile.html">
+                                Mobile
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/svn.html">
+                                svn
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="./tag/bootstrap.html">
+                                Bootstrap
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                    
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Automate Play deployments with ANT and Jenkins</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">Following my previous post A Play Framework server setup I'm going to write on how to automate the whole Play build-deploy cycle. In a nutcase, we have two servers (ci and play hosts), jenkins, an ANT script and a Bash script which will handle the servers restart in the ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2012-10-20T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Java"/>
+            <Attribute name="category" value="Play!"/>
+            <Attribute name="category" value="Ant"/>
+            <Attribute name="category" value="Jenkins"/>
+    </DataObject>
+
+
+--></body>
+</html>
