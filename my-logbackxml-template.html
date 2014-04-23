@@ -29,7 +29,11 @@
         
             <!-- SEO: g+ -->
         <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
-    		
+    
+    	<meta name=”description” content=”Software and technology blog”>
+    
+    	<meta name=”description” content=”eldelshell, software, technology, java, linux, web, development, alejandro, ayuso, blog, personal”>
+    
 
 </head>
 <body>
@@ -86,7 +90,7 @@
     <span class="published">
         <i class="fa fa-calendar"></i><time datetime="2011-10-05T00:00:00"> Wed 05 October 2011</time>
     </span>
-                    
+        		    
             
     
     <span class="label label-default">Tags</span>
@@ -99,79 +103,79 @@
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <p>This is a simple working XML configuration to start using Logback on your Java projects as fast as possible.</p>
-<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;configuration</span> <span class="na">debug=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre>    <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+    <span class="nt">&lt;configuration</span> <span class="na">debug=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
 
-  <span class="c">&lt;!-- Console --&gt;</span>  
+      <span class="c">&lt;!-- Console --&gt;</span>  
 
-  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;S&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;encoder&gt;</span>
-      <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
-    <span class="nt">&lt;/encoder&gt;</span>
-  <span class="nt">&lt;/appender&gt;</span>
+      <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;S&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;encoder&gt;</span>
+          <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
+        <span class="nt">&lt;/encoder&gt;</span>
+      <span class="nt">&lt;/appender&gt;</span>
 
-  <span class="c">&lt;!-- HTML Rolling Appender --&gt;</span>
+      <span class="c">&lt;!-- HTML Rolling Appender --&gt;</span>
 
-  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;H&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;file&gt;</span>logs/jongo.html<span class="nt">&lt;/file&gt;</span>
-    <span class="nt">&lt;encoder</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.encoder.LayoutWrappingEncoder&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;layout</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.classic.html.HTMLLayout&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;pattern&gt;</span>%msg%n<span class="nt">&lt;/pattern&gt;</span>
-        <span class="nt">&lt;/layout&gt;</span>
-    <span class="nt">&lt;/encoder&gt;</span>
-    <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;fileNamePattern&gt;</span>logs/jongo.html.%i<span class="nt">&lt;/fileNamePattern&gt;</span>
-      <span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
-      <span class="nt">&lt;maxIndex&gt;</span>3<span class="nt">&lt;/maxIndex&gt;</span>
-    <span class="nt">&lt;/rollingPolicy&gt;</span>
-    <span class="nt">&lt;triggeringPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;MaxFileSize&gt;</span>1024KB<span class="nt">&lt;/MaxFileSize&gt;</span>
-    <span class="nt">&lt;/triggeringPolicy&gt;</span>
-  <span class="nt">&lt;/appender&gt;</span>
+      <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;H&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;file&gt;</span>logs/jongo.html<span class="nt">&lt;/file&gt;</span>
+        <span class="nt">&lt;encoder</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.encoder.LayoutWrappingEncoder&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;layout</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.classic.html.HTMLLayout&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;pattern&gt;</span>%msg%n<span class="nt">&lt;/pattern&gt;</span>
+            <span class="nt">&lt;/layout&gt;</span>
+        <span class="nt">&lt;/encoder&gt;</span>
+        <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;fileNamePattern&gt;</span>logs/jongo.html.%i<span class="nt">&lt;/fileNamePattern&gt;</span>
+          <span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
+          <span class="nt">&lt;maxIndex&gt;</span>3<span class="nt">&lt;/maxIndex&gt;</span>
+        <span class="nt">&lt;/rollingPolicy&gt;</span>
+        <span class="nt">&lt;triggeringPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;MaxFileSize&gt;</span>1024KB<span class="nt">&lt;/MaxFileSize&gt;</span>
+        <span class="nt">&lt;/triggeringPolicy&gt;</span>
+      <span class="nt">&lt;/appender&gt;</span>
 
-  <span class="c">&lt;!-- Plain Text Rolling Appender --&gt;</span>
+      <span class="c">&lt;!-- Plain Text Rolling Appender --&gt;</span>
 
-  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;R&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Append&gt;</span>true<span class="nt">&lt;/Append&gt;</span>
-    <span class="nt">&lt;File&gt;</span>logs/jongo.log<span class="nt">&lt;/File&gt;</span>
-    <span class="nt">&lt;encoder&gt;</span>
-      <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
-    <span class="nt">&lt;/encoder&gt;</span>
-    <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;fileNamePattern&gt;</span>logs/jongo.log.%d{yyyy-MM-dd}<span class="nt">&lt;/fileNamePattern&gt;</span>
-      <span class="nt">&lt;maxHistory&gt;</span>30<span class="nt">&lt;/maxHistory&gt;</span>
-    <span class="nt">&lt;/rollingPolicy&gt;</span>
-  <span class="nt">&lt;/appender&gt;</span>
+      <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;R&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Append&gt;</span>true<span class="nt">&lt;/Append&gt;</span>
+        <span class="nt">&lt;File&gt;</span>logs/jongo.log<span class="nt">&lt;/File&gt;</span>
+        <span class="nt">&lt;encoder&gt;</span>
+          <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1} [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
+        <span class="nt">&lt;/encoder&gt;</span>
+        <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;fileNamePattern&gt;</span>logs/jongo.log.%d{yyyy-MM-dd}<span class="nt">&lt;/fileNamePattern&gt;</span>
+          <span class="nt">&lt;maxHistory&gt;</span>30<span class="nt">&lt;/maxHistory&gt;</span>
+        <span class="nt">&lt;/rollingPolicy&gt;</span>
+      <span class="nt">&lt;/appender&gt;</span>
 
-  <span class="c">&lt;!-- An specific Appender for Performance logs --&gt;</span>
+      <span class="c">&lt;!-- An specific Appender for Performance logs --&gt;</span>
 
-  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;PERF&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Append&gt;</span>true<span class="nt">&lt;/Append&gt;</span>
-    <span class="nt">&lt;File&gt;</span>logs/performance.log<span class="nt">&lt;/File&gt;</span>
-    <span class="nt">&lt;encoder&gt;</span>
-      <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1}:%L [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
-    <span class="nt">&lt;/encoder&gt;</span>
-    <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;fileNamePattern&gt;</span>logs/performance.log.%d{yyyy-MM-dd}<span class="nt">&lt;/fileNamePattern&gt;</span>
-      <span class="nt">&lt;maxHistory&gt;</span>10<span class="nt">&lt;/maxHistory&gt;</span>
-    <span class="nt">&lt;/rollingPolicy&gt;</span>
-  <span class="nt">&lt;/appender&gt;</span>
+      <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;PERF&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Append&gt;</span>true<span class="nt">&lt;/Append&gt;</span>
+        <span class="nt">&lt;File&gt;</span>logs/performance.log<span class="nt">&lt;/File&gt;</span>
+        <span class="nt">&lt;encoder&gt;</span>
+          <span class="nt">&lt;pattern&gt;</span>%d{yyyy-MM-dd HH:mm:ss} %c{1}:%L [%p] %m%n<span class="nt">&lt;/pattern&gt;</span>
+        <span class="nt">&lt;/encoder&gt;</span>
+        <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;fileNamePattern&gt;</span>logs/performance.log.%d{yyyy-MM-dd}<span class="nt">&lt;/fileNamePattern&gt;</span>
+          <span class="nt">&lt;maxHistory&gt;</span>10<span class="nt">&lt;/maxHistory&gt;</span>
+        <span class="nt">&lt;/rollingPolicy&gt;</span>
+      <span class="nt">&lt;/appender&gt;</span>
 
-  <span class="c">&lt;!-- All the logs called with LoggerFactory.getLogger(&quot;performance&quot;) will go trough this logger --&gt;</span>
-  <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;performance&quot;</span> <span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span> <span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;PERF&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/logger&gt;</span>
+      <span class="c">&lt;!-- All the logs called with LoggerFactory.getLogger(&quot;performance&quot;) will go trough this logger --&gt;</span>
+      <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;performance&quot;</span> <span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span> <span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;PERF&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/logger&gt;</span>
 
-  <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;org.w3c.tidy&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;ch.qos&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;org.slf4j&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;org.w3c.tidy&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;ch.qos&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;logger</span> <span class="na">name=</span><span class="s">&quot;org.slf4j&quot;</span> <span class="na">level=</span><span class="s">&quot;OFF&quot;</span><span class="nt">/&gt;</span>
 
-  <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;S&quot;</span><span class="nt">/&gt;</span>
-<span class="c">&lt;!--    &lt;appender-ref ref=&quot;H&quot;/&gt;--&gt;</span>
-<span class="c">&lt;!--    &lt;appender-ref ref=&quot;R&quot;/&gt;--&gt;</span>
-  <span class="nt">&lt;/root&gt;</span>
-<span class="nt">&lt;/configuration&gt;</span>
+      <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;S&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--    &lt;appender-ref ref=&quot;H&quot;/&gt;--&gt;</span>
+    <span class="c">&lt;!--    &lt;appender-ref ref=&quot;R&quot;/&gt;--&gt;</span>
+      <span class="nt">&lt;/root&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>
 
 
@@ -222,6 +226,11 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
                             <a href="http://www.eldelshell.com/tag/linux.html">
                                 Linux
                             </a>
@@ -231,9 +240,14 @@
                                 Tomcat
                             </a>
                         </li>
-                                            <li class="list-group-item tag-2">
-                            <a href="http://www.eldelshell.com/tag/flask.html">
-                                flask
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
@@ -242,63 +256,8 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/java.html">
-                                java
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-3">
                             <a href="http://www.eldelshell.com/tag/python.html">
                                 python
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/jinja2.html">
-                                jinja2
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/wicket.html">
-                                wicket
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/less.html">
-                                less
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/logback.html">
-                                logback
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
-                                geeksphone
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/jackson.html">
-                                Jackson
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/big-data.html">
-                                big-data
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/netbeans.html">
-                                netbeans
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/jboss.html">
-                                JBoss
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/jenkins.html">
-                                Jenkins
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -307,8 +266,53 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
                             <a href="http://www.eldelshell.com/tag/shell.html">
                                 Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/wicket.html">
+                                wicket
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jenkins.html">
+                                Jenkins
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
                             </a>
                         </li>
                                         </ul>
@@ -336,10 +340,11 @@
       </div>
    </div>
 </footer>
-<script src="//code.jquery.com/jquery.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://www.eldelshell.com/theme/js/bootstrap.min.js"></script>
+<!-- script src="http://www.eldelshell.com/theme/js/bootstrap.min.js"-->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://www.eldelshell.com/theme/js/respond.min.js"></script>
