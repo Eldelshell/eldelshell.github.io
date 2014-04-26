@@ -1,185 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://www.eldelshell.com/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
   <url>
     <loc>http://www.eldelshell.com/sharing-apache-tomcat-and-apache-web.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/hello-world.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/little-jooq-trick-to-get-list-of-pojos.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/active-page-in-apache-wicket.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/font-awesome-icons-in-android.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/updating-geeksphone-keon-to-nightly.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/a-jquery-mobile-progress-bar.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/a-simple-big-data-architecture.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/python-virtualenv-for-google-app-engine.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/build-your-less-files-from-cli-with.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/stars-filter-for-jinja2-bootstrap.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/jinja2-template-datetime-filters-in.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/hello-world-flask-and-netbeans.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/play-bootstrap-dates.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/play-21-modules-and-maven-dependencies.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/play-21-rc1-migration-mini-guide.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/jackson-mongodbs-objectid.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/spring-mvc-bootstrap-errors-extended.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/play-framework-i18n-messages-hunter.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/automate-play-deployments-with-ant-and-jenkins.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/play-framework-20x-javascript.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/a-play-framework-server-setup.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/move-windows-around-in-xfce.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/easily-secure-your-play-20-application.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/enabledisable-your-trackpad-in-linux.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/why-everyone-bitches-about-java.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/mobile-frameworks-comparison.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/doing-source-control-right-way.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/javas-ghost-jvms.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/my-logbackxml-template.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/grails-and-tomcat-7-datasource.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/secured-virtual-ftp-server-with-mysql.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/monitor-tomcatjboss-served-connections.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/java-daemon.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
     <url>
     <loc>http://www.eldelshell.com/central-screen-ssh-server.html</loc>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 
   
   <url>
     <loc>http://www.eldelshell.com/pages/about-me.html</loc>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
 
   
