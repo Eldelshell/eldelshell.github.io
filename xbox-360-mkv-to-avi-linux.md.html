@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Stars filter for Jinja2 + Bootstrap - Eldelshell Blog</title>
+    <title>Convert MKV to AVI for Xbox 360 in Linux - Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,17 +13,17 @@
     
                             <!-- Open Graph tags -->
                             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Stars filter for Jinja2 + Bootstrap"/>
-            <meta property="og:url" content="http://www.eldelshell.com/stars-filter-for-jinja2-bootstrap.html"/>
-            <meta property="og:description" content="Here's a simple Jinja2 filter to add FontAwesome 3.2.1 stars to a template: @app.template_filter('stars') def _jinja2_filter_stars(value): """ Adds filled and empty stars Usage: {{ obj.stars|stars|safe }} """ ret = "" if value: for i in range(1, value+1): ret += '<i class="icon-star"></i>' for i in ..."/>
+            <meta property="og:title" content="Convert MKV to AVI for Xbox 360 in Linux"/>
+            <meta property="og:url" content="http://www.eldelshell.com/xbox-360-mkv-to-avi-linux.md.html"/>
+            <meta property="og:description" content="For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, mkv files are like a tar file with some meta XML, the video file, the different audio files, the different subtitles and more stuff. For the Xbox 360 we only care about the video file (track from ..."/>
             
            <!-- includes/twitter_cards.html -->
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@Eldelshell">
 
-    <meta name="twitter:title" content="Stars filter for Jinja2 + Bootstrap">
-    <meta name="twitter:description" content="Here's a simple Jinja2 filter to add FontAwesome 3.2.1 stars to a template: @app.template_filter('stars') def _jinja2_filter_stars(value): """ Adds filled and empty stars Usage: {{ obj.stars|stars|safe }} """ ret = "" if value: for i in range(1, value+1): ret += '<i class="icon-star"></i>' for i in ...">
+    <meta name="twitter:title" content="Convert MKV to AVI for Xbox 360 in Linux">
+    <meta name="twitter:description" content="For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, mkv files are like a tar file with some meta XML, the video file, the different audio files, the different subtitles and more stuff. For the Xbox 360 we only care about the video file (track from ...">
 
     
     <!-- Bootstrap -->
@@ -82,10 +82,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.eldelshell.com/stars-filter-for-jinja2-bootstrap.html"
+                    <a href="http://www.eldelshell.com/xbox-360-mkv-to-avi-linux.md.html"
                        rel="bookmark"
-                       title="Permalink to Stars filter for Jinja2 + Bootstrap">
-                        Stars filter for Jinja2 + Bootstrap
+                       title="Permalink to Convert MKV to AVI for Xbox 360 in Linux">
+                        Convert MKV to AVI for Xbox 360 in Linux
                     </a>
                 </h1>
             </header>
@@ -95,36 +95,92 @@
                         <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-04-01T00:00:00"> Mon 01 April 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-04-27T00:00:00"> Sun 27 April 2014</time>
     </span>
         		    
             
     
     <span class="label label-default">Tags</span>
-	<a href="http://www.eldelshell.com/tag/bootstrap.html">bootstrap</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/jinja2.html">jinja2</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/flask.html">flask</a>
+	<a href="http://www.eldelshell.com/tag/linux.html">linux</a>
             
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Here's a simple Jinja2 filter to add FontAwesome 3.2.1 stars to a template:</p>
-<div class="highlight"><pre><span class="nd">@app.template_filter</span><span class="p">(</span><span class="s">&#39;stars&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_jinja2_filter_stars</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds filled and empty stars</span>
-<span class="sd">        Usage: {{ obj.stars|stars|safe }}</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-                <span class="n">ret</span> <span class="o">+=</span> <span class="s">&#39;&lt;i class=&quot;icon-star&quot;&gt;&lt;/i&gt;&#39;</span>
+                <p>For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, <code>mkv</code> files are like a
+<code>tar</code> file with some meta XML, the video file, the different audio files, the different subtitles
+and more stuff.</p>
+<p>For the Xbox 360 we only care about the video file (track from now on) and the audio file we want
+and since everything is already there, inside the <code>mkv</code> file, there's really no need to convert
+it using <strong>mencoder</strong> unless the video file is not supported by the Xbox (rarelly happens).</p>
+<p>So, first we need to know what we're going to find in the <code>mkv</code> file we've legally acquired:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkvinfo 4x02.mkv
 
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
-                <span class="n">ret</span> <span class="o">+=</span> <span class="s">&#39;&lt;i class=&quot;icon-star-empty&quot;&gt;&lt;/i&gt;&#39;</span>
-        <span class="k">return</span> <span class="n">ret</span>
++ EBML head
+|+ EBML version: 1
+|+ EBML <span class="nb">read </span>version: 1
+|+ EBML maximum ID length: 4
+|+ EBML maximum size length: 8
+|+ Doc <span class="nb">type</span>: matroska
+|+ Doc <span class="nb">type </span>version: 4
+|+ Doc <span class="nb">type read </span>version: 2
++ Segment, size 785643352
+|+ Seek head <span class="o">(</span>subentries will be skipped<span class="o">)</span>
+|+ EbmlVoid <span class="o">(</span>size: 4044<span class="o">)</span>
+|+ Segment information
+| + Timecode scale: 1000000
+| + Muxing application: libebml v1.3.0 + libmatroska v1.4.0
+| + Writing application: mkvmerge v6.1.0 <span class="o">(</span><span class="s1">&#39;Old Devil&#39;</span><span class="o">)</span> built on Mar  2 2013 14:32:37
+| + Duration: 3152.274s <span class="o">(</span>00:52:32.274<span class="o">)</span>
+| + Date: Tue Apr 22 22:56:54 2014 UTC
+| + Title: LEGALLY DOWNLOADED FILE
+| + Segment UID: 0x8c 0x53 0x7f 0x97 0x08 0x2a 0xda 0x85 0xaa 0x60 0x05 0x0d 0x39 0xab 0x37 0x21
+|+ Segment tracks
+| + A track
+|  + Track number: 1 <span class="o">(</span>track ID <span class="k">for </span>mkvmerge &amp; mkvextract: 0<span class="o">)</span>
+|  + Track UID: 721393027
+|  + Track <span class="nb">type</span>: video
+|  + Lacing flag: 0
+|  + MinCache: 1
+|  + Codec ID: V_MPEG4/ISO/AVC
+|  + CodecPrivate, length 44 <span class="o">(</span>h.264 profile: High @L4.1<span class="o">)</span>
+|  + Default duration: 41.708ms <span class="o">(</span>23.976 frames/fields per second <span class="k">for </span>a video track<span class="o">)</span>
+|  + Language: und
+|  + Name: LEGALLY DOWNLOADED FILE
+|  + Video track
+|   + Pixel width: 1280
+|   + Pixel height: 720
+|   + Display width: 1280
+|   + Display height: 720
+| + A track
+|  + Track number: 2 <span class="o">(</span>track ID <span class="k">for </span>mkvmerge &amp; mkvextract: 1<span class="o">)</span>
+|  + Track <span class="nb">type</span>: audio
+|  + Codec ID: A_AC3
+|  + Default duration: 32.000ms <span class="o">(</span>31.250 frames/fields per second <span class="k">for </span>a video track<span class="o">)</span>
+|  + Language: spa
+|  + Name: LEGALLY DOWNLOADED FILE
+|  + Audio track
+|   + Sampling frequency: 48000
+|   + Channels: 2
+|+ EbmlVoid <span class="o">(</span>size: 1085<span class="o">)</span>
+|+ Cluster
 </pre></div>
+
+
+<p>There you can see the information contained in our <code>mkv</code> file, the audio and video tracks and more
+information about them, like the audio's track language (es) and the ID's which we'll need.</p>
+<p>By the way, we need to install <strong>mkvtoolnix</strong> first <i class="fa fa-smile-o"></i></p>
+<p>Next, we'll extract both files:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkvextract tracks 4x02.mkv 0:4x02.vid
+<span class="nv">$ </span>mkvextract tracks 4x02.mkv 1:4x02.aud
+</pre></div>
+
+
+<p>Finally, we merge the two together:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkvmerge 4x02.vid 4x02.aud -o 4x02.avi
+</pre></div>
+
+
+<p>And that's it. The great thing about this method instead of using <strong>mencoder</strong> is that it is <em>way</em> faster and less
+error prone than decoding/encoding.</p>
             </div>
             <!-- /.entry-content -->
                                             </article>
@@ -315,18 +371,16 @@
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Stars filter for Jinja2 + Bootstrap</Attribute>
+    <Attribute name="title">Convert MKV to AVI for Xbox 360 in Linux</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description">Here's a simple Jinja2 filter to add FontAwesome 3.2.1 stars to a template: @app.template_filter('stars') def _jinja2_filter_stars(value): """ Adds filled and empty stars Usage: {{ obj.stars|stars|safe }} """ ret = "" if value: for i in range(1, value+1): ret += '<i class="icon-star"></i>' for i in ...</Attribute>
+    <Attribute name="description">For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, mkv files are like a tar file with some meta XML, the video file, the different audio files, the different subtitles and more stuff. For the Xbox 360 we only care about the video file (track from ...</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update">2013-04-01T00:00:00</Attribute>
+    <Attribute name="last_update">2014-04-27T00:00:00</Attribute>
 </DataObject>
 <DataObject type="metatags">
     <Attribute name="category" value="Blog"/>
-            <Attribute name="category" value="bootstrap"/>
-            <Attribute name="category" value="jinja2"/>
-            <Attribute name="category" value="flask"/>
+            <Attribute name="category" value="linux"/>
     </DataObject>
 
 

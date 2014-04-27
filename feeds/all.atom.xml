@@ -1,5 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-04-20T00:00:00+02:00</updated><entry><title>Sharing Apache Tomcat and Apache Web Server</title><link href="http://www.eldelshell.com/sharing-apache-tomcat-and-apache-web.html" rel="alternate"></link><updated>2014-04-20T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-20:sharing-apache-tomcat-and-apache-web.html</id><summary type="html">&lt;p&gt;Today's problem is sharing one single virtual host with different Tomcat instances. For example, say you have your Apache (the web server) with a virtual host for an intranet and you have in different Tomcat instances different applications like: monitoring, dashboard and hradmin. You want your users to be directed to the correct application if they access the URL &lt;em&gt;http://intranet/dashboard&lt;/em&gt; or &lt;em&gt;http://intranet/hradmin&lt;/em&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-04-27T00:00:00+02:00</updated><entry><title>Convert MKV to AVI for Xbox 360 in Linux</title><link href="http://www.eldelshell.com/xbox-360-mkv-to-avi-linux.md.html" rel="alternate"></link><updated>2014-04-27T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-27:xbox-360-mkv-to-avi-linux.md.html</id><summary type="html">&lt;p&gt;For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, &lt;code&gt;mkv&lt;/code&gt; files are like a
+&lt;code&gt;tar&lt;/code&gt; file with some meta XML, the video file, the different audio files, the different subtitles
+and more stuff.&lt;/p&gt;
+&lt;p&gt;For the Xbox 360 we only care about the video file (track from now on) and the audio file we want
+and since everything is already there, inside the &lt;code&gt;mkv&lt;/code&gt; file, there's really no need to convert
+it using &lt;strong&gt;mencoder&lt;/strong&gt; unless the video file is not supported by the Xbox (rarelly happens).&lt;/p&gt;
+&lt;p&gt;So, first we need to know what we're going to find in the &lt;code&gt;mkv&lt;/code&gt; file we've legally acquired:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvinfo 4x02.mkv
+
++ EBML head
+|+ EBML version: 1
+|+ EBML &lt;span class="nb"&gt;read &lt;/span&gt;version: 1
+|+ EBML maximum ID length: 4
+|+ EBML maximum size length: 8
+|+ Doc &lt;span class="nb"&gt;type&lt;/span&gt;: matroska
+|+ Doc &lt;span class="nb"&gt;type &lt;/span&gt;version: 4
+|+ Doc &lt;span class="nb"&gt;type read &lt;/span&gt;version: 2
++ Segment, size 785643352
+|+ Seek head &lt;span class="o"&gt;(&lt;/span&gt;subentries will be skipped&lt;span class="o"&gt;)&lt;/span&gt;
+|+ EbmlVoid &lt;span class="o"&gt;(&lt;/span&gt;size: 4044&lt;span class="o"&gt;)&lt;/span&gt;
+|+ Segment information
+| + Timecode scale: 1000000
+| + Muxing application: libebml v1.3.0 + libmatroska v1.4.0
+| + Writing application: mkvmerge v6.1.0 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Old Devil&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; built on Mar  2 2013 14:32:37
+| + Duration: 3152.274s &lt;span class="o"&gt;(&lt;/span&gt;00:52:32.274&lt;span class="o"&gt;)&lt;/span&gt;
+| + Date: Tue Apr 22 22:56:54 2014 UTC
+| + Title: LEGALLY DOWNLOADED FILE
+| + Segment UID: 0x8c 0x53 0x7f 0x97 0x08 0x2a 0xda 0x85 0xaa 0x60 0x05 0x0d 0x39 0xab 0x37 0x21
+|+ Segment tracks
+| + A track
+|  + Track number: 1 &lt;span class="o"&gt;(&lt;/span&gt;track ID &lt;span class="k"&gt;for &lt;/span&gt;mkvmerge &amp;amp; mkvextract: 0&lt;span class="o"&gt;)&lt;/span&gt;
+|  + Track UID: 721393027
+|  + Track &lt;span class="nb"&gt;type&lt;/span&gt;: video
+|  + Lacing flag: 0
+|  + MinCache: 1
+|  + Codec ID: V_MPEG4/ISO/AVC
+|  + CodecPrivate, length 44 &lt;span class="o"&gt;(&lt;/span&gt;h.264 profile: High @L4.1&lt;span class="o"&gt;)&lt;/span&gt;
+|  + Default duration: 41.708ms &lt;span class="o"&gt;(&lt;/span&gt;23.976 frames/fields per second &lt;span class="k"&gt;for &lt;/span&gt;a video track&lt;span class="o"&gt;)&lt;/span&gt;
+|  + Language: und
+|  + Name: LEGALLY DOWNLOADED FILE
+|  + Video track
+|   + Pixel width: 1280
+|   + Pixel height: 720
+|   + Display width: 1280
+|   + Display height: 720
+| + A track
+|  + Track number: 2 &lt;span class="o"&gt;(&lt;/span&gt;track ID &lt;span class="k"&gt;for &lt;/span&gt;mkvmerge &amp;amp; mkvextract: 1&lt;span class="o"&gt;)&lt;/span&gt;
+|  + Track &lt;span class="nb"&gt;type&lt;/span&gt;: audio
+|  + Codec ID: A_AC3
+|  + Default duration: 32.000ms &lt;span class="o"&gt;(&lt;/span&gt;31.250 frames/fields per second &lt;span class="k"&gt;for &lt;/span&gt;a video track&lt;span class="o"&gt;)&lt;/span&gt;
+|  + Language: spa
+|  + Name: LEGALLY DOWNLOADED FILE
+|  + Audio track
+|   + Sampling frequency: 48000
+|   + Channels: 2
+|+ EbmlVoid &lt;span class="o"&gt;(&lt;/span&gt;size: 1085&lt;span class="o"&gt;)&lt;/span&gt;
+|+ Cluster
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There you can see the information contained in our &lt;code&gt;mkv&lt;/code&gt; file, the audio and video tracks and more
+information about them, like the audio's track language (es) and the ID's which we'll need.&lt;/p&gt;
+&lt;p&gt;By the way, we need to install &lt;strong&gt;mkvtoolnix&lt;/strong&gt; first &lt;i class="fa fa-smile-o"&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;Next, we'll extract both files:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvextract tracks 4x02.mkv 0:4x02.vid
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkvextract tracks 4x02.mkv 1:4x02.aud
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, we merge the two together:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvmerge 4x02.vid 4x02.aud -o 4x02.avi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And that's it. The great thing about this method instead of using &lt;strong&gt;mencoder&lt;/strong&gt; is that it is &lt;em&gt;way&lt;/em&gt; faster and less
+error prone than decoding/encoding.&lt;/p&gt;</summary><category term="linux"></category></entry><entry><title>Sharing Apache Tomcat and Apache Web Server</title><link href="http://www.eldelshell.com/sharing-apache-tomcat-and-apache-web.html" rel="alternate"></link><updated>2014-04-20T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-20:sharing-apache-tomcat-and-apache-web.html</id><summary type="html">&lt;p&gt;Today's problem is sharing one single virtual host with different Tomcat instances. For example, say you have your Apache (the web server) with a virtual host for an intranet and you have in different Tomcat instances different applications like: monitoring, dashboard and hradmin. You want your users to be directed to the correct application if they access the URL &lt;em&gt;http://intranet/dashboard&lt;/em&gt; or &lt;em&gt;http://intranet/hradmin&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;In this example I'm using three Tomcat servers and this applications:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;server1:8080/monitoring/&lt;/li&gt;
