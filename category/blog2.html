@@ -89,6 +89,20 @@
     
 
                         <article>
+                <h2><a href="http://www.eldelshell.com/python-virtualenv-for-google-app-engine.html">Python virtualenv for Google App Engine and Flask</a></h2>
+                <div class="summary"><p>Ok, this was so easy I couldn't believe it. First Download the App Engine SDK. 
+Then install <strong>virtualenv</strong> if you don't already have. Create a new folder, 
+for example, <code>/opt/environments/gae</code> and do some virtualenv magic:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /opt/environments
+<span class="nv">$ </span>mkdir my-gae
+<span class="nv">$ </span>virtualenv my-gae
+
+New python executable in ...</pre></div>
+                                        <a class="btn btn-default btn-xs" href="http://www.eldelshell.com/python-virtualenv-for-google-app-engine.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+                    <article>
                 <h2><a href="http://www.eldelshell.com/build-your-less-files-from-cli-with.html">Build your LESS files from the CLI with Java & Rhino</a></h2>
                 <div class="summary"><p>For some reason, this started as a simple task that wasn't that simple: build Bootstrap 
 from its LESS sources using Rhino. No Ant, Maven, Play, etc.</p>
@@ -197,24 +211,6 @@ to allow for appending and prep-ending of icons to bootstrap's input fields:</p>
                 </div>
             </article>
             <hr/>
-                    <article>
-                <h2><a href="http://www.eldelshell.com/play-framework-i18n-messages-hunter.html">Play Framework i18n Messages Hunter</a></h2>
-                <div class="summary"><p>Here's a little bash script to help you out hunting the different translatable labels your Play application has:</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nv">tmp_file</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
-
-<span class="nv">repository_path</span><span class="o">=</span><span class="s2">&quot;${1}&quot;</span>
-<span class="nv">file_path</span><span class="o">=</span><span class="s2">&quot;${repository_path}/conf/messages.&quot;</span>
-<span class="nv">docroot_path</span><span class="o">=</span><span class="s2">&quot;${repository_path}/public&quot;</span>
-<span class="nv">langs</span><span class="o">=(</span> <span class="s2">&quot;en&quot;</span> <span class="s2">&quot;es&quot;</span> <span class="o">)</span>
-
-<span class="nb">echo</span> <span class="s2">&quot;Searching for translatable strings&quot;</span>
-find <span class="k">${</span><span class="nv">repository_path</span><span class="k">}</span>/app/views -name <span class="s1">&#39;*.html&#39;</span> -exec grep -oE <span class="s2">&quot;@Messages ...</span></pre></div>
-                                        <a class="btn btn-default btn-xs" href="http://www.eldelshell.com/play-framework-i18n-messages-hunter.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
             
         <ul class="pagination">
                                 <li class="prev">
@@ -272,6 +268,11 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
                             <a href="http://www.eldelshell.com/tag/linux.html">
                                 Linux
                             </a>
@@ -281,9 +282,9 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                                 Tomcat
                             </a>
                         </li>
-                                            <li class="list-group-item tag-2">
-                            <a href="http://www.eldelshell.com/tag/flask.html">
-                                flask
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
+                                bootstrap
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
@@ -292,13 +293,8 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
-                                bootstrap
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/jinja2.html">
-                                jinja2
+                            <a href="http://www.eldelshell.com/tag/spring.html">
+                                Spring
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
@@ -306,19 +302,9 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                                 python
                             </a>
                         </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/netbeans.html">
-                                netbeans
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/jackson.html">
-                                Jackson
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -327,8 +313,8 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/pelican.html">
-                                pelican
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                linux
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -337,13 +323,23 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
-                                geeksphone
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/linux.html">
-                                linux
+                            <a href="http://www.eldelshell.com/tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jackson.html">
+                                Jackson
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -357,8 +353,8 @@ find <span class="k">${</span><span class="nv">repository_path</span><span class
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/logback.html">
-                                logback
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
                             </a>
                         </li>
                                         </ul>

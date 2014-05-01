@@ -211,7 +211,141 @@ results already indexed very high.&lt;/p&gt;
 
 &lt;p&gt;In this case, we generated the &lt;strong&gt;PostDao&lt;/strong&gt; and the &lt;strong&gt;Post&lt;/strong&gt; POJO with jOOQ's generator. 
 The trick is to use the &lt;code&gt;mapper()&lt;/code&gt; method defined in the DAO to generate
-the List of &lt;strong&gt;Post&lt;/strong&gt; instead of &lt;strong&gt;Result&amp;lt;Record&amp;gt;&lt;/strong&gt;.&lt;/p&gt;</summary><category term="jooq"></category><category term="java"></category></entry><entry><title>Active Page in Apache Wicket</title><link href="http://www.eldelshell.com/active-page-in-apache-wicket.html" rel="alternate"></link><updated>2014-03-25T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-03-25:active-page-in-apache-wicket.html</id><summary type="html">&lt;p&gt;A few days ago I started a new project with Apache Wicket and I'm pretty sure I'll 
+the List of &lt;strong&gt;Post&lt;/strong&gt; instead of &lt;strong&gt;Result&amp;lt;Record&amp;gt;&lt;/strong&gt;.&lt;/p&gt;</summary><category term="jooq"></category><category term="java"></category></entry><entry><title>Spring 4 @Async usage example</title><link href="http://www.eldelshell.com/spring4-async-example.html" rel="alternate"></link><updated>2014-04-01T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-01:spring4-async-example.html</id><summary type="html">&lt;p&gt;Here's a fast example to get you started up with using asynchronous tasks with the &lt;code&gt;@Async&lt;/code&gt;
+annotation from Spring.&lt;/p&gt;
+&lt;p&gt;This are our dependencies:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-context&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.0.3.RELEASE&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We'll be using annotations mixed with XML so we reach the most with this little example. So
+now we need our &lt;em&gt;spring.xml&lt;/em&gt; file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;beans&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/beans&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xmlns:xsi=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xmlns:context=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/context&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xmlns:task=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/task&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/beans&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/beans/spring-beans.xsd&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/context&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/context/spring-context-4.0.xsd&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/task&lt;/span&gt;
+&lt;span class="s"&gt;            http://www.springframework.org/schema/task/spring-task-4.0.xsd&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;context:annotation-config&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;context:component-scan&lt;/span&gt; &lt;span class="na"&gt;base-package=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;osuya.example&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;task:annotation-driven&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class="nt"&gt;&amp;lt;bean&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;osuya.example.Spring4Tasks&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spring4Tasks&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/beans&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The important parts here are &lt;strong&gt;XSD&lt;/strong&gt; definitions for the &lt;em&gt;task&lt;/em&gt; namespace and the
+&lt;code&gt;&amp;lt;task:annotation-driven /&amp;gt;&lt;/code&gt; that tells spring to scan our components for the &lt;code&gt;@Async&lt;/code&gt; and
+&lt;code&gt;@Scheduled&lt;/code&gt; annotations.&lt;/p&gt;
+&lt;p&gt;I'll write about the &lt;code&gt;@Scheduled&lt;/code&gt; annotation in the future and how it might be useful.&lt;/p&gt;
+&lt;p&gt;Finally, we'll create two &lt;code&gt;@Service&lt;/code&gt; components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NormalService + NormalServiceImpl&lt;/li&gt;
+&lt;li&gt;ASyncService + ASyncServiceImpl&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here's the code for the &lt;strong&gt;ASyncServiceImpl&lt;/strong&gt; which has the important parts:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;osuya&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;example&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.concurrent.Future&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.scheduling.annotation.Async&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.scheduling.annotation.AsyncResult&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.stereotype.Service&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Service&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ASyncServiceImpl&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;ASyncService&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt; &lt;span class="n"&gt;NormalService&lt;/span&gt; &lt;span class="n"&gt;normalService&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Async&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Future&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;async&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+        &lt;span class="c1"&gt;// Demonstrate that our beans are being injected&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Managed bean injected: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;normalService&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sleep&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InterruptedException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printStackTrace&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;I&amp;#39;m done!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;AsyncResult&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So, for a method to work asynchronously we need to annotate it with &lt;code&gt;@Async&lt;/code&gt; and have it
+return an &lt;code&gt;AsyncResult&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now, let's see how it works with the following code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;osuya&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;example&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.concurrent.Future&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.context.ApplicationContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.context.support.ClassPathXmlApplicationContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Spring4Tasks&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt; &lt;span class="n"&gt;ASyncService&lt;/span&gt; &lt;span class="n"&gt;asyncService&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt; &lt;span class="n"&gt;NormalService&lt;/span&gt; &lt;span class="n"&gt;normalService&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;ApplicationContext&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClassPathXmlApplicationContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/spring.xml&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;Spring4Tasks&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getBean&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Spring4Tasks&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;start&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;start&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;normalService&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;notAsync&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+        &lt;span class="n"&gt;Future&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;asyncService&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;async&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="n"&gt;normalService&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;notAsync&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+        &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(!&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;isDone&lt;/span&gt;&lt;span class="o"&gt;()){&lt;/span&gt;
+            &lt;span class="c1"&gt;// we wait&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The result should be:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Not in a thread&lt;/p&gt;
+&lt;p&gt;Managed bean injected: true&lt;/p&gt;
+&lt;p&gt;I'm done!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can check the Maven project &lt;a href="https://github.com/Eldelshell/blog/tree/master/examples/spring4-async-example"&gt;here&lt;/a&gt; and run it with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mvn clean install &lt;span class="nb"&gt;exec&lt;/span&gt;:java -Dexec.mainClass&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;osuya.example.Spring4Tasks&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Java"></category><category term="Spring"></category></entry><entry><title>Active Page in Apache Wicket</title><link href="http://www.eldelshell.com/active-page-in-apache-wicket.html" rel="alternate"></link><updated>2014-03-25T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-03-25:active-page-in-apache-wicket.html</id><summary type="html">&lt;p&gt;A few days ago I started a new project with Apache Wicket and I'm pretty sure I'll 
 be posting some cool stuff I'll be learning during the following days using 
 this framework (a nice review in the future?).&lt;/p&gt;
 &lt;p&gt;Anyway, something I found quite annoying to do and that took me some time to get a 

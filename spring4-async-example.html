@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Updating Geeksphone Keon to Nightly Build - Eldelshell Blog</title>
+    <title>Spring 4 @Async usage example - Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,17 +13,17 @@
     
                             <!-- Open Graph tags -->
                             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Updating Geeksphone Keon to Nightly Build"/>
-            <meta property="og:url" content="http://www.eldelshell.com/updating-geeksphone-keon-to-nightly.html"/>
-            <meta property="og:description" content="Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves. Anyway, the process is quite easy, on Linux at least. Before you begin, be sure to have enabled the remote debugging option and at least ..."/>
+            <meta property="og:title" content="Spring 4 @Async usage example"/>
+            <meta property="og:url" content="http://www.eldelshell.com/spring4-async-example.html"/>
+            <meta property="og:description" content="Here's a fast example to get you started up with using asynchronous tasks with the @Async annotation from Spring. This are our dependencies: <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> <version>4.0.3.RELEASE</version> </dependency> We'll be using annotations mixed with XML so we reach ..."/>
             
            <!-- includes/twitter_cards.html -->
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@Eldelshell">
 
-    <meta name="twitter:title" content="Updating Geeksphone Keon to Nightly Build">
-    <meta name="twitter:description" content="Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves. Anyway, the process is quite easy, on Linux at least. Before you begin, be sure to have enabled the remote debugging option and at least ...">
+    <meta name="twitter:title" content="Spring 4 @Async usage example">
+    <meta name="twitter:description" content="Here's a fast example to get you started up with using asynchronous tasks with the @Async annotation from Spring. This are our dependencies: <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> <version>4.0.3.RELEASE</version> </dependency> We'll be using annotations mixed with XML so we reach ...">
 
     
     <!-- Bootstrap -->
@@ -82,10 +82,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.eldelshell.com/updating-geeksphone-keon-to-nightly.html"
+                    <a href="http://www.eldelshell.com/spring4-async-example.html"
                        rel="bookmark"
-                       title="Permalink to Updating Geeksphone Keon to Nightly Build">
-                        Updating Geeksphone Keon to Nightly Build
+                       title="Permalink to Spring 4 @Async usage example">
+                        Spring 4 @Async usage example
                     </a>
                 </h1>
             </header>
@@ -95,61 +95,153 @@
                         <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-05-31T00:00:00"> Fri 31 May 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-04-01T00:00:00"> Tue 01 April 2014</time>
     </span>
         		    
             
     
     <span class="label label-default">Tags</span>
-	<a href="http://www.eldelshell.com/tag/geeksphone.html">geeksphone</a>
+	<a href="http://www.eldelshell.com/tag/java.html">Java</a>
+            /
+    	<a href="http://www.eldelshell.com/tag/spring.html">Spring</a>
             
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves.</p>
-<p>Anyway, the process is quite easy, on Linux at least.</p>
-<p>Before you begin, be sure to have enabled the remote debugging option and at least 10% of battery in your Keon. </p>
-<p>Download the latest nightly build from Geeksphone and unzip it somewhere.</p>
-<p>Now, add/edit the file <code>/etc/udev/rules.d/51-android.rules</code> with this two lines:</p>
-<div class="highlight"><pre><span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s">&quot;usb&quot;</span><span class="p">,</span> <span class="n">ATTR</span><span class="p">{</span><span class="n">idVendor</span><span class="p">}</span><span class="o">==</span><span class="s">&quot;05c6&quot;</span><span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s">&quot;0666&quot;</span><span class="p">,</span> <span class="n">GROUP</span><span class="o">=</span><span class="s">&quot;plugdev&quot;</span>
-<span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s">&quot;usb&quot;</span><span class="p">,</span> <span class="n">ATTR</span><span class="p">{</span><span class="n">idVendor</span><span class="p">}</span><span class="o">==</span><span class="s">&quot;18d1&quot;</span><span class="p">,</span> <span class="n">MODE</span><span class="o">=</span><span class="s">&quot;0666&quot;</span><span class="p">,</span> <span class="n">GROUP</span><span class="o">=</span><span class="s">&quot;plugdev&quot;</span>
+                <p>Here's a fast example to get you started up with using asynchronous tasks with the <code>@Async</code>
+annotation from Spring.</p>
+<p>This are our dependencies:</p>
+<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-context<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>4.0.3.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
 
-<p>Put the Keon on Airplane Mode and plug it to the computer with the USB cable.</p>
-<div class="highlight"><pre>./flash.sh
+<p>We'll be using annotations mixed with XML so we reach the most with this little example. So
+now we need our <em>spring.xml</em> file:</p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
+       <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+       <span class="na">xmlns:context=</span><span class="s">&quot;http://www.springframework.org/schema/context&quot;</span>
+       <span class="na">xmlns:task=</span><span class="s">&quot;http://www.springframework.org/schema/task&quot;</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+<span class="s">            http://www.springframework.org/schema/beans</span>
+<span class="s">            http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+<span class="s">            http://www.springframework.org/schema/context</span>
+<span class="s">            http://www.springframework.org/schema/context/spring-context-4.0.xsd</span>
+<span class="s">            http://www.springframework.org/schema/task</span>
+<span class="s">            http://www.springframework.org/schema/task/spring-task-4.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;context:annotation-config</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">&quot;osuya.example&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;task:annotation-driven</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">&quot;osuya.example.Spring4Tasks&quot;</span> <span class="na">name=</span><span class="s">&quot;spring4Tasks&quot;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
 </pre></div>
 
 
-<p>You should get the following output:</p>
-<div class="highlight"><pre><span class="o">*</span> <span class="n">daemon</span> <span class="n">not</span> <span class="n">running</span><span class="p">.</span> <span class="n">starting</span> <span class="n">it</span> <span class="n">now</span> <span class="n">on</span> <span class="n">port</span> <span class="mi">5037</span> <span class="o">*</span>
-<span class="o">*</span> <span class="n">daemon</span> <span class="n">started</span> <span class="n">successfully</span> <span class="o">*</span>
-<span class="o">&lt;</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">device</span> <span class="o">&gt;</span>
-<span class="n">sending</span> <span class="err">&#39;</span><span class="n">boot</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">3424</span> <span class="n">KB</span><span class="p">)...</span>
-<span class="n">OKAY</span> <span class="p">[</span>  <span class="mf">0.364</span><span class="n">s</span><span class="p">]</span>
-<span class="n">writing</span> <span class="err">&#39;</span><span class="n">boot</span><span class="err">&#39;</span><span class="p">...</span>
-<span class="n">OKAY</span> <span class="p">[</span>  <span class="mf">0.628</span><span class="n">s</span><span class="p">]</span>
-<span class="n">finished</span><span class="p">.</span> <span class="n">total</span> <span class="n">time</span><span class="o">:</span> <span class="mf">0.992</span><span class="n">s</span>
-<span class="n">sending</span> <span class="err">&#39;</span><span class="n">userdata</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">26364</span> <span class="n">KB</span><span class="p">)...</span>
-<span class="n">OKAY</span> <span class="p">[</span>  <span class="mf">2.816</span><span class="n">s</span><span class="p">]</span>
-<span class="n">writing</span> <span class="err">&#39;</span><span class="n">userdata</span><span class="err">&#39;</span><span class="p">...</span>
-<span class="n">OKAY</span> <span class="p">[</span>  <span class="mf">4.909</span><span class="n">s</span><span class="p">]</span>
-<span class="n">finished</span><span class="p">.</span> <span class="n">total</span> <span class="n">time</span><span class="o">:</span> <span class="mf">7.726</span><span class="n">s</span>
-<span class="n">sending</span> <span class="err">&#39;</span><span class="n">system</span><span class="err">&#39;</span> <span class="p">(</span><span class="mi">134304</span> <span class="n">KB</span><span class="p">)...</span>
-<span class="n">OKAY</span> <span class="p">[</span> <span class="mf">14.387</span><span class="n">s</span><span class="p">]</span>
-<span class="n">writing</span> <span class="err">&#39;</span><span class="n">system</span><span class="err">&#39;</span><span class="p">...</span>
-<span class="n">OKAY</span> <span class="p">[</span> <span class="mf">25.483</span><span class="n">s</span><span class="p">]</span>
-<span class="n">finished</span><span class="p">.</span> <span class="n">total</span> <span class="n">time</span><span class="o">:</span> <span class="mf">39.870</span><span class="n">s</span>
-<span class="n">erasing</span> <span class="err">&#39;</span><span class="n">cache</span><span class="err">&#39;</span><span class="p">...</span>
-<span class="n">OKAY</span> <span class="p">[</span>  <span class="mf">0.006</span><span class="n">s</span><span class="p">]</span>
-<span class="n">finished</span><span class="p">.</span> <span class="n">total</span> <span class="n">time</span><span class="o">:</span> <span class="mf">0.006</span><span class="n">s</span>
-<span class="n">rebooting</span><span class="p">...</span>
+<p>The important parts here are <strong>XSD</strong> definitions for the <em>task</em> namespace and the
+<code>&lt;task:annotation-driven /&gt;</code> that tells spring to scan our components for the <code>@Async</code> and
+<code>@Scheduled</code> annotations.</p>
+<p>I'll write about the <code>@Scheduled</code> annotation in the future and how it might be useful.</p>
+<p>Finally, we'll create two <code>@Service</code> components:</p>
+<ul>
+<li>NormalService + NormalServiceImpl</li>
+<li>ASyncService + ASyncServiceImpl</li>
+</ul>
+<p>Here's the code for the <strong>ASyncServiceImpl</strong> which has the important parts:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">osuya</span><span class="o">.</span><span class="na">example</span><span class="o">;</span>
 
-<span class="n">finished</span><span class="p">.</span> <span class="n">total</span> <span class="n">time</span><span class="o">:</span> <span class="mf">0.001</span><span class="n">s</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.scheduling.annotation.Async</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.scheduling.annotation.AsyncResult</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ASyncServiceImpl</span> <span class="kd">implements</span> <span class="n">ASyncService</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span> <span class="n">NormalService</span> <span class="n">normalService</span><span class="o">;</span>
+
+    <span class="nd">@Async</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="nf">async</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="c1">// Demonstrate that our beans are being injected</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Managed bean injected: &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">normalService</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">));</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;I&#39;m done!&quot;</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="n">AsyncResult</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
 </pre></div>
 
 
-<p>And there you go, a fresh FirefoxOS version.</p>
-<p>Warning: <strong>Flashing will WIPE ALL YOUR DATA!</strong></p>
+<p>So, for a method to work asynchronously we need to annotate it with <code>@Async</code> and have it
+return an <code>AsyncResult</code>.</p>
+<p>Now, let's see how it works with the following code:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">osuya</span><span class="o">.</span><span class="na">example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.support.ClassPathXmlApplicationContext</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Spring4Tasks</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span> <span class="n">ASyncService</span> <span class="n">asyncService</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span> <span class="n">NormalService</span> <span class="n">normalService</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&quot;/spring.xml&quot;</span><span class="o">);</span>
+        <span class="n">Spring4Tasks</span> <span class="n">app</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">Spring4Tasks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">app</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">normalService</span><span class="o">.</span><span class="na">notAsync</span><span class="o">();</span>
+
+        <span class="n">Future</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">asyncService</span><span class="o">.</span><span class="na">async</span><span class="o">();</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="n">normalService</span><span class="o">.</span><span class="na">notAsync</span><span class="o">();</span>
+
+        <span class="k">while</span><span class="o">(!</span><span class="n">result</span><span class="o">.</span><span class="na">isDone</span><span class="o">()){</span>
+            <span class="c1">// we wait</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>The result should be:</p>
+<blockquote>
+<p>Not in a thread</p>
+<p>Not in a thread</p>
+<p>Not in a thread</p>
+<p>Not in a thread</p>
+<p>Not in a thread</p>
+<p>Not in a thread</p>
+<p>Managed bean injected: true</p>
+<p>I'm done!</p>
+</blockquote>
+<p>You can check the Maven project <a href="https://github.com/Eldelshell/blog/tree/master/examples/spring4-async-example">here</a> and run it with:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn clean install <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;osuya.example.Spring4Tasks&quot;</span>
+</pre></div>
             </div>
             <!-- /.entry-content -->
                                             </article>
@@ -340,16 +432,17 @@
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Updating Geeksphone Keon to Nightly Build</Attribute>
+    <Attribute name="title">Spring 4 @Async usage example</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description">Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves. Anyway, the process is quite easy, on Linux at least. Before you begin, be sure to have enabled the remote debugging option and at least ...</Attribute>
+    <Attribute name="description">Here's a fast example to get you started up with using asynchronous tasks with the @Async annotation from Spring. This are our dependencies: <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> <version>4.0.3.RELEASE</version> </dependency> We'll be using annotations mixed with XML so we reach ...</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update">2013-05-31T00:00:00</Attribute>
+    <Attribute name="last_update">2014-04-01T00:00:00</Attribute>
 </DataObject>
 <DataObject type="metatags">
     <Attribute name="category" value="Blog"/>
-            <Attribute name="category" value="geeksphone"/>
+            <Attribute name="category" value="Java"/>
+            <Attribute name="category" value="Spring"/>
     </DataObject>
 
 

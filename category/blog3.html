@@ -89,6 +89,24 @@
     
 
                         <article>
+                <h2><a href="http://www.eldelshell.com/play-framework-i18n-messages-hunter.html">Play Framework i18n Messages Hunter</a></h2>
+                <div class="summary"><p>Here's a little bash script to help you out hunting the different translatable labels your Play application has:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nv">tmp_file</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
+
+<span class="nv">repository_path</span><span class="o">=</span><span class="s2">&quot;${1}&quot;</span>
+<span class="nv">file_path</span><span class="o">=</span><span class="s2">&quot;${repository_path}/conf/messages.&quot;</span>
+<span class="nv">docroot_path</span><span class="o">=</span><span class="s2">&quot;${repository_path}/public&quot;</span>
+<span class="nv">langs</span><span class="o">=(</span> <span class="s2">&quot;en&quot;</span> <span class="s2">&quot;es&quot;</span> <span class="o">)</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Searching for translatable strings&quot;</span>
+find <span class="k">${</span><span class="nv">repository_path</span><span class="k">}</span>/app/views -name <span class="s1">&#39;*.html&#39;</span> -exec grep -oE <span class="s2">&quot;@Messages ...</span></pre></div>
+                                        <a class="btn btn-default btn-xs" href="http://www.eldelshell.com/play-framework-i18n-messages-hunter.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+                    <article>
                 <h2><a href="http://www.eldelshell.com/automate-play-deployments-with-ant-and-jenkins.html">Automate Play deployments with ANT and Jenkins</a></h2>
                 <div class="summary"><p>Following my previous post A Play Framework server setup 
 I'm going to write on how to automate the whole Play build-deploy cycle. </p>
@@ -184,14 +202,6 @@ which may give you trouble on the long run.</p>
                 </div>
             </article>
             <hr/>
-                    <article>
-                <h2><a href="http://www.eldelshell.com/javas-ghost-jvms.html">Java's Ghost JVMs</a></h2>
-                <div class="summary"><p>It's a nice day when you end up digging through some of the JDK source code to find out what is broken with one of the JDK tools like JPS or JConsole. Today was one of those days.</p>
-<p>The problem was with our JBoss monitoring tool which depends on ...</p>
-                                        <a class="btn btn-default btn-xs" href="http://www.eldelshell.com/javas-ghost-jvms.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
             
         <ul class="pagination">
                                 <li class="prev">
@@ -249,6 +259,11 @@ which may give you trouble on the long run.</p>
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
                             <a href="http://www.eldelshell.com/tag/linux.html">
                                 Linux
                             </a>
@@ -258,9 +273,9 @@ which may give you trouble on the long run.</p>
                                 Tomcat
                             </a>
                         </li>
-                                            <li class="list-group-item tag-2">
-                            <a href="http://www.eldelshell.com/tag/flask.html">
-                                flask
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
+                                bootstrap
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
@@ -269,13 +284,8 @@ which may give you trouble on the long run.</p>
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
-                                bootstrap
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-3">
-                            <a href="http://www.eldelshell.com/tag/jinja2.html">
-                                jinja2
+                            <a href="http://www.eldelshell.com/tag/spring.html">
+                                Spring
                             </a>
                         </li>
                                             <li class="list-group-item tag-3">
@@ -283,19 +293,9 @@ which may give you trouble on the long run.</p>
                                 python
                             </a>
                         </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/netbeans.html">
-                                netbeans
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/jackson.html">
-                                Jackson
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -304,8 +304,8 @@ which may give you trouble on the long run.</p>
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/pelican.html">
-                                pelican
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                linux
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -314,13 +314,23 @@ which may give you trouble on the long run.</p>
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
-                                geeksphone
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/linux.html">
-                                linux
+                            <a href="http://www.eldelshell.com/tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jackson.html">
+                                Jackson
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -334,8 +344,8 @@ which may give you trouble on the long run.</p>
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://www.eldelshell.com/tag/logback.html">
-                                logback
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
                             </a>
                         </li>
                                         </ul>

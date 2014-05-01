@@ -27,6 +27,11 @@
   </url>
 
     <url>
+    <loc>http://www.eldelshell.com/spring4-async-example.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
     <loc>http://www.eldelshell.com/active-page-in-apache-wicket.html</loc>
     <priority>0.5</priority>
   </url>
