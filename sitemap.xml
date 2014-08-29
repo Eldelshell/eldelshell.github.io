@@ -191,6 +191,11 @@
     <priority>0.5</priority>
   </url>
 
+    <url>
+    <loc>http://www.eldelshell.com/java-templates-2010.html</loc>
+    <priority>0.5</priority>
+  </url>
+
   
   <url>
     <loc>http://www.eldelshell.com/pages/about-me.html</loc>

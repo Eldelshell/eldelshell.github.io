@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Java Template Engines, fight! - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="http://www.eldelshell.com/static/images/favicon.ico" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Java Template Engines, fight!"/>
+            <meta property="og:url" content="http://www.eldelshell.com/java-templates-2010.html"/>
+            <meta property="og:description" content="One of the greatest features Java provides for enterprise applications, are the many frameworks, libraries and tools provided by many third-party developers. In the web development front, we find many useful resources and today I'm gonna compare the most popular template systems a Java developer will find. A template ..."/>
+            
+           <!-- includes/twitter_cards.html -->
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@Eldelshell">
+
+    <meta name="twitter:title" content="Java Template Engines, fight!">
+    <meta name="twitter:description" content="One of the greatest features Java provides for enterprise applications, are the many frameworks, libraries and tools provided by many third-party developers. In the web development front, we find many useful resources and today I'm gonna compare the most popular template systems a Java developer will find. A template ...">
+
+    
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="http://www.eldelshell.com/theme/css/bootstrap.flatly.min.css" type="text/css"/>
+        <link href="http://www.eldelshell.com/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://www.eldelshell.com/theme/css/pygments/native.css" rel="stylesheet">
+            <link rel="stylesheet" href="http://www.eldelshell.com/theme/css/style.css" type="text/css"/>
+    
+            <link href="http://www.eldelshell.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Eldelshell Blog ATOM Feed"/>
+        
+            <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+    
+    	<meta name=”description” content=”Software and technology blog”>
+    
+    	<meta name=”keywords” content=”eldelshell, software, technology, java, linux, web, development, alejandro, ayuso, blog, personal”>
+    
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.eldelshell.com/" class="navbar-brand" style="font-family: monospace;">
+				eldelshell@internet$./blog
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                             <li><a href="http://www.eldelshell.com/pages/about-me.html">
+                             About me & About this blog
+                          </a></li>
+                                                                  </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.eldelshell.com/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                    
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://www.eldelshell.com/java-templates-2010.html"
+                       rel="bookmark"
+                       title="Permalink to Java Template Engines, fight!">
+                        Java Template Engines, fight!
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2010-06-01T00:00:00"> Tue 01 June 2010</time>
+    </span>
+        		    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="http://www.eldelshell.com/tag/java.html">Java</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>One of the greatest features Java provides for enterprise applications, are the many
+frameworks, libraries and tools provided by many third-party developers. In the web development
+front, we find many useful resources and today I'm gonna compare the most popular template
+systems a Java developer will find.</p>
+<p>A template system is comprimised of three main components:</p>
+<ul>
+<li>Template Engine</li>
+<li>Content Resource</li>
+<li>Template Resource</li>
+</ul>
+<p>You can find more information about the theory behind template systems 
+in the <a href="http://en.wikipedia.org/wiki/Web_template_system">Wikipedia Entry.</a></p>
+<p>Our candidates are:</p>
+<ul>
+<li>FreeMarker</li>
+<li>Velocity</li>
+<li>StringTemplate</li>
+<li>MVEL</li>
+</ul>
+<h2>FreeMarker</h2>
+<p>License: <em>BSD-style</em></p>
+<p>Tested Version: <em>2.3.16</em></p>
+<p>Dependencies: <em>None</em></p>
+<h3>Advantages:</h3>
+<ul>
+<li>XML/HTML Templates (no need to learn a new language).</li>
+<li>Very simple and straight to the point.</li>
+<li>Plugins for lots of IDEs.</li>
+</ul>
+<h3>Disadvantages:</h3>
+<ul>
+<li>Latest version is almost 8 months old.</li>
+<li>Simplicity comes at a price: not as powerful as the others.</li>
+</ul>
+<p>As stated on the projects' site <em>"It simply generates text"</em> and it does it greatly. It was 
+very easy to get to work with it and appart from the example below, I was able to generate
+SQL queries, HTML pages and Configuration files, from a file or from in-code templates 
+without a problem. Also, having the ability to provide an OutputWriter was great.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FreemarkerExample</span> <span class="kd">extends</span> <span class="n">TemplateExample</span><span class="o">{</span>
+
+    <span class="n">Configuration</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Configuration</span><span class="o">();</span>
+    <span class="n">Template</span> <span class="n">freemarkerTemplate</span><span class="o">;</span>
+    <span class="n">OutputStreamWriter</span> <span class="n">output</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OutputStreamWriter</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">dataModel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;();</span>
+
+    <span class="kd">public</span> <span class="nf">FreemarkerExample</span><span class="o">(</span><span class="n">String</span> <span class="n">user</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">;</span>
+        <span class="n">dataModel</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">freemarkerTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Template</span><span class="o">(</span>
+                <span class="s">&quot;Template&quot;</span><span class="o">,</span> 
+                <span class="k">new</span> <span class="nf">StringReader</span><span class="o">(</span><span class="s">&quot;Hello Freemarker, I&#39;m ${user}\n&quot;</span><span class="o">),</span>
+                <span class="n">config</span>
+            <span class="o">);</span>
+            <span class="n">freemarkerTemplate</span><span class="o">.</span><span class="na">process</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataModel</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">output</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">TemplateException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printFromFile</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">freemarkerTemplate</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getTemplate</span><span class="o">(</span><span class="s">&quot;templates/freemarker.xml&quot;</span><span class="o">);</span>
+            <span class="n">freemarkerTemplate</span><span class="o">.</span><span class="na">process</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataModel</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">output</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">TemplateException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>Velocity Engine</h2>
+<p>License: <em>Apache</em></p>
+<p>Tested Version: <em>1.6.4</em></p>
+<p>Dependencies: <em>None</em></p>
+<h3>Advantages:</h3>
+<ul>
+<li>Very alive. This version is from a few weeks back.</li>
+<li>The most powerful.</li>
+<li>Most popular.</li>
+</ul>
+<h3>Disadvantages:</h3>
+<ul>
+<li>Ugly syntax.</li>
+<li>Complex.</li>
+</ul>
+<p>Without a doubt, the most powerful and complex project. If you take into account 
+all the parts that conform Velocity (Engine, Tools, DVSL, Texen, Anakia, etc.) you have almost
+all of your needs covered. If you take only the Velocity Engine, you'll want to rip 
+your eyes off because of the syntax. Also, the variable names are very easy to
+get lost inside complex pieces of code, and when we're talking about velocity, they will.</p>
+<p>I really wish they followed Python's way with the syntax. Instead of using all those counter 
+intuitive pound signs. I mean, for any Unix/Linux user, those are comments
+and believe me, your mind won't get used to them, ever!</p>
+<p>It was the hardest to get running and creating a new context can be a mess in big 
+systems when developers start putting data in there.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">VelocityExample</span> <span class="kd">extends</span> <span class="n">TemplateExample</span> <span class="o">{</span>
+
+    <span class="n">VelocityEngine</span> <span class="n">engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VelocityEngine</span><span class="o">();</span>
+    <span class="n">VelocityContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VelocityContext</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="nf">VelocityExample</span><span class="o">(</span><span class="n">String</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">;</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+        <span class="n">StringReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="o">(</span><span class="s">&quot;\nHello Velocity, I&#39;m $user\n&quot;</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Velocity</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">writer</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">,</span> <span class="n">reader</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">);</span> 
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printFromFile</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Template</span> <span class="n">template</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="na">getTemplate</span><span class="o">(</span><span class="s">&quot;templates/velocity.vm&quot;</span><span class="o">);</span>
+            <span class="n">template</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span> <span class="n">context</span><span class="o">,</span> <span class="n">writer</span> <span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">);</span> 
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>StringTemplate</h2>
+<p>License: <em>BSD</em></p>
+<p>Tested Version: <em>3.2.1</em></p>
+<p>Dependencies: <em>ANTLR</em></p>
+<h3>Advantages:</h3>
+<ul>
+<li>Powerful and simple</li>
+<li>Not limited to Web.</li>
+<li>Not a Java only project.</li>
+</ul>
+<h3>Disadvantages:</h3>
+<ul>
+<li>Counter-intuitive usage of the dollar sign.</li>
+<li>Single person project. Not much activity.</li>
+<li>Not much documentation.</li>
+<li>No IDE plugins</li>
+</ul>
+<p>Watching an article about StringTemplate is what drove me into writing this post. 
+I thought: "<em>finally someone is implementing a StringBuilder that behaves like it should</em>". But 
+no, it was another template engine, but I wanted to see how it works. And it was fast and 
+easy to learn, but the way the the dollar sign is used kept me head banging on the table. </p>
+<p>You only have to take a look at this to cry: <code>$if(title)$&lt;title&gt;$title$&lt;/title&gt;$endif$</code>.</p>
+<p>Now imagine a thousand lines of it.</p>
+<p>If you get used to this syntax, having a template engine that works in several programming languages is a very good thing.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StringTemplateExample</span> <span class="kd">extends</span> <span class="n">TemplateExample</span><span class="o">{</span>
+
+    <span class="n">StringTemplate</span> <span class="n">template</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringTemplate</span><span class="o">(</span><span class="s">&quot;Hello StringTemplate, I&#39;m $user$&quot;</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="nf">StringTemplateExample</span><span class="o">(</span><span class="n">String</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">;</span>
+        <span class="n">template</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printFromFile</span><span class="o">(){</span>
+        <span class="n">StringTemplateGroup</span> <span class="n">templateGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringTemplateGroup</span><span class="o">(</span><span class="s">&quot;xml group&quot;</span><span class="o">,</span> <span class="s">&quot;templates&quot;</span><span class="o">);</span>
+        <span class="n">StringTemplate</span> <span class="n">xmlTemplate</span> <span class="o">=</span> <span class="n">templateGroup</span><span class="o">.</span><span class="na">getInstanceOf</span><span class="o">(</span><span class="s">&quot;xml&quot;</span><span class="o">);</span>
+        <span class="n">xmlTemplate</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">xmlTemplate</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>MVEL2</h2>
+<p>License: <em>Apache 2.0</em></p>
+<p>Tested Version: <em>2.0.17</em></p>
+<p>Dependencies: <em>None</em></p>
+<h3>Advantages:</h3>
+<ul>
+<li>Easiest to use of all</li>
+<li>Nice syntax</li>
+<li>Very alive. Latest version is from March 2010</li>
+</ul>
+<h3>Disadvantages:</h3>
+<ul>
+<li>The eval method should accept a File object directly.</li>
+<li>No IDE plugins</li>
+</ul>
+<p>I really liked MVEL2 for its simplicity and power. You get a very nice template 
+engine and a very nice expression language which will look very familiar to 
+Java programmers. No weird syntax and the usage of @{var} was a good decision 
+since it's not something you see in any other place, allowing the programmer 
+to easily adjust to the engine.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MVELExample</span> <span class="kd">extends</span> <span class="n">TemplateExample</span><span class="o">{</span>
+
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;();</span>
+
+    <span class="kd">public</span> <span class="nf">MVELExample</span><span class="o">(</span><span class="n">String</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">;</span>
+        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">TemplateRuntime</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="s">&quot;Hello MVEL, I&#39;m @{user}\n&quot;</span><span class="o">,</span> <span class="n">map</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printFromFile</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">TemplateRuntime</span><span class="o">.</span><span class="na">eval</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;templates/mvel.xml&quot;</span><span class="o">)),</span> <span class="n">map</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>Conclusion</h2>
+<p>For an enterprise system the decision is clear: <em>Velocity</em>. It's the most known and 
+powerful tool of them all. It might also have the ugliest syntax but if you 
+get your mind around it and install your IDE plugin, things start looking 
+better. If Velocity wasn't the most known of them all, I would definitely go 
+with MVEL2 for everything, from complex systems to simple ones. From Web apps, to Swing apps.</p>
+            </div>
+            <!-- /.entry-content -->
+                                            </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3 well well-sm" id="sidebar">
+                
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://stackoverflow.com/users/48869/eldelshell"><i
+                            class="fa fa-stackexchange-square fa-lg"></i> StackExchange
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://www.eldelshell.com/feeds/all.atom.xml"><i
+                            class="fa fa-rss-square fa-lg"></i> RSS
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                            <li class="list-group-item"><a href="http://www.eldelshell.com/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group" id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="http://www.eldelshell.com/tag/java.html">
+                                Java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="http://www.eldelshell.com/tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/java.html">
+                                java
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/less.html">
+                                less
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jackson.html">
+                                Jackson
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/http.html">
+                                HTTP
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/jboss.html">
+                                JBoss
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                                                
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- script src="http://www.eldelshell.com/theme/js/bootstrap.min.js"-->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://www.eldelshell.com/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-50208536-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">Java Template Engines, fight!</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">One of the greatest features Java provides for enterprise applications, are the many frameworks, libraries and tools provided by many third-party developers. In the web development front, we find many useful resources and today I'm gonna compare the most popular template systems a Java developer will find. A template ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2010-06-01T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+            <Attribute name="category" value="Java"/>
+    </DataObject>
+
+
+--></body>
+</html>
