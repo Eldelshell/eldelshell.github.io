@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Jackson + MongoDB's ObjectId - Eldelshell Blog</title>
+    <title>JobHunter and JavaFX - Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,17 +13,17 @@
     
                             <!-- Open Graph tags -->
                             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Jackson + MongoDB's ObjectId"/>
-            <meta property="og:url" content="http://www.eldelshell.com/jackson-mongodbs-objectid.html"/>
-            <meta property="og:description" content="This two classes should help you change the way Jackson serialization works for MongoDB's ObjectId. If you don't annotate your ObjectId fields with this classes, you should be receiving something like this: "id":{ "new":false, "machine":-2068967138, "timeSecond":1355228408, "inc":175606344, "time":1355228408000 } In my case, I needed ..."/>
+            <meta property="og:title" content="JobHunter and JavaFX"/>
+            <meta property="og:url" content="http://www.eldelshell.com/jobhunter-presentation.html"/>
+            <meta property="og:description" content="Today I added the first release of a new open source project called JobHunter which is my take at trying to fix a very personal problem: managing all the jobs I've been applying for and have a central reference from all the different job portals. You can download it ..."/>
             
            <!-- includes/twitter_cards.html -->
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@Eldelshell">
 
-    <meta name="twitter:title" content="Jackson + MongoDB's ObjectId">
-    <meta name="twitter:description" content="This two classes should help you change the way Jackson serialization works for MongoDB's ObjectId. If you don't annotate your ObjectId fields with this classes, you should be receiving something like this: "id":{ "new":false, "machine":-2068967138, "timeSecond":1355228408, "inc":175606344, "time":1355228408000 } In my case, I needed ...">
+    <meta name="twitter:title" content="JobHunter and JavaFX">
+    <meta name="twitter:description" content="Today I added the first release of a new open source project called JobHunter which is my take at trying to fix a very personal problem: managing all the jobs I've been applying for and have a central reference from all the different job portals. You can download it ...">
 
     
     <!-- Bootstrap -->
@@ -82,10 +82,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.eldelshell.com/jackson-mongodbs-objectid.html"
+                    <a href="http://www.eldelshell.com/jobhunter-presentation.html"
                        rel="bookmark"
-                       title="Permalink to Jackson + MongoDB's ObjectId">
-                        Jackson + MongoDB's ObjectId
+                       title="Permalink to JobHunter and JavaFX">
+                        JobHunter and JavaFX
                     </a>
                 </h1>
             </header>
@@ -95,79 +95,151 @@
                         <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2012-12-11T00:00:00"> Tue 11 December 2012</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-08-29T00:00:00"> Fri 29 August 2014</time>
     </span>
         		    
             
     
     <span class="label label-default">Tags</span>
-	<a href="http://www.eldelshell.com/tag/java.html">Java</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/jackson.html">Jackson</a>
+	<a href="http://www.eldelshell.com/tag/projects.html">projects</a>
             
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>This two classes should help you change the way Jackson serialization works 
-for MongoDB's ObjectId. If you don't annotate your ObjectId fields 
-with this classes, you should be receiving something like this:</p>
-<div class="highlight"><pre><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="p">{</span>
-  <span class="s2">&quot;new&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
-  <span class="s2">&quot;machine&quot;</span><span class="o">:-</span><span class="mi">2068967138</span><span class="p">,</span>
-  <span class="s2">&quot;timeSecond&quot;</span><span class="o">:</span><span class="mi">1355228408</span><span class="p">,</span>
-  <span class="s2">&quot;inc&quot;</span><span class="o">:</span><span class="mi">175606344</span><span class="p">,</span>
-  <span class="s2">&quot;time&quot;</span><span class="o">:</span><span class="mi">1355228408000</span>
-<span class="p">}</span>
+                <p>Today I added the first release of a new open source project called <em>JobHunter</em> which
+is my take at trying to fix a very personal problem: managing all the jobs I've been
+applying for and have a central reference from all the different job portals.</p>
+<p>You can download it from <a href="https://github.com/Eldelshell/JobHunter">Github</a></p>
+<h2>What it does?</h2>
+<p>Basically, JobHunter allows its users to add the jobs you've applied for and keep track
+of the different things which happen to it, sort of a CRM but for people looking for a job.</p>
+<h3>Jobs</h3>
+<p>The things you can keep track are:</p>
+<ul>
+<li>Job position, salary, description and rating.</li>
+<li>Company information.</li>
+<li>Contacts related to the position (HeadHunter, HR representative, etc.)</li>
+<li>Events like when you have/had an interview.</li>
+</ul>
+<h3>Plugins</h3>
+<p>At first, adding jobs one by one wasn't a problem, but then I started to search for public APIs
+and luckily many job portals have a public API which can be used to import the job's data into
+<em>JobHunter</em>. Instead of building <em>JobHunter</em> around this feature, I created a plugin system
+which would allow people to add their own plugins to import jobs from any portal with a public API
+or by doing some scrapping.</p>
+<h2>How it was made?</h2>
+<p><em>JobHunter</em> is a JavaFX desktop application (looking forward to make the Android version) with
+the following dependencies:</p>
+<ul>
+<li>Maven 3 as build system.</li>
+<li>MVEL2 to generate HTML.</li>
+<li>XStream for the XML persistence.</li>
+<li>Jackson for JSON data handling (to be used by Plugins)</li>
+<li>Commons HttpClient (to be used by Plugins)</li>
+<li>jSOUP to parse HTML (to be used by Plugins)</li>
+<li>Reflections to load the plugins.</li>
+<li>ControlsFX to extend JavaFX features.</li>
+</ul>
+<h2>JavaFX</h2>
+<p>First, I want to state that I wanted to do some desktop stuff, which I haven't done in a long while. Since
+I've already used SWT, Swing, GTK, Qt and WxWidgets I wanted to learn something new and JavaFX would allow me
+to learn two things at the same time: JavaFX and Java8 (Stream, Lambdas, etc).</p>
+<p>The hardest part with JavaFX was setting up my Maven project to correctly execute and include all of JavaFX
+libraries, but nothing a quick search wouldn't fix.</p>
+<h3>JavaFXSceneBuilder 2.0</h3>
+<p>Using a tool like <em>JavaFXSceneBuilder</em> made things pretty easy, and if you've ever done any GUI
+applications, you won't be dissapointed that the standard stuff is there. Hell, even Android devs should
+understand JavaFX in no time. Mind that <em>JavaFXSceneBuilder</em> is kind of raw and needs lots of work 
+to reach the quality of similar tools, but it really helps when working with complex layouts.</p>
+<p>With <em>JavaFXSceneBuilder</em> you generate <em>FXML</em> files which are later imported by your Java application. One of
+the things I found to give me more flexibility was to not indicate the <em>controller</em> in the <em>FXML</em> file and instead
+add it later when you're importing the layout:</p>
+<div class="highlight"><pre><span class="k">default</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Parent</span><span class="o">&gt;</span> <span class="nf">load</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">FXMLLoader</span> <span class="n">fxmlLoader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FXMLLoader</span><span class="o">(</span><span class="n">MyController</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResource</span><span class="o">(</span><span class="n">PATH</span><span class="o">));</span>
+    <span class="n">fxmlLoader</span><span class="o">.</span><span class="na">setController</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">((</span><span class="n">Parent</span><span class="o">)</span><span class="n">fxmlLoader</span><span class="o">.</span><span class="na">load</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">l</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">&quot;Failed to open file {}&quot;</span><span class="o">,</span> <span class="n">PATH</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+<span class="o">}</span>
 </pre></div>
 
 
-<p>In my case, I needed my ObjectId's as:</p>
-<div class="highlight"><pre><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;50c724f884ae111e0a778a48&quot;</span>
+<p>Another great feature of JavaFX is the use of a sort of CSS (i.e. <code>-fx-background-color</code>) to handle the styling
+of the application, separating concerns in three ways:</p>
+<ul>
+<li>Java code for logic.</li>
+<li>FXML for GUI structure.</li>
+<li>CSS for styling.</li>
+</ul>
+<p>Every JavaFX component has its default class (i.e. <code>.button</code>) and you can add you own classes and id, so any
+web developer or designer should be able to style a JavaFX application without much problem. Here <em>JavaFXSceneBuilder</em>
+also help with its CSS analyzer, which works in pretty much the same way as the one in Firefox or Chrome.</p>
+<h3>Progress bars and Worker</h3>
+<p>One of the hardest things in GUI development is progress bars, and JavaFX comes a long way to help on this
+with its own threading system based on the <code>Worker</code> interface. This system gives easy threading and
+good UX. As an example, this is how I handle importing a job from a remote API:</p>
+<div class="highlight"><pre><span class="n">ImportService</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImportService</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+
+<span class="n">s</span><span class="o">.</span><span class="na">setOnSucceeded</span><span class="o">((</span><span class="n">event</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">// FTW!</span>
+<span class="o">});</span>
+
+<span class="n">s</span><span class="o">.</span><span class="na">setOnFailed</span><span class="o">((</span><span class="n">event</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">// :-(</span>
+<span class="o">});</span>
+
+<span class="n">Dialogs</span><span class="o">.</span><span class="na">create</span><span class="o">().</span><span class="na">message</span><span class="o">(</span><span class="s">&quot;Importing...&quot;</span><span class="o">).</span><span class="na">showWorkerProgress</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+<span class="n">s</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
 </pre></div>
 
 
-<p>Well, here are the classes:</p>
-<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ObjectIdSerializer</span> <span class="kd">extends</span> <span class="n">JsonSerializer</span><span class="o">&lt;</span><span class="n">ObjectId</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">serialize</span><span class="o">(</span>
-            <span class="n">ObjectId</span> <span class="n">value</span><span class="o">,</span>
-            <span class="n">JsonGenerator</span> <span class="n">jgen</span><span class="o">,</span>
-            <span class="n">SerializerProvider</span> <span class="n">provider</span><span class="o">)</span>
-    <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonProcessingException</span>
-    <span class="o">{</span>
-        <span class="n">jgen</span><span class="o">.</span><span class="na">writeString</span><span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">toHexString</span><span class="o">());</span>
+<p>The <code>ImportService</code> is an <code>Observer</code> of the class which does the connection and HTML parsing like:</p>
+<div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">Job</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">try</span><span class="o">{</span>
+        <span class="k">return</span> <span class="n">Client</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">url</span><span class="o">).</span><span class="na">observe</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">execute</span><span class="o">();</span>
+    <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">MonsterAPIException</span><span class="o">(</span><span class="s">&quot;Failed to import&quot;</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">Observable</span> <span class="n">o</span><span class="o">,</span> <span class="n">Object</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Client</span><span class="o">.</span><span class="na">Event</span> <span class="n">event</span> <span class="o">=</span> <span class="o">(</span><span class="n">Client</span><span class="o">.</span><span class="na">Event</span><span class="o">)</span> <span class="n">arg</span><span class="o">;</span>
+    <span class="c1">// Use Task methods to indicate the changes to the progress dialog</span>
+    <span class="n">updateMessage</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">message</span><span class="o">);</span>
+    <span class="n">updateProgress</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">position</span><span class="o">,</span> <span class="n">event</span><span class="o">.</span><span class="na">total</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ObjectIdDeserializer</span> <span class="kd">extends</span> <span class="n">JsonDeserializer</span><span class="o">&lt;</span><span class="n">ObjectId</span><span class="o">&gt;{</span>
+<p>The progress dialog will pickup the events raised by our <code>Task</code> and update itself.</p>
+<h2>Java 8</h2>
+<p>If there's something for which Java 8 new lambdas are useful are with JavaFX (or Swing for that matter):</p>
+<div class="highlight"><pre><span class="c1">// With Java 8</span>
+<span class="n">profileController</span><span class="o">.</span><span class="na">setListener</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">// () indicates empty args</span>
+    <span class="n">refresh</span><span class="o">();</span>
+<span class="o">});</span>
+
+<span class="c1">// Before Java 8</span>
+<span class="n">profileController</span><span class="o">.</span><span class="na">setListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ProfileRepositoryListener</span><span class="o">()</span> <span class="o">{</span>
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">ObjectId</span> <span class="nf">deserialize</span><span class="o">(</span>
-            <span class="n">JsonParser</span> <span class="n">jp</span><span class="o">,</span>
-            <span class="n">DeserializationContext</span> <span class="n">ctxt</span><span class="o">)</span>
-    <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">JsonProcessingException</span>
-    <span class="o">{</span>
-        <span class="n">ObjectCodec</span> <span class="n">oc</span> <span class="o">=</span> <span class="n">jp</span><span class="o">.</span><span class="na">getCodec</span><span class="o">();</span>
-        <span class="n">JsonNode</span> <span class="n">node</span> <span class="o">=</span> <span class="n">oc</span><span class="o">.</span><span class="na">readTree</span><span class="o">(</span><span class="n">jp</span><span class="o">);</span>
-        <span class="c1">// You could validate the input with ObjectId.valid(xxx)</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">ObjectId</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getTextValue</span><span class="o">());</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">changed</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">refresh</span><span class="o">();</span>
     <span class="o">}</span>
-<span class="o">}</span>
+<span class="o">});</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span class="nd">@Document</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyDocument</span> <span class="o">{</span>
-
-    <span class="nd">@JsonDeserialize</span><span class="o">(</span><span class="n">using</span> <span class="o">=</span> <span class="n">ObjectIdDeserializer</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-    <span class="nd">@JsonSerialize</span><span class="o">(</span><span class="n">using</span> <span class="o">=</span> <span class="n">ObjectIdSerializer</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">ObjectId</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="o">...</span>
-<span class="o">}</span>
-</pre></div>
+<p>I believe the reason for Lambdas is clear.</p>
+<h2>Wrap up</h2>
+<p>The experience have been very productive and I find JavaFX to be a great way to develop GUI applications. Much of the
+code noise associated with Swing is gone and code is much cleaner and easier to write thanks to Java8 new features. Also,
+any new JavaFX project should include <em>ControlsFX</em> if not only for the <code>Dialogs</code> but also as a good example of creating
+stuff with JavaFX. </p>
             </div>
             <!-- /.entry-content -->
                                             </article>
@@ -358,17 +430,16 @@ with this classes, you should be receiving something like this:</p>
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Jackson + MongoDB's ObjectId</Attribute>
+    <Attribute name="title">JobHunter and JavaFX</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description">This two classes should help you change the way Jackson serialization works for MongoDB's ObjectId. If you don't annotate your ObjectId fields with this classes, you should be receiving something like this: "id":{ "new":false, "machine":-2068967138, "timeSecond":1355228408, "inc":175606344, "time":1355228408000 } In my case, I needed ...</Attribute>
+    <Attribute name="description">Today I added the first release of a new open source project called JobHunter which is my take at trying to fix a very personal problem: managing all the jobs I've been applying for and have a central reference from all the different job portals. You can download it ...</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update">2012-12-11T00:00:00</Attribute>
+    <Attribute name="last_update">2014-08-29T00:00:00</Attribute>
 </DataObject>
 <DataObject type="metatags">
     <Attribute name="category" value="Blog"/>
-            <Attribute name="category" value="Java"/>
-            <Attribute name="category" value="Jackson"/>
+            <Attribute name="category" value="projects"/>
     </DataObject>
 
 

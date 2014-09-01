@@ -1,5 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-04-27T00:00:00+02:00</updated><entry><title>Convert MKV to AVI for Xbox 360 in Linux</title><link href="http://www.eldelshell.com/xbox-360-mkv-to-avi-linux.md.html" rel="alternate"></link><updated>2014-04-27T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-27:xbox-360-mkv-to-avi-linux.md.html</id><summary type="html">&lt;p&gt;For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, &lt;code&gt;mkv&lt;/code&gt; files are like a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-08-29T00:00:00+02:00</updated><entry><title>JobHunter and JavaFX</title><link href="http://www.eldelshell.com/jobhunter-presentation.html" rel="alternate"></link><updated>2014-08-29T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-08-29:jobhunter-presentation.html</id><summary type="html">&lt;p&gt;Today I added the first release of a new open source project called &lt;em&gt;JobHunter&lt;/em&gt; which
+is my take at trying to fix a very personal problem: managing all the jobs I've been
+applying for and have a central reference from all the different job portals.&lt;/p&gt;
+&lt;p&gt;You can download it from &lt;a href="https://github.com/Eldelshell/JobHunter"&gt;Github&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;What it does?&lt;/h2&gt;
+&lt;p&gt;Basically, JobHunter allows its users to add the jobs you've applied for and keep track
+of the different things which happen to it, sort of a CRM but for people looking for a job.&lt;/p&gt;
+&lt;h3&gt;Jobs&lt;/h3&gt;
+&lt;p&gt;The things you can keep track are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Job position, salary, description and rating.&lt;/li&gt;
+&lt;li&gt;Company information.&lt;/li&gt;
+&lt;li&gt;Contacts related to the position (HeadHunter, HR representative, etc.)&lt;/li&gt;
+&lt;li&gt;Events like when you have/had an interview.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Plugins&lt;/h3&gt;
+&lt;p&gt;At first, adding jobs one by one wasn't a problem, but then I started to search for public APIs
+and luckily many job portals have a public API which can be used to import the job's data into
+&lt;em&gt;JobHunter&lt;/em&gt;. Instead of building &lt;em&gt;JobHunter&lt;/em&gt; around this feature, I created a plugin system
+which would allow people to add their own plugins to import jobs from any portal with a public API
+or by doing some scrapping.&lt;/p&gt;
+&lt;h2&gt;How it was made?&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;JobHunter&lt;/em&gt; is a JavaFX desktop application (looking forward to make the Android version) with
+the following dependencies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Maven 3 as build system.&lt;/li&gt;
+&lt;li&gt;MVEL2 to generate HTML.&lt;/li&gt;
+&lt;li&gt;XStream for the XML persistence.&lt;/li&gt;
+&lt;li&gt;Jackson for JSON data handling (to be used by Plugins)&lt;/li&gt;
+&lt;li&gt;Commons HttpClient (to be used by Plugins)&lt;/li&gt;
+&lt;li&gt;jSOUP to parse HTML (to be used by Plugins)&lt;/li&gt;
+&lt;li&gt;Reflections to load the plugins.&lt;/li&gt;
+&lt;li&gt;ControlsFX to extend JavaFX features.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;JavaFX&lt;/h2&gt;
+&lt;p&gt;First, I want to state that I wanted to do some desktop stuff, which I haven't done in a long while. Since
+I've already used SWT, Swing, GTK, Qt and WxWidgets I wanted to learn something new and JavaFX would allow me
+to learn two things at the same time: JavaFX and Java8 (Stream, Lambdas, etc).&lt;/p&gt;
+&lt;p&gt;The hardest part with JavaFX was setting up my Maven project to correctly execute and include all of JavaFX
+libraries, but nothing a quick search wouldn't fix.&lt;/p&gt;
+&lt;h3&gt;JavaFXSceneBuilder 2.0&lt;/h3&gt;
+&lt;p&gt;Using a tool like &lt;em&gt;JavaFXSceneBuilder&lt;/em&gt; made things pretty easy, and if you've ever done any GUI
+applications, you won't be dissapointed that the standard stuff is there. Hell, even Android devs should
+understand JavaFX in no time. Mind that &lt;em&gt;JavaFXSceneBuilder&lt;/em&gt; is kind of raw and needs lots of work 
+to reach the quality of similar tools, but it really helps when working with complex layouts.&lt;/p&gt;
+&lt;p&gt;With &lt;em&gt;JavaFXSceneBuilder&lt;/em&gt; you generate &lt;em&gt;FXML&lt;/em&gt; files which are later imported by your Java application. One of
+the things I found to give me more flexibility was to not indicate the &lt;em&gt;controller&lt;/em&gt; in the &lt;em&gt;FXML&lt;/em&gt; file and instead
+add it later when you're importing the layout:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="n"&gt;Optional&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Parent&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;load&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;FXMLLoader&lt;/span&gt; &lt;span class="n"&gt;fxmlLoader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FXMLLoader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MyController&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getResource&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+    &lt;span class="n"&gt;fxmlLoader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setController&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Optional&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;of&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;Parent&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="n"&gt;fxmlLoader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;load&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;error&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Failed to open file {}&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Optional&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;empty&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another great feature of JavaFX is the use of a sort of CSS (i.e. &lt;code&gt;-fx-background-color&lt;/code&gt;) to handle the styling
+of the application, separating concerns in three ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java code for logic.&lt;/li&gt;
+&lt;li&gt;FXML for GUI structure.&lt;/li&gt;
+&lt;li&gt;CSS for styling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Every JavaFX component has its default class (i.e. &lt;code&gt;.button&lt;/code&gt;) and you can add you own classes and id, so any
+web developer or designer should be able to style a JavaFX application without much problem. Here &lt;em&gt;JavaFXSceneBuilder&lt;/em&gt;
+also help with its CSS analyzer, which works in pretty much the same way as the one in Firefox or Chrome.&lt;/p&gt;
+&lt;h3&gt;Progress bars and Worker&lt;/h3&gt;
+&lt;p&gt;One of the hardest things in GUI development is progress bars, and JavaFX comes a long way to help on this
+with its own threading system based on the &lt;code&gt;Worker&lt;/code&gt; interface. This system gives easy threading and
+good UX. As an example, this is how I handle importing a job from a remote API:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ImportService&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ImportService&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setOnSucceeded&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// FTW!&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+
+&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setOnFailed&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// :-(&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+
+&lt;span class="n"&gt;Dialogs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;message&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Importing...&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;showWorkerProgress&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;start&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;ImportService&lt;/code&gt; is an &lt;code&gt;Observer&lt;/code&gt; of the class which does the connection and HTML parsing like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nd"&gt;@Override&lt;/span&gt;
+&lt;span class="kd"&gt;protected&lt;/span&gt; &lt;span class="n"&gt;Job&lt;/span&gt; &lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;of&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;observe&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;MonsterAPIException&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Failed to import&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Override&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Observable&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Event&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Event&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;// Use Task methods to indicate the changes to the progress dialog&lt;/span&gt;
+    &lt;span class="n"&gt;updateMessage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;message&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;updateProgress&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;position&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;total&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The progress dialog will pickup the events raised by our &lt;code&gt;Task&lt;/code&gt; and update itself.&lt;/p&gt;
+&lt;h2&gt;Java 8&lt;/h2&gt;
+&lt;p&gt;If there's something for which Java 8 new lambdas are useful are with JavaFX (or Swing for that matter):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// With Java 8&lt;/span&gt;
+&lt;span class="n"&gt;profileController&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setListener&lt;/span&gt;&lt;span class="o"&gt;(()&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// () indicates empty args&lt;/span&gt;
+    &lt;span class="n"&gt;refresh&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Before Java 8&lt;/span&gt;
+&lt;span class="n"&gt;profileController&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ProfileRepositoryListener&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;changed&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;refresh&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I believe the reason for Lambdas is clear.&lt;/p&gt;
+&lt;h2&gt;Wrap up&lt;/h2&gt;
+&lt;p&gt;The experience have been very productive and I find JavaFX to be a great way to develop GUI applications. Much of the
+code noise associated with Swing is gone and code is much cleaner and easier to write thanks to Java8 new features. Also,
+any new JavaFX project should include &lt;em&gt;ControlsFX&lt;/em&gt; if not only for the &lt;code&gt;Dialogs&lt;/code&gt; but also as a good example of creating
+stuff with JavaFX. &lt;/p&gt;</summary><category term="projects"></category></entry><entry><title>Convert MKV to AVI for Xbox 360 in Linux</title><link href="http://www.eldelshell.com/xbox-360-mkv-to-avi-linux.md.html" rel="alternate"></link><updated>2014-04-27T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-04-27:xbox-360-mkv-to-avi-linux.md.html</id><summary type="html">&lt;p&gt;For some reason, the Xbox 360 doesn't like Matroska (mkv) files. Basically, &lt;code&gt;mkv&lt;/code&gt; files are like a
 &lt;code&gt;tar&lt;/code&gt; file with some meta XML, the video file, the different audio files, the different subtitles
 and more stuff.&lt;/p&gt;
 &lt;p&gt;For the Xbox 360 we only care about the video file (track from now on) and the audio file we want
