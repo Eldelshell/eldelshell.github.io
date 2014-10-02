@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>What is Docker - Eldelshell Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://www.eldelshell.com/static/images/favicon.ico" rel="icon">
+
+    <!-- Open Graph tags -->
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="What is Docker"/>
+            <meta property="og:url" content="http://www.eldelshell.com/whats-docker.html"/>
+            <meta property="og:description" content="According to docker.io Docker is: an open platform for developers and sysadmins to build, ship, and run distributed applications. In case that doesn't make any sense let me explain with a simple example. Before Docker, if you wanted to do some development with a RDBMS like MySQL you ..."/>
+
+<!-- includes/twitter_cards.html -->
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@Eldelshell">
+
+    <meta name="twitter:title" content="What is Docker">
+    <meta name="twitter:description" content="According to docker.io Docker is: an open platform for developers and sysadmins to build, ship, and run distributed applications. In case that doesn't make any sense let me explain with a simple example. Before Docker, if you wanted to do some development with a RDBMS like MySQL you ...">
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://www.eldelshell.com/theme/css/bootstrap.flatly.min.css" type="text/css"/>
+    <link href="http://www.eldelshell.com/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://www.eldelshell.com/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.eldelshell.com/theme/css/style.css" type="text/css"/>
+
+        <link href="http://www.eldelshell.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Eldelshell Blog ATOM Feed"/>
+
+        <!-- SEO: g+ -->
+        <link rel="author" href="https://plus.google.com/+AlejandroAyuso"/>
+
+	<meta name=”description” content=”Software and technology blog”>
+
+	<meta name=”keywords” content=”eldelshell, software, technology, java, linux, web, development, alejandro, ayuso, blog, personal”>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.eldelshell.com/" class="navbar-brand" style="font-family: monospace;">
+		eldelshell@internet$./blog
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://www.eldelshell.com/pages/about-me.html">
+                             About me & About this blog
+                          </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.eldelshell.com/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://www.eldelshell.com/whats-docker.html"
+                       rel="bookmark"
+                       title="Permalink to What is Docker">
+                        What is Docker
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-10-02T00:00:00"> Thu 02 October 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://www.eldelshell.com/tag/docker.html">docker</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>According to <a href="http://docker.io">docker.io</a> Docker is:</p>
+<blockquote>
+<p>an open platform for developers and sysadmins to build, ship, and run distributed applications.</p>
+</blockquote>
+<p>In case that doesn't make any sense let me explain with a simple example.</p>
+<p>Before Docker, if you wanted to do some development with a RDBMS like MySQL you would install it in your
+computer or in a development server. The same for every other technology you might use:</p>
+<ul>
+<li>memcached</li>
+<li>web server</li>
+<li>application server</li>
+</ul>
+<p>The process would be like:</p>
+<ul>
+<li>Install &amp; configure MySQL</li>
+<li>Install &amp; configure memcached</li>
+<li>Install &amp; configure web server</li>
+<li>Install &amp; configure application server</li>
+<li>Install &amp; configure development environment</li>
+</ul>
+<p>If you don't see the pain in this is because you haven't spent two days setting up a development environment. Some tools
+like Puppet or Chef automate this process with a script or DSL solution. Docker takes this a little further and also isolates
+all of this in one or several virtual machines (containers) separate of the host operating system. Actually, Chef or Puppet and
+Docker work really nice together if you have to create complex images.</p>
+<p>With Docker, you would simply do something like:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker run --name my-dev-environment -d -P -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>1234 company-dev-image
+</pre></div>
+
+
+<p>This would download, install and configure all that stuff and place it in a virtual machine like:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+postgres            9.3.5               75af0ca1d93c        13 hours ago        213.1 MB
+postgres            latest              75af0ca1d93c        13 hours ago        213.1 MB
+postgres            9.3                 75af0ca1d93c        13 hours ago        213.1 MB
+mysql               latest              722147135e89        13 hours ago        235.6 MB
+company-dev-image   latest              d7734f8df1fc        13 hours ago        765.3 MB
+</pre></div>
+
+
+<p>All of this would be running in a virtual machine which you can stop, modify and distribute
+to your peers in case a modification is made.</p>
+<h2>Concepts</h2>
+<p>There are three basic concept you need to know when working with Docker:</p>
+<h3>Registry</h3>
+<p>This is where all Docker <em>images</em> are stored. There's the <a href="https://registry.hub.docker.com/">central Docker registry</a> and then
+you can create your own registry server. To access this registry server:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker login http://mycompany.registry.server
+</pre></div>
+
+
+<p>You can search the registry servers you're signed to for different images with:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker search postgres
+NAME                     DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+postgres                 PostgreSQL is a powerful, open <span class="nb">source </span>obje...   218       <span class="o">[</span>OK<span class="o">]</span>       
+paintedfox/postgresql    A docker image <span class="k">for </span>running Postgresql.          43                   <span class="o">[</span>OK<span class="o">]</span>
+helmi03/docker-postgis   PostGIS 2.1 in PostgreSQL 9.3                   18                   <span class="o">[</span>OK<span class="o">]</span>
+</pre></div>
+
+
+<h3>Images</h3>
+<p>A Docker image is the mean of distribution of a set of components. Images are defined by a <code>Dockerfile</code> which
+describes this components and their behavior. For example, check the <a href="https://github.com/docker-library/mysql/blob/7461a52b43f06839a4d8723ae8841f4cb616b3d0/5.6/Dockerfile">MySQL server Dockerfile</a>. Docker images
+are similar to other Virtual Machine software images like VirtualBox or QEMU.</p>
+<p>To checkout the images you have in your system, type <code>docker images</code>.</p>
+<p>You can add images with <code>docker run</code> or with <code>docker pull</code>. Here are some examples using images:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker run --name my-super-cool-postgres -d postgres
+</pre></div>
+
+
+<p>Will download the default image from the <em>postgres</em> repository and create/run a new container with the name <em>my-super-cool-postgres</em>.</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker pull postgres       // Download all images in the postgres repository
+<span class="nv">$ </span>docker pull postgres:9.4   // Download only the image tagged 9.4
+
+<span class="nv">$ </span>docker rmi postgres        // Deletes all images of postgres repository
+<span class="nv">$ </span>docker rmi postgres:9.4    // Deletes only the image <span class="k">for </span>9.4
+</pre></div>
+
+
+<p>The <code>pull</code> command won't create any container.</p>
+<h3>Containers</h3>
+<p>A container is an instance of an image being executed. You can have several containers of the same image running at the same
+time. To checkout all the containers run:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker ps -a
+CONTAINER ID        IMAGE               STATUS                         PORTS               NAMES
+251eee778c08        mysql:latest        Up About an hour               3306/tcp            jongo-mysql         
+80ddbb08a173        postgres:9          Exited <span class="o">(</span>0<span class="o">)</span> About an hour ago                       jongo-pg
+</pre></div>
+
+
+<p>Here you can see all the containers, their state, name and ports. You also perform several operations with the containers:</p>
+<div class="highlight"><pre><span class="nv">$ </span>docker stop my-super-cool-postgres // stop this container
+<span class="nv">$ </span>docker rm my-super-cool-postgres   // delete this container
+</pre></div>
+
+
+<p>Containers can communicate between them with the <code>--link</code> option. You can create temporary containers with the <code>--rm</code> option and
+you can open a port in your host machine to the container with the <code>-P &amp; -p</code> options.</p>
+<p>This is has been my introduction to Docker and only the future will tell where this technology takes us, but as I see it, the biggest
+issue Docker will help is with the "it works in my machine" syndrome and ease the whole release process. For example, I can see a full
+continuous integration and delivery process that tests, builds, packages and releases a Docker container from the moment a developer
+pushes to a branch. And yes, many places are starting to use Docker in production.</p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://twitter.com/Eldelshell"><i
+                            class="fa fa-twitter-square fa-lg"></i> Twitter
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/+AlejandroAyuso?rel=author"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google+
+                    </a></li>
+                    <li class="list-group-item"><a href="http://stackoverflow.com/users/48869/eldelshell"><i
+                            class="fa fa-stackexchange-square fa-lg"></i> StackExchange
+                    </a></li>
+                    <li class="list-group-item"><a href="http://es.linkedin.com/in/alejandroayuso/"><i
+                            class="fa fa-linkedin-square fa-lg"></i> LinkedIn
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.eldelshell.com/feeds/all.atom.xml"><i
+                            class="fa fa-rss-square fa-lg"></i> RSS
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://www.eldelshell.com/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+		<!--
+                    <ul class="list-group" id="tags">
+                        <li class="list-group-item tag-0">
+                            <a href="http://www.eldelshell.com/tag/java.html">
+                                java
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://www.eldelshell.com/tag/play.html">
+                                Play!
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/python.html">
+                                python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
+                                bootstrap
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://www.eldelshell.com/tag/tomcat.html">
+                                Tomcat
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://www.eldelshell.com/tag/spring.html">
+                                Spring
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/mysql.html">
+                                MySQL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
+                                geeksphone
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/big-data.html">
+                                big-data
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/git.html">
+                                git
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/pelican.html">
+                                pelican
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/ant.html">
+                                Ant
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/less.html">
+                                less
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/hack.html">
+                                Hack
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://www.eldelshell.com/tag/ftp.html">
+                                FTP
+                            </a>
+                        </li>
+                    </ul>
+		-->
+                        <span class="tag-0">
+                            <a href="http://www.eldelshell.com/tag/java.html">
+                                java
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-1">
+                            <a href="http://www.eldelshell.com/tag/play.html">
+                                Play!
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-2">
+                            <a href="http://www.eldelshell.com/tag/flask.html">
+                                flask
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-2">
+                            <a href="http://www.eldelshell.com/tag/python.html">
+                                python
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-2">
+                            <a href="http://www.eldelshell.com/tag/linux.html">
+                                linux
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-2">
+                            <a href="http://www.eldelshell.com/tag/bootstrap.html">
+                                bootstrap
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-2">
+                            <a href="http://www.eldelshell.com/tag/tomcat.html">
+                                Tomcat
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-3">
+                            <a href="http://www.eldelshell.com/tag/jinja2.html">
+                                jinja2
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-3">
+                            <a href="http://www.eldelshell.com/tag/spring.html">
+                                Spring
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/logback.html">
+                                logback
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/mysql.html">
+                                MySQL
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/geeksphone.html">
+                                geeksphone
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/netbeans.html">
+                                netbeans
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/big-data.html">
+                                big-data
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/git.html">
+                                git
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/pelican.html">
+                                pelican
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/ant.html">
+                                Ant
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/less.html">
+                                less
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/hack.html">
+                                Hack
+                            </a>&nbsp;
+                        </span>
+                        <span class="tag-4">
+                            <a href="http://www.eldelshell.com/tag/ftp.html">
+                                FTP
+                            </a>&nbsp;
+                        </span>
+                </li>    
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Eldelshell
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- script src="http://www.eldelshell.com/theme/js/bootstrap.min.js"-->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://www.eldelshell.com/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-50208536-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+<!-- https://developers.google.com/custom-search/docs/structured_data?hl=es&csw=1#microformats -->
+<!--
+<PageMap>
+<DataObject type="document">
+    <Attribute name="title">What is Docker</Attribute>
+    <Attribute name="author">Eldelshell</Attribute>
+    <Attribute name="description">According to docker.io Docker is: an open platform for developers and sysadmins to build, ship, and run distributed applications. In case that doesn't make any sense let me explain with a simple example. Before Docker, if you wanted to do some development with a RDBMS like MySQL you ...</Attribute>
+    <Attribute name="page_count">1</Attribute>
+    <Attribute name="rating">5</Attribute>
+    <Attribute name="last_update">2014-10-02T00:00:00</Attribute>
+</DataObject>
+<DataObject type="metatags">
+    <Attribute name="category" value="Blog"/>
+        <Attribute name="category" value="docker"/>
+</DataObject>
+
+
+--></body>
+</html>

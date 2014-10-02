@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-08-29T00:00:00+02:00</updated><entry><title>JobHunter and JavaFX</title><link href="http://www.eldelshell.com/jobhunter-presentation.html" rel="alternate"></link><updated>2014-08-29T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-08-29:jobhunter-presentation.html</id><summary type="html">&lt;p&gt;Today I added the first release of a new open source project called &lt;em&gt;JobHunter&lt;/em&gt; which
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-10-02T00:00:00+02:00</updated><entry><title>What is Docker</title><link href="http://www.eldelshell.com/whats-docker.html" rel="alternate"></link><updated>2014-10-02T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-10-02:whats-docker.html</id><summary type="html">&lt;p&gt;According to &lt;a href="http://docker.io"&gt;docker.io&lt;/a&gt; Docker is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;an open platform for developers and sysadmins to build, ship, and run distributed applications.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In case that doesn't make any sense let me explain with a simple example.&lt;/p&gt;
+&lt;p&gt;Before Docker, if you wanted to do some development with a RDBMS like MySQL you would install it in your
+computer or in a development server. The same for every other technology you might use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;memcached&lt;/li&gt;
+&lt;li&gt;web server&lt;/li&gt;
+&lt;li&gt;application server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The process would be like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &amp;amp; configure MySQL&lt;/li&gt;
+&lt;li&gt;Install &amp;amp; configure memcached&lt;/li&gt;
+&lt;li&gt;Install &amp;amp; configure web server&lt;/li&gt;
+&lt;li&gt;Install &amp;amp; configure application server&lt;/li&gt;
+&lt;li&gt;Install &amp;amp; configure development environment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you don't see the pain in this is because you haven't spent two days setting up a development environment. Some tools
+like Puppet or Chef automate this process with a script or DSL solution. Docker takes this a little further and also isolates
+all of this in one or several virtual machines (containers) separate of the host operating system. Actually, Chef or Puppet and
+Docker work really nice together if you have to create complex images.&lt;/p&gt;
+&lt;p&gt;With Docker, you would simply do something like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker run --name my-dev-environment -d -P -e &lt;span class="nv"&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1234 company-dev-image
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This would download, install and configure all that stuff and place it in a virtual machine like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+postgres            9.3.5               75af0ca1d93c        13 hours ago        213.1 MB
+postgres            latest              75af0ca1d93c        13 hours ago        213.1 MB
+postgres            9.3                 75af0ca1d93c        13 hours ago        213.1 MB
+mysql               latest              722147135e89        13 hours ago        235.6 MB
+company-dev-image   latest              d7734f8df1fc        13 hours ago        765.3 MB
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;All of this would be running in a virtual machine which you can stop, modify and distribute
+to your peers in case a modification is made.&lt;/p&gt;
+&lt;h2&gt;Concepts&lt;/h2&gt;
+&lt;p&gt;There are three basic concept you need to know when working with Docker:&lt;/p&gt;
+&lt;h3&gt;Registry&lt;/h3&gt;
+&lt;p&gt;This is where all Docker &lt;em&gt;images&lt;/em&gt; are stored. There's the &lt;a href="https://registry.hub.docker.com/"&gt;central Docker registry&lt;/a&gt; and then
+you can create your own registry server. To access this registry server:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker login http://mycompany.registry.server
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can search the registry servers you're signed to for different images with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker search postgres
+NAME                     DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+postgres                 PostgreSQL is a powerful, open &lt;span class="nb"&gt;source &lt;/span&gt;obje...   218       &lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt;       
+paintedfox/postgresql    A docker image &lt;span class="k"&gt;for &lt;/span&gt;running Postgresql.          43                   &lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt;
+helmi03/docker-postgis   PostGIS 2.1 in PostgreSQL 9.3                   18                   &lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Images&lt;/h3&gt;
+&lt;p&gt;A Docker image is the mean of distribution of a set of components. Images are defined by a &lt;code&gt;Dockerfile&lt;/code&gt; which
+describes this components and their behavior. For example, check the &lt;a href="https://github.com/docker-library/mysql/blob/7461a52b43f06839a4d8723ae8841f4cb616b3d0/5.6/Dockerfile"&gt;MySQL server Dockerfile&lt;/a&gt;. Docker images
+are similar to other Virtual Machine software images like VirtualBox or QEMU.&lt;/p&gt;
+&lt;p&gt;To checkout the images you have in your system, type &lt;code&gt;docker images&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can add images with &lt;code&gt;docker run&lt;/code&gt; or with &lt;code&gt;docker pull&lt;/code&gt;. Here are some examples using images:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker run --name my-super-cool-postgres -d postgres
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Will download the default image from the &lt;em&gt;postgres&lt;/em&gt; repository and create/run a new container with the name &lt;em&gt;my-super-cool-postgres&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker pull postgres       // Download all images in the postgres repository
+&lt;span class="nv"&gt;$ &lt;/span&gt;docker pull postgres:9.4   // Download only the image tagged 9.4
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;docker rmi postgres        // Deletes all images of postgres repository
+&lt;span class="nv"&gt;$ &lt;/span&gt;docker rmi postgres:9.4    // Deletes only the image &lt;span class="k"&gt;for &lt;/span&gt;9.4
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;pull&lt;/code&gt; command won't create any container.&lt;/p&gt;
+&lt;h3&gt;Containers&lt;/h3&gt;
+&lt;p&gt;A container is an instance of an image being executed. You can have several containers of the same image running at the same
+time. To checkout all the containers run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker ps -a
+CONTAINER ID        IMAGE               STATUS                         PORTS               NAMES
+251eee778c08        mysql:latest        Up About an hour               3306/tcp            jongo-mysql         
+80ddbb08a173        postgres:9          Exited &lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt; About an hour ago                       jongo-pg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here you can see all the containers, their state, name and ports. You also perform several operations with the containers:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;docker stop my-super-cool-postgres // stop this container
+&lt;span class="nv"&gt;$ &lt;/span&gt;docker rm my-super-cool-postgres   // delete this container
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Containers can communicate between them with the &lt;code&gt;--link&lt;/code&gt; option. You can create temporary containers with the &lt;code&gt;--rm&lt;/code&gt; option and
+you can open a port in your host machine to the container with the &lt;code&gt;-P &amp;amp; -p&lt;/code&gt; options.&lt;/p&gt;
+&lt;p&gt;This is has been my introduction to Docker and only the future will tell where this technology takes us, but as I see it, the biggest
+issue Docker will help is with the "it works in my machine" syndrome and ease the whole release process. For example, I can see a full
+continuous integration and delivery process that tests, builds, packages and releases a Docker container from the moment a developer
+pushes to a branch. And yes, many places are starting to use Docker in production.&lt;/p&gt;</summary><category term="docker"></category></entry><entry><title>JobHunter and JavaFX</title><link href="http://www.eldelshell.com/jobhunter-presentation.html" rel="alternate"></link><updated>2014-08-29T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-08-29:jobhunter-presentation.html</id><summary type="html">&lt;p&gt;Today I added the first release of a new open source project called &lt;em&gt;JobHunter&lt;/em&gt; which
 is my take at trying to fix a very personal problem: managing all the jobs I've been
 applying for and have a central reference from all the different job portals.&lt;/p&gt;
 &lt;p&gt;You can download it from &lt;a href="https://github.com/Eldelshell/JobHunter"&gt;Github&lt;/a&gt;&lt;/p&gt;
@@ -555,9 +656,9 @@ Then, add to your &lt;strong&gt;strings.xml&lt;/strong&gt; file the definitions 
 &lt;p&gt;Since it's a font, you can control the color and size of the icons programmatically 
 and the icons will scale automatically. The biggest downside is that 
 the icons won't appear in the graphical layout.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android Button with FontAwesome Icon" src="http://www.eldelshell.com/static/images/Selection_088.png" title="Android Button with FontAwesome Icon" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android Button with FontAwesome Icon" src="http://www.eldelshell.com/images/Selection_088.png" title="Android Button with FontAwesome Icon" /&gt;&lt;/p&gt;
 &lt;p&gt;You can place your icons in pretty much any part of the &lt;strong&gt;ActionBar&lt;/strong&gt; title or in the tabs.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android Menu with FontAwesome Icons" src="http://www.eldelshell.com/static/images/Selection_096.png" title="Android Menu with FontAwesome Icons" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android Menu with FontAwesome Icons" src="http://www.eldelshell.com/images/Selection_096.png" title="Android Menu with FontAwesome Icons" /&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;mSectionsPagerAdapter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCount&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;TextView&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;TextView&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mSectionsPagerAdapter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPageTitle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
@@ -632,7 +733,7 @@ you'll need to create a &lt;code&gt;MetricAffectingSpan&lt;/code&gt; like this o
 
 
 &lt;p&gt;The result is the following:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android ActionBar with FontAwesome Icons" src="http://www.eldelshell.com/static/images/Selection_095.png" title="Android ActionBar with FontAwesome Icons" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android ActionBar with FontAwesome Icons" src="http://www.eldelshell.com/images/Selection_095.png" title="Android ActionBar with FontAwesome Icons" /&gt;&lt;/p&gt;
 &lt;p&gt;Well, that was some nice hacking with Android. Hope it's useful for you.&lt;/p&gt;
 &lt;p&gt;NOTE: I'm using FontAwesome 3.2.1 and Android 4.3 (API 18).&lt;/p&gt;</summary><category term="android"></category></entry><entry><title>Updating Geeksphone Keon to Nightly Build</title><link href="http://www.eldelshell.com/updating-geeksphone-keon-to-nightly.html" rel="alternate"></link><updated>2013-05-31T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-05-31:updating-geeksphone-keon-to-nightly.html</id><summary type="html">&lt;p&gt;Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves.&lt;/p&gt;
 &lt;p&gt;Anyway, the process is quite easy, on Linux at least.&lt;/p&gt;
@@ -718,9 +819,9 @@ you'll need to create a &lt;code&gt;MetricAffectingSpan&lt;/code&gt; like this o
 
 
 &lt;p&gt;This code is being used for the landing page of this app while it loads some stuff on the background.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="FirefoxOS Simulator" src="http://www.eldelshell.com/static/images/Simulator_075.png" title="FirefoxOS Simulator" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="FirefoxOS Simulator" src="http://www.eldelshell.com/images/Simulator_075.png" title="FirefoxOS Simulator" /&gt;&lt;/p&gt;
 &lt;p&gt;You can put the slider's button back by removing the .ui-slider-handle from the CSS.&lt;/p&gt;</summary><category term="jquery-mobile"></category></entry><entry><title>A (Simple) Big Data Architecture</title><link href="http://www.eldelshell.com/a-simple-big-data-architecture.html" rel="alternate"></link><updated>2013-04-23T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-04-23:a-simple-big-data-architecture.html</id><summary type="html">&lt;p&gt;How does a Big Data architecture looks like?&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Big Data Architecture" src="http://www.eldelshell.com/static/images/bigdata.png" title="Big Data Architecture" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Big Data Architecture" src="http://www.eldelshell.com/images/bigdata.png" title="Big Data Architecture" /&gt;&lt;/p&gt;
 &lt;p&gt;Of course, your requirements/tools surely can change, but this should give you a pretty good 
 abstract view of the different layers applied in a Big Data environment. There are many 
 things missing, like caching (memcached), data indexing (Solr), task execution (Zookeeper) and 
@@ -895,10 +996,10 @@ Simply create a new platform and point it to the virtualenv python binary in &lt
 
 &lt;p&gt;Create a new Python proyect on NetBeans in the apps folder of your virtual environment and 
 specify the new Python platform you just created (you can set it as default).&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Choose Project" src="http://www.eldelshell.com/static/images/Project_025.png" title="Choose Project" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Select virtualenv" src="http://www.eldelshell.com/static/images/Project_026.png" title="Select virtualenv" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Choose Project" src="http://www.eldelshell.com/images/Project_025.png" title="Choose Project" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Select virtualenv" src="http://www.eldelshell.com/images/Project_026.png" title="Select virtualenv" /&gt;&lt;/p&gt;
 &lt;p&gt;Copy/paste the Hello World example from Flask site, click on Run and point your browser to &lt;code&gt;http://localhost:5000/&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Flask Server Running" src="http://www.eldelshell.com/static/images/Selection_027.png" title="Flask Server Running" /&gt;&lt;/p&gt;</summary><category term="flask"></category><category term="netbeans"></category><category term="python"></category></entry><entry><title>Play + Bootstrap + Dates</title><link href="http://www.eldelshell.com/play-bootstrap-dates.html" rel="alternate"></link><updated>2013-03-04T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-03-04:play-bootstrap-dates.html</id><summary type="html">&lt;p&gt;First of all, I hate HTML date input fields, because they're so broken when you start 
+&lt;p&gt;&lt;img alt="Flask Server Running" src="http://www.eldelshell.com/images/Selection_027.png" title="Flask Server Running" /&gt;&lt;/p&gt;</summary><category term="flask"></category><category term="netbeans"></category><category term="python"></category></entry><entry><title>Play + Bootstrap + Dates</title><link href="http://www.eldelshell.com/play-bootstrap-dates.html" rel="alternate"></link><updated>2013-03-04T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-03-04:play-bootstrap-dates.html</id><summary type="html">&lt;p&gt;First of all, I hate HTML date input fields, because they're so broken when you start 
 playing with different formats for different locales, and HTML5 &lt;code&gt;input=date&lt;/code&gt; doesn't 
 help either since not all browsers implement this and in case of Google's Chrome, 
 it's so ugly that you won't use it.&lt;/p&gt;
@@ -1338,7 +1439,7 @@ ANT script and a Bash script which will handle the servers restart in the host m
 
 &lt;p&gt;So, what we basically want here is to setup Jenkins to call a single ANT tasks, 
 in this case &lt;em&gt;jenkins-play-build&lt;/em&gt; and set some properties as shown here:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Jenkins" src="http://www.eldelshell.com/static/images/Selection_006.png" title="Jenkins" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Jenkins" src="http://www.eldelshell.com/images/Selection_006.png" title="Jenkins" /&gt;&lt;/p&gt;
 &lt;p&gt;The script used to finish the deploy process will restart the Play apps 
 and update the symlink pointing to the latest version we deployed&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
@@ -1587,9 +1688,9 @@ logger configurations to Logback we use the logger.file option.&lt;/p&gt;
 &lt;li&gt;Easy servers control (bash scripts)&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="Java"></category><category term="Play!"></category></entry><entry><title>Move windows around in XFCE</title><link href="http://www.eldelshell.com/move-windows-around-in-xfce.html" rel="alternate"></link><updated>2012-08-16T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2012-08-16:move-windows-around-in-xfce.html</id><summary type="html">&lt;p&gt;There's this cool feature in Unity and MacOS (that I know of) where you can 
 use some keybinding to place windows as blocks in your screen, like this:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/2_002.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/2_002.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The idea is that by pressing SUPER+LEFT the current window is placed on the left of your desktop.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/2_003.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/2_003.png" /&gt;&lt;/p&gt;
 &lt;p&gt;As mentioned, XFCE doesn't support this out-of-the-box, but it's very easy to implement:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="c"&gt;# - coding: utf-8 -&lt;/span&gt;
@@ -1731,7 +1832,7 @@ use some keybinding to place windows as blocks in your screen, like this:&lt;/p&
 &lt;p&gt;And that's pretty much it the whole script. You'll need to install &lt;em&gt;xdotool&lt;/em&gt; which 
 is what does all the magic. &lt;/p&gt;
 &lt;p&gt;To add your own shortcuts, got to &lt;code&gt;Settings -&amp;gt; Settings Manager -&amp;gt; Keyboard -&amp;gt; Application Shortcuts&lt;/code&gt; and add your own.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Keyboard_005.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Keyboard_005.png" /&gt;&lt;/p&gt;
 &lt;p&gt;As you can see in the screenshot, I saved this script as &lt;code&gt;/usr/bin/window-placer&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The options for the script are: &lt;/p&gt;
 &lt;p&gt;&lt;em&gt;-u (up)
@@ -2113,7 +2214,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;h2&gt;jQuery Mobile&lt;/h2&gt;
 &lt;p&gt;jQuery Mobile seems to be the most popular around and the only inconvenience I found when using the "kitchensink" was performance on the SMGS. Using the excellent tools, I got the app up and running, even with the theme colors for the target brand in no more than two hours, with some nice effects and all.&lt;/p&gt;
 &lt;p&gt;Performance was really good even when not using the minified version and the only caveat was with the "slide" effect which brought the SMGS to its knees. Not a problem with the other phones even with all effects. The nested list handled fine all the amount of items we needed. The general experience was excellent and I really liked JQM. The other frameworks are going to have a hard time beating it.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_003.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_003.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Great tools like Theme Roller and Codiqa UI builder.&lt;/li&gt;
@@ -2142,7 +2243,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;li&gt;Architect doesn't allow to add the "data" field to Stores making it hard to preview lists&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In general, I didn't like the experience at all compared with jQuery Mobile which took me a few hours to almost have a completely functional webapp.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_002.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_002.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Based on ExtJS&lt;/li&gt;
@@ -2163,7 +2264,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;p&gt;This got me frustrated really fast, so I tried to work out the prototype cowboy style, with code. At least one thing which I thought was a good idea apart from Sencha was that the controls are defined separately with the ui function. This was the result:&lt;/p&gt;
 &lt;p&gt;Not great. But one thing got my attention and it was the performance. It was really fast loading and handling animations on the SMGS and iPhone 3GS.&lt;/p&gt;
 &lt;p&gt;As with Sencha Touch, I didn't like the experience very much. The general feeling is of a beta product, beginning with the UI designer. Getting started was easier than with Sencha but then things went downhill as my lack of knowledge of how things work with DHTMLX started to show.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_005.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_005.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Based on DHTMLX&lt;/li&gt;
@@ -2283,7 +2384,7 @@ team is using the same version of the libs.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;The problem was with our JBoss monitoring tool which depends on jconsoles LocalVirtualMachine.getAllVirtualMachines() method. For some reason, after a controlled restart of the farm, a couple of servers were being reported as offline. Looking at the log files, I was able to see that the PID for this servers was wrong and the process couldn't connect to retrieve the data (this is done using JMX).&lt;/p&gt;
 &lt;p&gt;The solution was to see what this method was doing with the source code from &lt;a href="http://www.java2s.com/Open-Source/Java-Document/6.0-JDK-Modules-sun/jvmstat/sun/jvmstat/perfdata/monitor/protocol/local/LocalVmManager.java.htm"&gt;LocalVmManager.java&lt;/a&gt; and &lt;a href="http://javasourcecode.org/html/open-source/jdk/jdk-5.0/sun/jvmstat/perfdata/monitor/protocol/local/PerfDataFile.java.html"&gt;PerfDataFile.java&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;So how does tools like JPS, JConsole or VisualVM know the JVMs running in a system? They simply look in the folder &lt;code&gt;/tmp/hsperfdata_foo&lt;/code&gt; where a 32KB data file with the PID as name is created for each JVM.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/screenshot_215.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/screenshot_215.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Back to our problem. After the restart, some of the files that should have been removed when the JVM was killed were still there, so this was giving the monitoring process a wrong PID and it couldn't connect to the JVM and do its magic.&lt;/p&gt;
 &lt;p&gt;Solution: remove the unused files and everything works as expected.&lt;/p&gt;
 &lt;p&gt;So, the next time you need to know all the JVM running on your system, remember this: &lt;code&gt;$ls /tmp/hsperfdata_*/&lt;/code&gt;&lt;/p&gt;</summary><category term="Java"></category></entry><entry><title>My Logback.xml template</title><link href="http://www.eldelshell.com/my-logbackxml-template.html" rel="alternate"></link><updated>2011-10-05T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-10-05:my-logbackxml-template.html</id><summary type="html">&lt;p&gt;This is a simple working XML configuration to start using Logback on your Java projects as fast as possible.&lt;/p&gt;
@@ -2511,7 +2612,7 @@ team is using the same version of the libs.&lt;/em&gt;&lt;/p&gt;
 &lt;li&gt;man vsftpd.conf&lt;/li&gt;
 &lt;li&gt;man pam&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="FTP"></category><category term="MySQL"></category><category term="Linux"></category></entry><entry><title>Monitor Tomcat/JBoss served connections</title><link href="http://www.eldelshell.com/monitor-tomcatjboss-served-connections.html" rel="alternate"></link><updated>2011-05-12T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-05-12:monitor-tomcatjboss-served-connections.html</id><summary type="html">&lt;p&gt;Say you want to monitor how many connections each of your JBoss/Tomcat servers are serving, because, you might want to make sure load balancing is working correctly. This can be accomplished by reading this information from an MBean, in this case the GlobalRequestProcessor.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="jconsole screenshot of a jboss jvm" src="http://www.eldelshell.com/static/images/screenshot_179.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="jconsole screenshot of a jboss jvm" src="http://www.eldelshell.com/images/screenshot_179.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The image speaks by itself. So, depending on how your Tomcat server is being accessed, you can count the number of served requests it has processed and many more data which could become useful someday.&lt;/p&gt;</summary><category term="Java"></category><category term="Tomcat"></category><category term="JBoss"></category></entry><entry><title>Java Daemon</title><link href="http://www.eldelshell.com/java-daemon.html" rel="alternate"></link><updated>2011-04-13T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-04-13:java-daemon.html</id><summary type="html">&lt;p&gt;Here's a little Bash script to run any Java application as a daemon. The only change you'll have to implement in your Java application is a handler for UNIX kill signals. Something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Signal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;handle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Signal&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;INT&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SignalHandler&lt;/span&gt; &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Signal&lt;/span&gt; &lt;span class="n"&gt;sig&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
