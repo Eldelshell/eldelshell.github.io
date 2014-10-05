@@ -1,5 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-10-02T00:00:00+02:00</updated><entry><title>What is Docker</title><link href="http://www.eldelshell.com/whats-docker.html" rel="alternate"></link><updated>2014-10-02T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-10-02:whats-docker.html</id><summary type="html">&lt;p&gt;According to &lt;a href="http://docker.io"&gt;docker.io&lt;/a&gt; Docker is:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Eldelshell Blog</title><link href="http://www.eldelshell.com/" rel="alternate"></link><link href="http://www.eldelshell.com/feeds/all.atom.xml" rel="self"></link><id>http://www.eldelshell.com/</id><updated>2014-10-05T00:00:00+02:00</updated><entry><title>All of IT</title><link href="http://www.eldelshell.com/all-of-it.html" rel="alternate"></link><updated>2014-10-05T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-10-05:all-of-it.html</id><summary type="html">&lt;p&gt;For the past few months I've been actively searching and applying for different 
+job positions and although is not my first time, I've came to realize the amount 
+of knowledge most of the employers I interviewed with expected and it's dizzying.&lt;/p&gt;
+&lt;p&gt;First of all, &lt;em&gt;English&lt;/em&gt;. This is a must have in every position I applied for. 
+I guess this also comes from the fact that I only apply for this kind of positions 
+because of my level of expertise on it I have a clear advantage against most of 
+my peers in my country. On the other hand, not knowing English in IT is really
+a big handicap.&lt;/p&gt;
+&lt;p&gt;Then, the list grows exponentially. I've been tasked for different exercises in the many interviews I had:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL and NoSQL modeling and querying&lt;/li&gt;
+&lt;li&gt;Data structures&lt;/li&gt;
+&lt;li&gt;Complexity (Big-O)&lt;/li&gt;
+&lt;li&gt;Recursion&lt;/li&gt;
+&lt;li&gt;Bitwise manipulation&lt;/li&gt;
+&lt;li&gt;Search/sort algorithms&lt;/li&gt;
+&lt;li&gt;Flow charts&lt;/li&gt;
+&lt;li&gt;Architecture&lt;/li&gt;
+&lt;li&gt;Design patterns&lt;/li&gt;
+&lt;li&gt;Programming paradigms&lt;/li&gt;
+&lt;li&gt;Agile methodologies&lt;/li&gt;
+&lt;li&gt;Unit testing&lt;/li&gt;
+&lt;li&gt;Mocking&lt;/li&gt;
+&lt;li&gt;Version control&lt;/li&gt;
+&lt;li&gt;IDE and editors&lt;/li&gt;
+&lt;li&gt;Operating systems commands (specially if you apply for Linux related jobs)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is all &lt;em&gt;basic&lt;/em&gt; stuff &lt;em&gt;every&lt;/em&gt; developer with more than two years of professional 
+experience has to know or at least is expected to know. And I might be leaving 
+some other things behind.&lt;/p&gt;
+&lt;p&gt;Now you have to add &lt;strong&gt;all&lt;/strong&gt; the specific knowledge of the technologies which are 
+really used by the position. For example, if you're a front-end developer in 
+2014 you're expected to have a deep knowledge of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTML (X, 4, 5) and CSS (and LESS or SASS)&lt;/li&gt;
+&lt;li&gt;JavaScript (and jQuery)&lt;/li&gt;
+&lt;li&gt;SPA frameworks (Backbone, Angular, etc)&lt;/li&gt;
+&lt;li&gt;Backend frameworks (Spring, Django, Symfony)&lt;/li&gt;
+&lt;li&gt;Templates&lt;/li&gt;
+&lt;li&gt;HTTP, REST, JSON, XML&lt;/li&gt;
+&lt;li&gt;Authentication (Basic, OAuth, OpenID)&lt;/li&gt;
+&lt;li&gt;Browsers quirks (will this work in MSIE?)&lt;/li&gt;
+&lt;li&gt;Responsive design&lt;/li&gt;
+&lt;li&gt;Localization&lt;/li&gt;
+&lt;li&gt;GIS Positioning&lt;/li&gt;
+&lt;li&gt;Data validation&lt;/li&gt;
+&lt;li&gt;Basic security&lt;/li&gt;
+&lt;li&gt;API and integration&lt;/li&gt;
+&lt;li&gt;And more...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You also have to add business specific knowledge like insurance, travel, banking. Have 
+worked in some open source project. Done all the exercises in Project Euler. Aren't you
+overwhelmed yet?&lt;/p&gt;
+&lt;p&gt;Of course, you have to keep up with every new fad that comes up. If you're an 
+iOS developer, you have to learn Swift. If you do Android, the differences 
+between each API and hardware. Some knowledge of web (hybrid apps) doesn't come bad either.&lt;/p&gt;
+&lt;p&gt;And &lt;strong&gt;all&lt;/strong&gt; of this, through out your 50 years of professional life, without forgetting what 
+a Red-Black tree is and how to implement BFS recursively on it. Because it's not like it was
+&lt;em&gt;invented&lt;/em&gt; after 2.000 years of the invention of mathematics. It's funny how many of the 
+most "simple" data structures and algorithms have been invented in the last 50 years 
+and you're expected to remember them randomly for each interview.&lt;/p&gt;
+&lt;p&gt;All of this got me to wonder: &lt;em&gt;is this amount of knowledge and expertise expected 
+in other engineering fields?&lt;/em&gt;. Is 
+a mechanical engineer asked about elementary physics questions during interviews or given
+a bunch of Lego to build a motor. Is a chemical engineer asked about the density of 
+different elements and to produce in a whiteboard the chemical structure of caffeine?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Is this amount of knowledge and expertise expected in other non-engineering fields?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I'm in no way trying to be disrespectful of other fields and my questions arise more from
+my ignorance on them (I have my head full of IT acronyms and abbreviations) than as
+a biased comparison. But it's true that because of this
+not that many people who start their career in the IT field keep doing it after 10 or 15 years
+and more worrying, people with great skills simply don't want to get involved in it.&lt;/p&gt;
+&lt;p&gt;&lt;a href=""&gt;Comment on Hacker News&lt;/a&gt;&lt;/p&gt;</summary><category term="programming"></category></entry><entry><title>What is Docker</title><link href="http://www.eldelshell.com/whats-docker.html" rel="alternate"></link><updated>2014-10-02T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2014-10-02:whats-docker.html</id><summary type="html">&lt;p&gt;According to &lt;a href="http://docker.io"&gt;docker.io&lt;/a&gt; Docker is:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;an open platform for developers and sysadmins to build, ship, and run distributed applications.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -656,9 +728,9 @@ Then, add to your &lt;strong&gt;strings.xml&lt;/strong&gt; file the definitions 
 &lt;p&gt;Since it's a font, you can control the color and size of the icons programmatically 
 and the icons will scale automatically. The biggest downside is that 
 the icons won't appear in the graphical layout.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android Button with FontAwesome Icon" src="http://www.eldelshell.com/images/Selection_088.png" title="Android Button with FontAwesome Icon" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android Button with FontAwesome Icon" src="http://www.eldelshell.com/static/images/Selection_088.png" title="Android Button with FontAwesome Icon" /&gt;&lt;/p&gt;
 &lt;p&gt;You can place your icons in pretty much any part of the &lt;strong&gt;ActionBar&lt;/strong&gt; title or in the tabs.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android Menu with FontAwesome Icons" src="http://www.eldelshell.com/images/Selection_096.png" title="Android Menu with FontAwesome Icons" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android Menu with FontAwesome Icons" src="http://www.eldelshell.com/static/images/Selection_096.png" title="Android Menu with FontAwesome Icons" /&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;mSectionsPagerAdapter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCount&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;TextView&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;TextView&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mSectionsPagerAdapter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPageTitle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
@@ -733,7 +805,7 @@ you'll need to create a &lt;code&gt;MetricAffectingSpan&lt;/code&gt; like this o
 
 
 &lt;p&gt;The result is the following:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android ActionBar with FontAwesome Icons" src="http://www.eldelshell.com/images/Selection_095.png" title="Android ActionBar with FontAwesome Icons" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android ActionBar with FontAwesome Icons" src="http://www.eldelshell.com/static/images/Selection_095.png" title="Android ActionBar with FontAwesome Icons" /&gt;&lt;/p&gt;
 &lt;p&gt;Well, that was some nice hacking with Android. Hope it's useful for you.&lt;/p&gt;
 &lt;p&gt;NOTE: I'm using FontAwesome 3.2.1 and Android 4.3 (API 18).&lt;/p&gt;</summary><category term="android"></category></entry><entry><title>Updating Geeksphone Keon to Nightly Build</title><link href="http://www.eldelshell.com/updating-geeksphone-keon-to-nightly.html" rel="alternate"></link><updated>2013-05-31T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-05-31:updating-geeksphone-keon-to-nightly.html</id><summary type="html">&lt;p&gt;Tonight I decided to update FirefoxOS on my Keon, because the version that comes by default is, well, not too good enough for my nerves.&lt;/p&gt;
 &lt;p&gt;Anyway, the process is quite easy, on Linux at least.&lt;/p&gt;
@@ -819,9 +891,9 @@ you'll need to create a &lt;code&gt;MetricAffectingSpan&lt;/code&gt; like this o
 
 
 &lt;p&gt;This code is being used for the landing page of this app while it loads some stuff on the background.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="FirefoxOS Simulator" src="http://www.eldelshell.com/images/Simulator_075.png" title="FirefoxOS Simulator" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="FirefoxOS Simulator" src="http://www.eldelshell.com/static/images/Simulator_075.png" title="FirefoxOS Simulator" /&gt;&lt;/p&gt;
 &lt;p&gt;You can put the slider's button back by removing the .ui-slider-handle from the CSS.&lt;/p&gt;</summary><category term="jquery-mobile"></category></entry><entry><title>A (Simple) Big Data Architecture</title><link href="http://www.eldelshell.com/a-simple-big-data-architecture.html" rel="alternate"></link><updated>2013-04-23T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-04-23:a-simple-big-data-architecture.html</id><summary type="html">&lt;p&gt;How does a Big Data architecture looks like?&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Big Data Architecture" src="http://www.eldelshell.com/images/bigdata.png" title="Big Data Architecture" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Big Data Architecture" src="http://www.eldelshell.com/static/images/bigdata.png" title="Big Data Architecture" /&gt;&lt;/p&gt;
 &lt;p&gt;Of course, your requirements/tools surely can change, but this should give you a pretty good 
 abstract view of the different layers applied in a Big Data environment. There are many 
 things missing, like caching (memcached), data indexing (Solr), task execution (Zookeeper) and 
@@ -996,10 +1068,10 @@ Simply create a new platform and point it to the virtualenv python binary in &lt
 
 &lt;p&gt;Create a new Python proyect on NetBeans in the apps folder of your virtual environment and 
 specify the new Python platform you just created (you can set it as default).&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Choose Project" src="http://www.eldelshell.com/images/Project_025.png" title="Choose Project" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Select virtualenv" src="http://www.eldelshell.com/images/Project_026.png" title="Select virtualenv" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Choose Project" src="http://www.eldelshell.com/static/images/Project_025.png" title="Choose Project" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Select virtualenv" src="http://www.eldelshell.com/static/images/Project_026.png" title="Select virtualenv" /&gt;&lt;/p&gt;
 &lt;p&gt;Copy/paste the Hello World example from Flask site, click on Run and point your browser to &lt;code&gt;http://localhost:5000/&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Flask Server Running" src="http://www.eldelshell.com/images/Selection_027.png" title="Flask Server Running" /&gt;&lt;/p&gt;</summary><category term="flask"></category><category term="netbeans"></category><category term="python"></category></entry><entry><title>Play + Bootstrap + Dates</title><link href="http://www.eldelshell.com/play-bootstrap-dates.html" rel="alternate"></link><updated>2013-03-04T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-03-04:play-bootstrap-dates.html</id><summary type="html">&lt;p&gt;First of all, I hate HTML date input fields, because they're so broken when you start 
+&lt;p&gt;&lt;img alt="Flask Server Running" src="http://www.eldelshell.com/static/images/Selection_027.png" title="Flask Server Running" /&gt;&lt;/p&gt;</summary><category term="flask"></category><category term="netbeans"></category><category term="python"></category></entry><entry><title>Play + Bootstrap + Dates</title><link href="http://www.eldelshell.com/play-bootstrap-dates.html" rel="alternate"></link><updated>2013-03-04T00:00:00+01:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2013-03-04:play-bootstrap-dates.html</id><summary type="html">&lt;p&gt;First of all, I hate HTML date input fields, because they're so broken when you start 
 playing with different formats for different locales, and HTML5 &lt;code&gt;input=date&lt;/code&gt; doesn't 
 help either since not all browsers implement this and in case of Google's Chrome, 
 it's so ugly that you won't use it.&lt;/p&gt;
@@ -1439,7 +1511,7 @@ ANT script and a Bash script which will handle the servers restart in the host m
 
 &lt;p&gt;So, what we basically want here is to setup Jenkins to call a single ANT tasks, 
 in this case &lt;em&gt;jenkins-play-build&lt;/em&gt; and set some properties as shown here:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Jenkins" src="http://www.eldelshell.com/images/Selection_006.png" title="Jenkins" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Jenkins" src="http://www.eldelshell.com/static/images/Selection_006.png" title="Jenkins" /&gt;&lt;/p&gt;
 &lt;p&gt;The script used to finish the deploy process will restart the Play apps 
 and update the symlink pointing to the latest version we deployed&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
@@ -1688,9 +1760,9 @@ logger configurations to Logback we use the logger.file option.&lt;/p&gt;
 &lt;li&gt;Easy servers control (bash scripts)&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="Java"></category><category term="Play!"></category></entry><entry><title>Move windows around in XFCE</title><link href="http://www.eldelshell.com/move-windows-around-in-xfce.html" rel="alternate"></link><updated>2012-08-16T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2012-08-16:move-windows-around-in-xfce.html</id><summary type="html">&lt;p&gt;There's this cool feature in Unity and MacOS (that I know of) where you can 
 use some keybinding to place windows as blocks in your screen, like this:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/2_002.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/2_002.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The idea is that by pressing SUPER+LEFT the current window is placed on the left of your desktop.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/2_003.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/2_003.png" /&gt;&lt;/p&gt;
 &lt;p&gt;As mentioned, XFCE doesn't support this out-of-the-box, but it's very easy to implement:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="c"&gt;# - coding: utf-8 -&lt;/span&gt;
@@ -1832,7 +1904,7 @@ use some keybinding to place windows as blocks in your screen, like this:&lt;/p&
 &lt;p&gt;And that's pretty much it the whole script. You'll need to install &lt;em&gt;xdotool&lt;/em&gt; which 
 is what does all the magic. &lt;/p&gt;
 &lt;p&gt;To add your own shortcuts, got to &lt;code&gt;Settings -&amp;gt; Settings Manager -&amp;gt; Keyboard -&amp;gt; Application Shortcuts&lt;/code&gt; and add your own.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Keyboard_005.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Keyboard_005.png" /&gt;&lt;/p&gt;
 &lt;p&gt;As you can see in the screenshot, I saved this script as &lt;code&gt;/usr/bin/window-placer&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The options for the script are: &lt;/p&gt;
 &lt;p&gt;&lt;em&gt;-u (up)
@@ -2214,7 +2286,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;h2&gt;jQuery Mobile&lt;/h2&gt;
 &lt;p&gt;jQuery Mobile seems to be the most popular around and the only inconvenience I found when using the "kitchensink" was performance on the SMGS. Using the excellent tools, I got the app up and running, even with the theme colors for the target brand in no more than two hours, with some nice effects and all.&lt;/p&gt;
 &lt;p&gt;Performance was really good even when not using the minified version and the only caveat was with the "slide" effect which brought the SMGS to its knees. Not a problem with the other phones even with all effects. The nested list handled fine all the amount of items we needed. The general experience was excellent and I really liked JQM. The other frameworks are going to have a hard time beating it.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_003.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_003.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Great tools like Theme Roller and Codiqa UI builder.&lt;/li&gt;
@@ -2243,7 +2315,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;li&gt;Architect doesn't allow to add the "data" field to Stores making it hard to preview lists&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In general, I didn't like the experience at all compared with jQuery Mobile which took me a few hours to almost have a completely functional webapp.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_002.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_002.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Based on ExtJS&lt;/li&gt;
@@ -2264,7 +2336,7 @@ first thing was to download all the JS files, code a simple REST backend with th
 &lt;p&gt;This got me frustrated really fast, so I tried to work out the prototype cowboy style, with code. At least one thing which I thought was a good idea apart from Sencha was that the controls are defined separately with the ui function. This was the result:&lt;/p&gt;
 &lt;p&gt;Not great. But one thing got my attention and it was the performance. It was really fast loading and handling animations on the SMGS and iPhone 3GS.&lt;/p&gt;
 &lt;p&gt;As with Sencha Touch, I didn't like the experience very much. The general feeling is of a beta product, beginning with the UI designer. Getting started was easier than with Sencha but then things went downhill as my lack of knowledge of how things work with DHTMLX started to show.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/Selection_005.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/Selection_005.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;Pros&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Based on DHTMLX&lt;/li&gt;
@@ -2384,7 +2456,7 @@ team is using the same version of the libs.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;The problem was with our JBoss monitoring tool which depends on jconsoles LocalVirtualMachine.getAllVirtualMachines() method. For some reason, after a controlled restart of the farm, a couple of servers were being reported as offline. Looking at the log files, I was able to see that the PID for this servers was wrong and the process couldn't connect to retrieve the data (this is done using JMX).&lt;/p&gt;
 &lt;p&gt;The solution was to see what this method was doing with the source code from &lt;a href="http://www.java2s.com/Open-Source/Java-Document/6.0-JDK-Modules-sun/jvmstat/sun/jvmstat/perfdata/monitor/protocol/local/LocalVmManager.java.htm"&gt;LocalVmManager.java&lt;/a&gt; and &lt;a href="http://javasourcecode.org/html/open-source/jdk/jdk-5.0/sun/jvmstat/perfdata/monitor/protocol/local/PerfDataFile.java.html"&gt;PerfDataFile.java&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;So how does tools like JPS, JConsole or VisualVM know the JVMs running in a system? They simply look in the folder &lt;code&gt;/tmp/hsperfdata_foo&lt;/code&gt; where a 32KB data file with the PID as name is created for each JVM.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/images/screenshot_215.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://www.eldelshell.com/static/images/screenshot_215.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Back to our problem. After the restart, some of the files that should have been removed when the JVM was killed were still there, so this was giving the monitoring process a wrong PID and it couldn't connect to the JVM and do its magic.&lt;/p&gt;
 &lt;p&gt;Solution: remove the unused files and everything works as expected.&lt;/p&gt;
 &lt;p&gt;So, the next time you need to know all the JVM running on your system, remember this: &lt;code&gt;$ls /tmp/hsperfdata_*/&lt;/code&gt;&lt;/p&gt;</summary><category term="Java"></category></entry><entry><title>My Logback.xml template</title><link href="http://www.eldelshell.com/my-logbackxml-template.html" rel="alternate"></link><updated>2011-10-05T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-10-05:my-logbackxml-template.html</id><summary type="html">&lt;p&gt;This is a simple working XML configuration to start using Logback on your Java projects as fast as possible.&lt;/p&gt;
@@ -2612,7 +2684,7 @@ team is using the same version of the libs.&lt;/em&gt;&lt;/p&gt;
 &lt;li&gt;man vsftpd.conf&lt;/li&gt;
 &lt;li&gt;man pam&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="FTP"></category><category term="MySQL"></category><category term="Linux"></category></entry><entry><title>Monitor Tomcat/JBoss served connections</title><link href="http://www.eldelshell.com/monitor-tomcatjboss-served-connections.html" rel="alternate"></link><updated>2011-05-12T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-05-12:monitor-tomcatjboss-served-connections.html</id><summary type="html">&lt;p&gt;Say you want to monitor how many connections each of your JBoss/Tomcat servers are serving, because, you might want to make sure load balancing is working correctly. This can be accomplished by reading this information from an MBean, in this case the GlobalRequestProcessor.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="jconsole screenshot of a jboss jvm" src="http://www.eldelshell.com/images/screenshot_179.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="jconsole screenshot of a jboss jvm" src="http://www.eldelshell.com/static/images/screenshot_179.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The image speaks by itself. So, depending on how your Tomcat server is being accessed, you can count the number of served requests it has processed and many more data which could become useful someday.&lt;/p&gt;</summary><category term="Java"></category><category term="Tomcat"></category><category term="JBoss"></category></entry><entry><title>Java Daemon</title><link href="http://www.eldelshell.com/java-daemon.html" rel="alternate"></link><updated>2011-04-13T00:00:00+02:00</updated><author><name>Eldelshell</name></author><id>tag:www.eldelshell.com,2011-04-13:java-daemon.html</id><summary type="html">&lt;p&gt;Here's a little Bash script to run any Java application as a daemon. The only change you'll have to implement in your Java application is a handler for UNIX kill signals. Something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Signal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;handle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Signal&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;INT&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SignalHandler&lt;/span&gt; &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handle&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Signal&lt;/span&gt; &lt;span class="n"&gt;sig&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;

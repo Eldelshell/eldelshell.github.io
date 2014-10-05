@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Hello World Flask and NetBeans - Eldelshell Blog</title>
+    <title>Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,18 +12,18 @@
         <link href="http://www.eldelshell.com/static/images/favicon.ico" rel="icon">
     
                             <!-- Open Graph tags -->
-                            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Hello World Flask and NetBeans"/>
-            <meta property="og:url" content="http://www.eldelshell.com/hello-world-flask-and-netbeans.html"/>
-            <meta property="og:description" content="Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ..."/>
-            
+                            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Eldelshell Blog"/>
+            <meta property="og:url" content="http://www.eldelshell.com"/>
+            <meta property="og:description" content="Eldelshell Blog"/>
+                        
            <!-- includes/twitter_cards.html -->
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@Eldelshell">
 
-    <meta name="twitter:title" content="Hello World Flask and NetBeans">
-    <meta name="twitter:description" content="Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ...">
+    <meta name="twitter:title" content="Eldelshell Blog">
+    <meta name="twitter:description" content="Software development and architecture blog">
 
     
     <!-- Bootstrap -->
@@ -77,91 +77,45 @@
 <div class="container">
     <div class="row">
                 <div class="col-sm-9">
-                    
-            <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://www.eldelshell.com/hello-world-flask-and-netbeans.html"
-                       rel="bookmark"
-                       title="Permalink to Hello World Flask and NetBeans">
-                        Hello World Flask and NetBeans
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-                        <footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-03-11T00:00:00"> Mon 11 March 2013</time>
-    </span>
-        		    
-            
+                        
+        			<div class="row">
+			<div class="col-lg-12">
+				<div class="well">
+					<h1>Software development and architecture blog</h1>
+					<p></p>
+				</div>
+			</div>
+		</div>
     
-    <span class="label label-default">Tags</span>
-	<a href="http://www.eldelshell.com/tag/flask.html">flask</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/netbeans.html">netbeans</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/python.html">python</a>
-            
-</footer><!-- /.post-info -->                    </div>
+
+                        <article>
+                <h2><a href="http://www.eldelshell.com/java-templates-2010.html">Java Template Engines, fight!</a></h2>
+                <div class="summary"><p>One of the greatest features Java provides for enterprise applications, are the many
+frameworks, libraries and tools provided by many third-party developers. In the web development
+front, we find many useful resources and today I'm gonna compare the most popular template
+systems a Java developer will find.</p>
+<p>A template ...</p>
+                                        <a class="btn btn-default btn-xs" href="http://www.eldelshell.com/java-templates-2010.html">more ...</a>
                 </div>
-                <p>Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask.</p>
-<p>First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After 
-installing it, install the Python plugin repository:</p>
-<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//deadlock.netbeans.org/hudson/job/nbms-and-javadoc/lastStableBuild/artifact/nbbuild/nbms/updates.xml.gz</span>
-</pre></div>
-
-
-<p><em>(You might also want to remove the PHP related plugins)</em></p>
-<p>After restarting NetBeans we're ready to setup our Python virtual environment. In Debian based distributions install with:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install python-virtualenv
-</pre></div>
-
-
-<p>Next we setup our first environment flask-env:</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir python-environments
-<span class="nv">$ </span><span class="nb">cd </span>python-environments
-<span class="nv">$ </span>virtualenv flask-env
-<span class="nv">$ </span><span class="nb">cd </span>flask-env
-<span class="nv">$ </span><span class="nb">source </span>bin/activate
-<span class="nv">$ </span>mkdir apps
-</pre></div>
-
-
-<p>Inside flask-env you should get something like:</p>
-<div class="highlight"><pre>.
-└── flask-env
-    ├── apps
-    ├── bin
-    ├── include
-    ├── lib
-    └── <span class="nb">local</span>
-</pre></div>
-
-
-<p>This is fairly the same structure you'll see in Python's site-package folder.</p>
-<p>To setup NetBeans to use the new virtualenv we'll need to create a new "Python platform" which you'll find in <code>Tools -&gt; Python Platforms</code>.
-Simply create a new platform and point it to the virtualenv python binary in <code>python-environments/flask-env/python/bin/python</code></p>
-<p>Finally, let's setup Flask for our Hello World example. Go back to your console were you executed source and execute:</p>
-<div class="highlight"><pre><span class="o">(</span>flask-env<span class="o">)</span><span class="nv">$ </span>easy_install Flask
-</pre></div>
-
-
-<p>Create a new Python proyect on NetBeans in the apps folder of your virtual environment and 
-specify the new Python platform you just created (you can set it as default).</p>
-<p><img alt="Choose Project" src="http://www.eldelshell.com/static/images/Project_025.png" title="Choose Project" /></p>
-<p><img alt="Select virtualenv" src="http://www.eldelshell.com/static/images/Project_026.png" title="Select virtualenv" /></p>
-<p>Copy/paste the Hello World example from Flask site, click on Run and point your browser to <code>http://localhost:5000/</code></p>
-<p><img alt="Flask Server Running" src="http://www.eldelshell.com/static/images/Selection_027.png" title="Flask Server Running" /></p>
-            </div>
-            <!-- /.entry-content -->
-                                            </article>
-    </section>
-
+            </article>
+            <hr/>
+            
+        <ul class="pagination">
+                                <li class="prev">
+		<a href="http://www.eldelshell.com/index4.html">&laquo;</a>
+            </li>
+                                <li class=""><a
+                        href="http://www.eldelshell.com/index.html">1</a></li>
+                            <li class=""><a
+                        href="http://www.eldelshell.com/index2.html">2</a></li>
+                            <li class=""><a
+                        href="http://www.eldelshell.com/index3.html">3</a></li>
+                            <li class=""><a
+                        href="http://www.eldelshell.com/index4.html">4</a></li>
+                            <li class="active"><a
+                        href="http://www.eldelshell.com/index5.html">5</a></li>
+                                <li class="next disabled"><a href="#">&raquo;</a></li>
+            </ul>
         </div>
 	        <div class="col-sm-3 well well-sm" id="sidebar">
                 
@@ -449,19 +403,13 @@ specify the new Python platform you just created (you can set it as default).</p
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Hello World Flask and NetBeans</Attribute>
+    <Attribute name="title">Homepage</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description">Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ...</Attribute>
+    <Attribute name="description">Software development and architecture blog</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update">2013-03-11T00:00:00</Attribute>
+    <Attribute name="last_update"></Attribute>
 </DataObject>
-<DataObject type="metatags">
-    <Attribute name="category" value="Blog"/>
-            <Attribute name="category" value="flask"/>
-            <Attribute name="category" value="netbeans"/>
-            <Attribute name="category" value="python"/>
-    </DataObject>
 
 
 --></body>

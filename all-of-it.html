@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Hello World Flask and NetBeans - Eldelshell Blog</title>
+    <title>All of IT - Eldelshell Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,17 +13,17 @@
     
                             <!-- Open Graph tags -->
                             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Hello World Flask and NetBeans"/>
-            <meta property="og:url" content="http://www.eldelshell.com/hello-world-flask-and-netbeans.html"/>
-            <meta property="og:description" content="Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ..."/>
+            <meta property="og:title" content="All of IT"/>
+            <meta property="og:url" content="http://www.eldelshell.com/all-of-it.html"/>
+            <meta property="og:description" content="For the past few months I've been actively searching and applying for different job positions and although is not my first time, I've came to realize the amount of knowledge most of the employers I interviewed with expected and it's dizzying. First of all, English. This is ..."/>
             
            <!-- includes/twitter_cards.html -->
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@Eldelshell">
 
-    <meta name="twitter:title" content="Hello World Flask and NetBeans">
-    <meta name="twitter:description" content="Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ...">
+    <meta name="twitter:title" content="All of IT">
+    <meta name="twitter:description" content="For the past few months I've been actively searching and applying for different job positions and although is not my first time, I've came to realize the amount of knowledge most of the employers I interviewed with expected and it's dizzying. First of all, English. This is ...">
 
     
     <!-- Bootstrap -->
@@ -82,10 +82,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://www.eldelshell.com/hello-world-flask-and-netbeans.html"
+                    <a href="http://www.eldelshell.com/all-of-it.html"
                        rel="bookmark"
-                       title="Permalink to Hello World Flask and NetBeans">
-                        Hello World Flask and NetBeans
+                       title="Permalink to All of IT">
+                        All of IT
                     </a>
                 </h1>
             </header>
@@ -95,68 +95,89 @@
                         <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2013-03-11T00:00:00"> Mon 11 March 2013</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-10-05T00:00:00"> Sun 05 October 2014</time>
     </span>
         		    
             
     
     <span class="label label-default">Tags</span>
-	<a href="http://www.eldelshell.com/tag/flask.html">flask</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/netbeans.html">netbeans</a>
-            /
-    	<a href="http://www.eldelshell.com/tag/python.html">python</a>
+	<a href="http://www.eldelshell.com/tag/programming.html">programming</a>
             
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask.</p>
-<p>First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After 
-installing it, install the Python plugin repository:</p>
-<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//deadlock.netbeans.org/hudson/job/nbms-and-javadoc/lastStableBuild/artifact/nbbuild/nbms/updates.xml.gz</span>
-</pre></div>
-
-
-<p><em>(You might also want to remove the PHP related plugins)</em></p>
-<p>After restarting NetBeans we're ready to setup our Python virtual environment. In Debian based distributions install with:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install python-virtualenv
-</pre></div>
-
-
-<p>Next we setup our first environment flask-env:</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir python-environments
-<span class="nv">$ </span><span class="nb">cd </span>python-environments
-<span class="nv">$ </span>virtualenv flask-env
-<span class="nv">$ </span><span class="nb">cd </span>flask-env
-<span class="nv">$ </span><span class="nb">source </span>bin/activate
-<span class="nv">$ </span>mkdir apps
-</pre></div>
-
-
-<p>Inside flask-env you should get something like:</p>
-<div class="highlight"><pre>.
-└── flask-env
-    ├── apps
-    ├── bin
-    ├── include
-    ├── lib
-    └── <span class="nb">local</span>
-</pre></div>
-
-
-<p>This is fairly the same structure you'll see in Python's site-package folder.</p>
-<p>To setup NetBeans to use the new virtualenv we'll need to create a new "Python platform" which you'll find in <code>Tools -&gt; Python Platforms</code>.
-Simply create a new platform and point it to the virtualenv python binary in <code>python-environments/flask-env/python/bin/python</code></p>
-<p>Finally, let's setup Flask for our Hello World example. Go back to your console were you executed source and execute:</p>
-<div class="highlight"><pre><span class="o">(</span>flask-env<span class="o">)</span><span class="nv">$ </span>easy_install Flask
-</pre></div>
-
-
-<p>Create a new Python proyect on NetBeans in the apps folder of your virtual environment and 
-specify the new Python platform you just created (you can set it as default).</p>
-<p><img alt="Choose Project" src="http://www.eldelshell.com/static/images/Project_025.png" title="Choose Project" /></p>
-<p><img alt="Select virtualenv" src="http://www.eldelshell.com/static/images/Project_026.png" title="Select virtualenv" /></p>
-<p>Copy/paste the Hello World example from Flask site, click on Run and point your browser to <code>http://localhost:5000/</code></p>
-<p><img alt="Flask Server Running" src="http://www.eldelshell.com/static/images/Selection_027.png" title="Flask Server Running" /></p>
+                <p>For the past few months I've been actively searching and applying for different 
+job positions and although is not my first time, I've came to realize the amount 
+of knowledge most of the employers I interviewed with expected and it's dizzying.</p>
+<p>First of all, <em>English</em>. This is a must have in every position I applied for. 
+I guess this also comes from the fact that I only apply for this kind of positions 
+because of my level of expertise on it I have a clear advantage against most of 
+my peers in my country. On the other hand, not knowing English in IT is really
+a big handicap.</p>
+<p>Then, the list grows exponentially. I've been tasked for different exercises in the many interviews I had:</p>
+<ul>
+<li>SQL and NoSQL modeling and querying</li>
+<li>Data structures</li>
+<li>Complexity (Big-O)</li>
+<li>Recursion</li>
+<li>Bitwise manipulation</li>
+<li>Search/sort algorithms</li>
+<li>Flow charts</li>
+<li>Architecture</li>
+<li>Design patterns</li>
+<li>Programming paradigms</li>
+<li>Agile methodologies</li>
+<li>Unit testing</li>
+<li>Mocking</li>
+<li>Version control</li>
+<li>IDE and editors</li>
+<li>Operating systems commands (specially if you apply for Linux related jobs)</li>
+</ul>
+<p>This is all <em>basic</em> stuff <em>every</em> developer with more than two years of professional 
+experience has to know or at least is expected to know. And I might be leaving 
+some other things behind.</p>
+<p>Now you have to add <strong>all</strong> the specific knowledge of the technologies which are 
+really used by the position. For example, if you're a front-end developer in 
+2014 you're expected to have a deep knowledge of:</p>
+<ul>
+<li>HTML (X, 4, 5) and CSS (and LESS or SASS)</li>
+<li>JavaScript (and jQuery)</li>
+<li>SPA frameworks (Backbone, Angular, etc)</li>
+<li>Backend frameworks (Spring, Django, Symfony)</li>
+<li>Templates</li>
+<li>HTTP, REST, JSON, XML</li>
+<li>Authentication (Basic, OAuth, OpenID)</li>
+<li>Browsers quirks (will this work in MSIE?)</li>
+<li>Responsive design</li>
+<li>Localization</li>
+<li>GIS Positioning</li>
+<li>Data validation</li>
+<li>Basic security</li>
+<li>API and integration</li>
+<li>And more...</li>
+</ul>
+<p>You also have to add business specific knowledge like insurance, travel, banking. Have 
+worked in some open source project. Done all the exercises in Project Euler. Aren't you
+overwhelmed yet?</p>
+<p>Of course, you have to keep up with every new fad that comes up. If you're an 
+iOS developer, you have to learn Swift. If you do Android, the differences 
+between each API and hardware. Some knowledge of web (hybrid apps) doesn't come bad either.</p>
+<p>And <strong>all</strong> of this, through out your 50 years of professional life, without forgetting what 
+a Red-Black tree is and how to implement BFS recursively on it. Because it's not like it was
+<em>invented</em> after 2.000 years of the invention of mathematics. It's funny how many of the 
+most "simple" data structures and algorithms have been invented in the last 50 years 
+and you're expected to remember them randomly for each interview.</p>
+<p>All of this got me to wonder: <em>is this amount of knowledge and expertise expected 
+in other engineering fields?</em>. Is 
+a mechanical engineer asked about elementary physics questions during interviews or given
+a bunch of Lego to build a motor. Is a chemical engineer asked about the density of 
+different elements and to produce in a whiteboard the chemical structure of caffeine?</p>
+<p><em>Is this amount of knowledge and expertise expected in other non-engineering fields?</em></p>
+<p>I'm in no way trying to be disrespectful of other fields and my questions arise more from
+my ignorance on them (I have my head full of IT acronyms and abbreviations) than as
+a biased comparison. But it's true that because of this
+not that many people who start their career in the IT field keep doing it after 10 or 15 years
+and more worrying, people with great skills simply don't want to get involved in it.</p>
+<p><a href="">Comment on Hacker News</a></p>
             </div>
             <!-- /.entry-content -->
                                             </article>
@@ -449,18 +470,16 @@ specify the new Python platform you just created (you can set it as default).</p
 <!--
 <PageMap>
 <DataObject type="document">
-    <Attribute name="title">Hello World Flask and NetBeans</Attribute>
+    <Attribute name="title">All of IT</Attribute>
     <Attribute name="author">Eldelshell</Attribute>
-    <Attribute name="description">Let me explain how easy it's to get started with developing a Python backend with tools as NetBeans, virtualenv and Flask. First, download the latest version of NetBeans 7.3 PHP (this is the lightest version). After installing it, install the Python plugin repository: http://deadlock.netbeans.org/hudson ...</Attribute>
+    <Attribute name="description">For the past few months I've been actively searching and applying for different job positions and although is not my first time, I've came to realize the amount of knowledge most of the employers I interviewed with expected and it's dizzying. First of all, English. This is ...</Attribute>
     <Attribute name="page_count">1</Attribute>
     <Attribute name="rating">5</Attribute>
-    <Attribute name="last_update">2013-03-11T00:00:00</Attribute>
+    <Attribute name="last_update">2014-10-05T00:00:00</Attribute>
 </DataObject>
 <DataObject type="metatags">
     <Attribute name="category" value="Blog"/>
-            <Attribute name="category" value="flask"/>
-            <Attribute name="category" value="netbeans"/>
-            <Attribute name="category" value="python"/>
+            <Attribute name="category" value="programming"/>
     </DataObject>
 
 
